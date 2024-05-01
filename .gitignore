@@ -24,3 +24,5 @@ Desktop.ini
 **/coverage
 
 .env
+
+.key
