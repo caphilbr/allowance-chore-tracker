@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react"
+import config from "../config"
+import getChildren from "../services/getChildren"
+import ChildTile from "./ChildTile"
 
 const Dashboard = () => {
+  const [children, setChildren] = useState([])
+  const [selectedChild, setSelectedChild] = useState({})
+
+  const childrenList = children.map(child => {
+    return <ChildTile child={child} setSelectedChild={setSelectedChild} />
+  })
+
+  useEffect(() => {
+    getChildren(setChildren)
+  },[])
 
   return (
-    <h2>Dashboard</h2>
+    <div className="background-color">
+      <div className="dashboard-title">
+        <img
+          className="landing-title"
+          src={config.dashboardTitleUrl}
+        />
+      </div>
+      {childrenList}
+    </div>
   )
 }
 

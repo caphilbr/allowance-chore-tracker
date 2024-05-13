@@ -8,7 +8,8 @@ const config = {
     },
   },
   homeBackgroundUrl: "https://www.theagencyre.com/blog/wp-content/uploads/2017/07/Cleaning-Chores-scaled.jpg",
-  titleFontUrl: "https://fontmeme.com/permalink/240513/2514a3a1bcc14351de0bf4e2b78fc7cb.png"
+  titleFontUrl: "https://fontmeme.com/permalink/240513/74a5a9893db5669681de078dc67f3215.png", //CALL ME MAYBE
+  dashboardTitleUrl: "https://fontmeme.com/permalink/240513/30ae31db8534d183f2f7896145bd0775.png"
 };
 
 export default config;
