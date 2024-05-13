@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import config from "../../config";
-
 import FormError from "../layout/FormError";
 
 const SignInForm = () => {
@@ -76,35 +74,35 @@ const SignInForm = () => {
     location.href = "/";
   }
 
+  const goHome = () => {
+    setShouldRedirect(true)
+  }
+
   return (
     <div className="grid-container" onSubmit={onSubmit}>
-      <h1>Sign In</h1>
+      <p className="sign-in-up-title">Sign In</p>
 
       {credentialsErrors ? <p className="callout alert">{credentialsErrors}</p> : null}
 
       <form>
-        <div>
-          <label>
-            Email
-            <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
-            <FormError error={errors.email} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input
-              type="password"
-              name="password"
-              value={userPayload.password}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.password} />
-          </label>
-        </div>
-        <div>
-          <input type="submit" className="button" value="Sign In" />
-        </div>
+        <label>
+          Email
+          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="email" />
+          <FormError error={errors.email} />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            name="password"
+            value={userPayload.password}
+            onChange={onInputChange}
+            className="password"
+          />
+          <FormError error={errors.password} />
+        </label>
+        <input type="submit" className="sign-in-button" value="Sign In" />
+        <span className="sign-in-button" onClick={goHome}>Home</span>
       </form>
     </div>
   );

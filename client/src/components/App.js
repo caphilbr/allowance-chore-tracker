@@ -8,7 +8,9 @@ import getCurrentUser from "../services/getCurrentUser";
 
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
+import LandingPage from "./LandingPage";
 import TopBar from "./layout/TopBar";
+import Dashboard from "./Dashboard";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -24,17 +26,34 @@ const App = (props) => {
   useEffect(() => {
     fetchCurrentUser();
   }, []);
+  
+  let isLoggedIn = true
+  if (currentUser === null || currentUser === undefined) {
+    isLoggedIn = false
+  }
 
-  return (
-    <Router>
+  const dashboard = (
+    <>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/">
-          <h2>Hello from react</h2>
-        </Route>
+        <Route exact path="/" component={Dashboard} />
+      </Switch>
+    </>
+  )
+
+  const landingPage = (
+    <>
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
       </Switch>
+    </>
+  )
+
+  return (
+    <Router>
+      {isLoggedIn ? dashboard : landingPage}
     </Router>
   );
 };

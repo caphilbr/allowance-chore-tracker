@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import config from "../../config";
-
 import ErrorList from "../layout/ErrorList";
 import FormError from "../layout/FormError";
 import translateServerErrors from "../../services/translateServerErrors";
@@ -97,46 +95,45 @@ const RegistrationForm = () => {
   if (shouldRedirect) {
     location.href = "/";
   }
+  
+  const goHome = () => {
+    setShouldRedirect(true)
+  }
 
   return (
     <div className="grid-container">
-      <h1>Register</h1>
+      <p className="sign-in-up-title">Register</p>
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
-        <div>
-          <label>
-            Email
-            <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
-            <FormError error={errors.email} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input
-              type="password"
-              name="password"
-              value={userPayload.password}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.password} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password Confirmation
-            <input
-              type="password"
-              name="passwordConfirmation"
-              value={userPayload.passwordConfirmation}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.passwordConfirmation} />
-          </label>
-        </div>
-        <div>
-          <input type="submit" className="button" value="Register" />
-        </div>
+        <label>
+          Email
+          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="email" />
+          <FormError error={errors.email} />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            name="password"
+            value={userPayload.password}
+            onChange={onInputChange}
+            className="password"
+          />
+          <FormError error={errors.password} />
+        </label>
+        <label>
+          Password Confirmation
+          <input
+            type="password"
+            name="passwordConfirmation"
+            value={userPayload.passwordConfirmation}
+            onChange={onInputChange}
+            className="password"
+          />
+          <FormError error={errors.passwordConfirmation} />
+        </label>
+        <input type="submit" className="sign-up-button" value="Register" />
+        <span className="sign-in-button" onClick={goHome}>Home</span>
       </form>
     </div>
   );
