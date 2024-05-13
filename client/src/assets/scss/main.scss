@@ -1,6 +1,7 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
+
 // place global css here
 *,
 *::before,
@@ -11,4 +12,93 @@
 :root {
   -moz-tab-size: 4;
   tab-size: 4;
+  --lightest-color: #ffffff;
+  --light-color: #F7EEDD;
+  --medium-color: #ACE2E1;
+  --dark-color: #49d0e8;
+  --darkest-color: #008DDA;
+  --grey-color: rgb(170,170,170);
+}
+
+.landing-page-background-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;  /* Optional: Set width to 100% for full coverage */
+  // height: 100%; /* Optional: Set height to 100% for full coverage */
+}
+
+.background-color {
+  background-color: var(--dark-color); /* Replace with your desired color */
+  position: fixed;  /* Ensures the background covers the entire viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+}
+
+.landing-page-main {
+  text-align: center;
+}
+
+.landing-title {
+  padding: 3rem 1rem 0 1rem;
+  display: inline-block;
+}
+
+.landing-slogan {
+  display: inline-block;
+  padding: 1rem;
+  font-size: 28px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 2px var(--grey-color)
+}
+
+.button-styling {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  background: var(--darkest-color);
+  border-radius: 0.25rem;
+  border: 1px solid transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.button-styling:hover {
+  background: var(--light-color);
+  color: var(--darkest-color);
+}
+
+.landing-page-button {
+  @extend .button-styling;
+  margin: 10rem 1rem 0 1rem;
+}
+
+.email, .password {
+  max-width: 30rem;
+  margin: 0 auto 1rem auto;
+}
+
+.sign-in-up-title {
+  font-size: 28px;
+  color: white;
+  font-weight: bold;
+  margin-top: 3rem;
+  text-shadow: 2px 2px 2px var(--grey-color)
+}
+
+.sign-in-button {
+  @extend .landing-page-button;
+  margin-top: 5rem;
+}
+
+.sign-up-button {
+  @extend .landing-page-button;
+  margin-top: 5rem;
 }
