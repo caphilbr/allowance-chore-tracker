@@ -8,9 +8,11 @@ childrenRouter.get("/", async (req, res) => {
   try {
     const family = await Family.query().findById(req.user.familyId)
     const children = await family.children()
-    const serializedChildren = ChildrenSerializer.parentDashboardList(children)
+    const serializedChildren = await ChildrenSerializer.parentDashboardList(children)
+    
     res.status(200).json({ children: serializedChildren })
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message })
   }
 });

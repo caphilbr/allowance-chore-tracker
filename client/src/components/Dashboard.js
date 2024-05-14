@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import config from "../config"
-import ParentDashboard from "./ParentDashBoard"
+import ParentDashboard from "./ParentDashboard"
 import ChildDashboard from "./ChildDashboard"
 
 const Dashboard = (props) => {

@@ -63,7 +63,7 @@ class User extends uniqueFunc(Model) {
         relation: Model.HasManyRelation,
         modelClass: Chore,
         join: {
-          from: "user.id",
+          from: "users.id",
           to: "chores.userId"
         }
       },

@@ -36,7 +36,7 @@ class Chore extends Model {
         modelClass: User,
         join: {
           from: "chores.userId",
-          to: "user.id"
+          to: "users.id"
         }
       },
       family: {

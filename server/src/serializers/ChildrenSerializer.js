@@ -1,14 +1,17 @@
+import ChoreSerializer from "./ChoreSerializer.js"
+
 class ChildrenSerializer {
 
-  static parentDashboardList = (children) => {
-    const allowedFields = ["id", "name", "imageUrl"]
-    const serializedChildren = children.map(child => {
+  static parentDashboardList = async (children) => {
+    const allowedFields = ["id", "name", "chores", "imageUrl"]
+    const serializedChildren = await Promise.all(children.map(async child => {
       const serializedChild = {}
       allowedFields.forEach(field => {
         serializedChild[field] = child[field]
       })
+      serializedChild.chores = await ChoreSerializer.parentDashboard(child)
       return serializedChild
-    })
+    }))
     return serializedChildren
   }
 }
