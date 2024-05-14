@@ -77,7 +77,8 @@
 
 .landing-page-button {
   @extend .button-styling;
-  margin: 10rem 1rem 0 1rem;
+  margin: 1rem 1rem 0 1rem;
+  // height: 1.5rem;
 }
 
 .email, .password {
@@ -93,17 +94,46 @@
   text-shadow: 2px 2px 2px var(--grey-color)
 }
 
-.sign-in-button {
-  @extend .landing-page-button;
-  margin-top: 5rem;
-}
-
-.sign-up-button {
-  @extend .landing-page-button;
-  margin-top: 5rem;
-}
-
 .dashboard-title{
   text-align: center;
   padding: 2rem;
 }
+
+.child-tile {
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  background-color: var(--lightest-color);
+  margin: 0.5rem;
+  text-align: center;
+  width: 93%;
+}
+
+.scroll {
+  max-height: 50rem;
+  overflow-y: auto;
+}
+
+.child-list-headers {
+  text-align: center;
+  font-size: 28px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px var(--grey-color);
+  margin-right: 2rem;
+}
+
+.add-child-button {
+  @extend .button-styling;
+  margin: 1rem;
+  text-align: center;
+  margin-right: 2rem;
+}
+
+.circle-image {
+  border-radius: 50%;
+  margin-bottom: 0.3rem;
+  max-width: 100%;
+  height: auto;
+}
+

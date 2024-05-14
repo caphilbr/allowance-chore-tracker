@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SignOutButton = () => {
+const SignOutButton = (props) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const signOut = async (event) => {
@@ -30,9 +30,9 @@ const SignOutButton = () => {
   }
 
   return (
-    <button type="button" className="button-styling" onClick={signOut}>
+    <span className="landing-page-button" onClick={signOut}>
       Sign Out
-    </button>
+    </span>
   );
 };
 

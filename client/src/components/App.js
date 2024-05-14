@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
 import "../assets/scss/main.scss";
 import getCurrentUser from "../services/getCurrentUser";
@@ -8,11 +8,12 @@ import TopBar from "./layout/TopBar";
 import Dashboard from "./Dashboard";
 
 const App = (props) => {
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined)
+  // const [shouldRedirect, setShouldRedirect] = useState(false)
   const fetchCurrentUser = async () => {
     try {
       const user = await getCurrentUser();
-      setCurrentUser(user);
+      setCurrentUser(user)
     } catch (err) {
       setCurrentUser(null);
     }
@@ -21,32 +22,27 @@ const App = (props) => {
   useEffect(() => {
     fetchCurrentUser();
   }, []);
-  
-  let isLoggedIn = true
-  if (currentUser === null || currentUser === undefined) {
-    isLoggedIn = false
-  }
 
-  const dashboard = (
+  let dashBoardContent = (
     <>
       <TopBar />
-      <Switch>
-        <Route exact path="/" component={Dashboard} />
-      </Switch>
+      <Dashboard user={currentUser} />
     </>
   )
-
-  const landingPage = (
-    <>
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-      </Switch>
-    </>
-  )
+  if (!currentUser) {
+    dashBoardContent = <p>Loading...</p>
+  }
 
   return (
     <Router>
-      {isLoggedIn ? dashboard : landingPage}
+      <Switch>
+        <Route exact path="/">
+          <LandingPage user={currentUser} />
+        </Route>
+        <Route exact path="/dashboard">
+          {dashBoardContent}
+        </Route>  
+      </Switch>
     </Router>
   );
 };
