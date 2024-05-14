@@ -132,8 +132,8 @@ const RegistrationForm = () => {
           />
           <FormError error={errors.passwordConfirmation} />
         </label>
-        <input type="submit" className="sign-up-button" value="Register" />
-        <span className="sign-in-button" onClick={goHome}>Home</span>
+        <input type="submit" className="landing-page-button" value="Register" />
+        <span className="landing-page-button" onClick={goHome}>Home</span>
       </form>
     </div>
   );

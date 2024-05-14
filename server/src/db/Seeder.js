@@ -40,7 +40,7 @@ class Seeder {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCl0-u5qnlrAa8cY-KYvoKiK8GReB6QLPOnw&s",
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcSTv5DUmTEybwkQt8UZFxVM7PjrXLbiDkng&s"
       ]
-      const family = [1,1,2,2,2]
+      const family = [1,2,2,2,2]
       
       await User.query().insert({
         email: `testChild${child}@email.com`,

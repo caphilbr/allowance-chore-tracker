@@ -4,12 +4,12 @@ import Intro from "./Intro"
 import SignInForm from "./authentication/SignInForm"
 import RegistrationForm from "./registration/RegistrationForm"
 
-const LandingPage = () => {
+const LandingPage = (props) => {
   const [landingDisplay, setLandingDisplay] = useState("landing")
 
   let mainContent
   if (landingDisplay === "landing") {
-    mainContent = <Intro setLandingDisplay={setLandingDisplay} />
+    mainContent = <Intro setLandingDisplay={setLandingDisplay} user={props.user} />
   }  
   if (landingDisplay === "signin") {
     mainContent = <SignInForm />

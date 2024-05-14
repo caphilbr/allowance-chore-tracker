@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import config from "../config"
-import getChildren from "../services/getChildren"
-import ChildTile from "./ChildTile"
+import ParentDashboard from "./ParentDashBoard"
+import ChildDashboard from "./ChildDashboard"
 
-const Dashboard = () => {
-  const [children, setChildren] = useState([])
-  const [selectedChild, setSelectedChild] = useState({})
+const Dashboard = (props) => {
 
-  const childrenList = children.map(child => {
-    return <ChildTile child={child} setSelectedChild={setSelectedChild} />
-  })
-
-  useEffect(() => {
-    getChildren(setChildren)
-  },[])
+  let mainContent = <ChildDashboard />
+  if (props.user.isParent) {
+    mainContent = <ParentDashboard />
+  }
 
   return (
     <div className="background-color">
@@ -23,7 +18,7 @@ const Dashboard = () => {
           src={config.dashboardTitleUrl}
         />
       </div>
-      {childrenList}
+      {mainContent}
     </div>
   )
 }
