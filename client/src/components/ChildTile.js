@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ChildTile = (props) => {
-
   
   const handleChildClick = (event) => {
     props.setSelectedChild(props.child)

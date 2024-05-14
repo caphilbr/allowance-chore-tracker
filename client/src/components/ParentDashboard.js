@@ -8,6 +8,7 @@ const ParentDashboard = () => {
   const [children, setChildren] = useState([])
   const [selectedChild, setSelectedChild] = useState({
     name: "",
+    chores: [],
     imageUrl: ""
   })
 
@@ -16,19 +17,23 @@ const ParentDashboard = () => {
   })
 
   useEffect(() => {
-    getChildren(setChildren)
+    const fetchedData = async () => {
+      const fetchedChildren = await getChildren()
+      setChildren(fetchedChildren)
+    }
+    fetchedData()
   },[])
 
   return (
     <div className="grid-x">
-      <div className="cell small-5 medium-4 large-3 child-list">
+      <div className="cell small-5 large-3 child-list">
         <h3 className="child-list-headers">Children</h3>
-        <p className="add-child-button">Add New Child</p>
+        <div className="add-child-button"><span className="button-styling">Add New Child</span></div>
         <div className="scroll">
           {childrenList}
         </div>
       </div>
-      <div className="cell small-7 medium-8 large-9">
+      <div className="cell small-7 large-9">
         <ChildDetails child={selectedChild}/>
       </div>
     </div>

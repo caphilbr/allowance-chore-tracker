@@ -13,10 +13,10 @@
   -moz-tab-size: 4;
   tab-size: 4;
   --lightest-color: #ffffff;
-  --light-color: #F7EEDD;
+  --light-color: #c1fffe;
   --medium-color: #ACE2E1;
   --dark-color: #49d0e8;
-  --darkest-color: #008DDA;
+  --darkest-color: #007dc1;
   --grey-color: rgb(170,170,170);
 }
 
@@ -78,7 +78,6 @@
 .landing-page-button {
   @extend .button-styling;
   margin: 1rem 1rem 0 1rem;
-  // height: 1.5rem;
 }
 
 .email, .password {
@@ -107,10 +106,13 @@
   margin: 0.5rem;
   text-align: center;
   width: 93%;
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--darkest-color);
 }
 
 .scroll {
-  max-height: 50rem;
+  max-height: 45rem;
   overflow-y: auto;
 }
 
@@ -124,10 +126,8 @@
 }
 
 .add-child-button {
-  @extend .button-styling;
-  margin: 1rem;
   text-align: center;
-  margin-right: 2rem;
+  padding: 1rem 2rem 1rem 1rem;
 }
 
 .circle-image {
@@ -135,5 +135,71 @@
   margin-bottom: 0.3rem;
   max-width: 100%;
   height: auto;
+  mask-image: radial-gradient(circle, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0) 90%);
+}
+
+.child-details {
+  background-color: var(--lightest-color);
+  border-radius: 0.5rem;
+  padding: 2rem 0.5rem;
+  margin: 4.6rem 1rem 0 1rem;
+}
+
+.select-child-message {
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px var(--grey-color);
+  margin-top: 10rem;
+  
+}
+
+.details-left {
+  text-align: center;  
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--darkest-color);
+}
+
+.details-left img {
+  border-radius: 1rem;
+}
+
+.details-right {
+  text-align: center;
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--darkest-color);
+}
+
+.balance-box {
+  border-radius: 0.5rem;
+  background-color: var(--darkest-color);
+  color: white;
+  padding: 1rem;
+}
+
+.balance-amount {
+  font-size: auto;
+  font-weight: bold;
+  margin: 0;
+}
+
+.chore-tile-small {
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  background-color: var(--light-color);
+  color: var(--darkest-color);
+}
+
+.chore-title-small {
+  font-weight: bold;
+  font-size: 125%;
+}
+
+.top-bar {
+  padding: 1rem 1rem;
 }
 
