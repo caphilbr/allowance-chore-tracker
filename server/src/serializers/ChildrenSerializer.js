@@ -9,7 +9,7 @@ class ChildrenSerializer {
       allowedFields.forEach(field => {
         serializedChild[field] = child[field]
       })
-      serializedChild.chores = await ChoreSerializer.parentDashboard(child)
+      serializedChild.chores = await ChoreSerializer.dashboard(child)
       return serializedChild
     }))
     return serializedChildren

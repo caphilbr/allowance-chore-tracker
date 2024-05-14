@@ -1,6 +1,6 @@
 class ChoreSerializer {
 
-  static parentDashboard = async (child) => {
+  static dashboard = async (child) => {
     const allowedFields = ["id", "name", "description", "amount", "dueDate"]
     const relatedChores = await child.$relatedQuery("chores")
     const serializedChores = relatedChores.map(chore => {

@@ -1,4 +1,4 @@
-const getChildren = async (setChildren) => {
+const getChildren = async () => {
   try {
     const response = await fetch("/api/v1/children")
     const parsedData = await response.json()
