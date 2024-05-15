@@ -4,7 +4,8 @@ import FormError from "../layout/FormError";
 
 const SignInForm = () => {
   const [userPayload, setUserPayload] = useState({ email: "", password: "" });
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldGoHome, setShouldGoHome] = useState(false);
+  const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
   const [errors, setErrors] = useState({});
   const [credentialsErrors, setCredentialsErrors] = useState("");
 
@@ -56,7 +57,7 @@ const SignInForm = () => {
           throw error;
         }
         const userData = await response.json();
-        setShouldRedirect(true);
+        setShouldGoDashboard(true);
       } catch (err) {
         console.error(`Error in fetch: ${err.message}`);
       }
@@ -70,12 +71,16 @@ const SignInForm = () => {
     });
   };
 
-  if (shouldRedirect) {
-    location.href = "/";
+  if (shouldGoDashboard) {
+    location.href = "/dashboard"
+  }
+  
+  if (shouldGoHome) {
+    location.href = "/"
   }
 
   const goHome = () => {
-    setShouldRedirect(true)
+    setShouldGoHome(true)
   }
 
   return (
