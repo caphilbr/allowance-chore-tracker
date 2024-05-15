@@ -13,7 +13,8 @@ const RegistrationForm = () => {
 
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldGoHome, setShouldGoHome] = useState(false)
+  const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
 
   const validateInput = (payload) => {
     setErrors({});
@@ -78,7 +79,7 @@ const RegistrationForm = () => {
           const error = new Error(errorMessage);
           throw error;
         }
-        return setShouldRedirect(true);
+        return setShouldGoDashboard(true);
       }
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
@@ -92,12 +93,16 @@ const RegistrationForm = () => {
     });
   };
 
-  if (shouldRedirect) {
-    location.href = "/";
+  if (shouldGoDashboard) {
+    location.href = "/dashboard"
+  }
+
+  if (shouldGoHome) {
+    location.href = "/"
   }
   
   const goHome = () => {
-    setShouldRedirect(true)
+    setShouldGoHome(true)
   }
 
   return (
