@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Dropzone from 'react-dropzone'
 
 const ProfilePhoto = (props) => {
@@ -52,7 +52,7 @@ const ProfilePhoto = (props) => {
       <>
         {/* <p><span className="">Preview</span></p>
         <img src={previewUrl} /> */}
-        <input type="submit" className="button-styling" value="Click to Disply New Photo"/>
+        <input type="submit" className="button-styling" value="Click to Display New Photo"/>
       </>
     )
     selectNewPhotoButton = null
