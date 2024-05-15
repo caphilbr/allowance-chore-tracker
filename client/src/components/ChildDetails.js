@@ -1,7 +1,7 @@
 import React from "react"
 import Balance from "./Balance"
 import ChoreTileSmall from "./ChoreTileSmall"
-import Photo from "./Photo"
+import ChildPhoto from "./ChildPhoto"
 
 const ChildDetails = (props) => {
   
@@ -14,7 +14,7 @@ const ChildDetails = (props) => {
       <h3 className="child-detail-header">{props.child.name}'s Details</h3>
       <div className="grid-x grid-margin-x grid-margin-y child-details scroll">
         <div className="cell small-6 details-left">
-          <Photo child={props.child} />
+          <ChildPhoto child={props.child} />
         </div>
         <div className="cell small-6 details-right">
           <Balance />

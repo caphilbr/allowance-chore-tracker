@@ -62,7 +62,6 @@ class Seeder {
         child = Math.floor(Math.random() * 5) + 3
       }
       const amt = parseFloat((30 * Math.random()).toFixed(2))
-      console.log(amt)
       const month = Math.floor(Math.random() * 12) + 1
       const day = Math.floor(Math.random() * 28) + 1
       const date = new Date(2024, month, day)
