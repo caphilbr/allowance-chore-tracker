@@ -1,6 +1,6 @@
 import React from "react"
 
-const Photo = (props) => {
+const ChildPhoto = (props) => {
 
   return(
     <>
@@ -12,4 +12,4 @@ const Photo = (props) => {
   )
 }
 
-export default Photo
+export default ChildPhoto

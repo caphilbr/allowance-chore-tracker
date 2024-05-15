@@ -1,9 +1,27 @@
 import express from "express";
 import { ValidationError } from "objection";
-
 import { User } from "../../../models/index.js";
+import uploadImage from "../../../services/upLoadImage.js";
 
 const usersRouter = new express.Router();
+
+usersRouter.post("/imageUrl", uploadImage.single("image"), async (req, res) => {
+  try {
+    const { body } = req
+    const data = {
+      ...body,
+      image: req.file.location,
+    }
+    const updatedUserRecord = {
+      ...req.user,
+      imageUrl: data.image
+    }
+    await User.query().findById(req.user.id).update(updatedUserRecord)
+    res.status(200).json({ imageUrl: req.user.imageUrl })
+  } catch(error) {
+    console.log(error)
+  }
+})
 
 usersRouter.post("/", async (req, res) => {
   const { email, password } = req.body;

@@ -3,7 +3,7 @@ import getChild from "../services/getChild";
 import Balance from "./Balance"
 import BalanceChart from "./BalanceChart";
 import ChoreTileRegular from "./ChoreTileRegular";
-import Photo from "./Photo";
+import ChildPhoto from "./ChildPhoto";
 
 const ChildDashboard = (props) => {
   const [child, setChild] = useState({
@@ -27,7 +27,7 @@ const ChildDashboard = (props) => {
   return (
     <div className="grid-x grid-margin-y align-center">
       <div className="cell small-8 medium-6 large-2 child-dash-top-left">
-        <Photo child={child} />
+        <ChildPhoto child={child} />
       </div>
       <div className="cell small-12 large-9 child-dash-top-right"> 
         <div className="grid-x">
