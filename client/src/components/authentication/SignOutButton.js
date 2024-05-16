@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SignOutButton = (props) => {
+const SignOutButton = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const signOut = async (event) => {
@@ -30,9 +30,9 @@ const SignOutButton = (props) => {
   }
 
   return (
-    <span className="landing-page-button" onClick={signOut}>
+    <p onClick={signOut}>
       Sign Out
-    </span>
+    </p>
   );
 };
 

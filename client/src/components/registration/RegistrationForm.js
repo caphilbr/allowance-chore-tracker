@@ -6,20 +6,30 @@ import translateServerErrors from "../../services/translateServerErrors";
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({
+    name: "",
+    familyName: "",
     email: "",
     password: "",
     passwordConfirmation: "",
+    isParent: false,
+    imageUrl: ""
   });
 
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
   const [shouldGoHome, setShouldGoHome] = useState(false)
-  const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
+  const [shouldGoProfile, setShouldGoProfile] = useState(false);
 
   const validateInput = (payload) => {
     setErrors({});
     setServerErrors({});
-    const { email, password, passwordConfirmation } = payload;
+    const {
+      email,
+      name,
+      password,
+      passwordConfirmation,
+      familyName
+    } = payload
     const emailRegexp = config.validation.email.regexp.emailRegex;
     let newErrors = {};
     if (!email.match(emailRegexp)) {
@@ -28,14 +38,24 @@ const RegistrationForm = () => {
         email: "is invalid",
       };
     }
-
     if (password.trim() == "") {
       newErrors = {
         ...newErrors,
         password: "is required",
       };
     }
-
+    if (name.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        name: "is required",
+      };
+    }
+    if (familyName.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        familyName: "is required",
+      };
+    }
     if (passwordConfirmation.trim() === "") {
       newErrors = {
         ...newErrors,
@@ -79,7 +99,7 @@ const RegistrationForm = () => {
           const error = new Error(errorMessage);
           throw error;
         }
-        return setShouldGoDashboard(true);
+        return setShouldGoProfile(true);
       }
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
@@ -93,8 +113,8 @@ const RegistrationForm = () => {
     });
   };
 
-  if (shouldGoDashboard) {
-    location.href = "/dashboard"
+  if (shouldGoProfile) {
+    location.href = "/profile"
   }
 
   if (shouldGoHome) {
@@ -104,14 +124,25 @@ const RegistrationForm = () => {
   const goHome = () => {
     setShouldGoHome(true)
   }
-
+  console.log(userPayload)
   return (
-    <div className="grid-container">
-      <p className="sign-in-up-title">Register</p>
+    <div className="sign-in-form">
+      <p className="sign-in-up-title">Register a new Family</p>
+      <p className="reg-notice">If you want to add a child or spouse to a an existing family, please login to add them instead of using this form</p>
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
         <label>
-          Email
+          Account Owner / Parent Name
+          <input type="text" name="name" value={userPayload.name} onChange={onInputChange} className="name" />
+          <FormError error={errors.name} />
+        </label>
+        <label>
+          Family Name
+          <input type="text" name="familyName" value={userPayload.familyName} onChange={onInputChange} className="name" />
+          <FormError error={errors.familyName} />
+        </label>
+        <label>
+          Parent Email
           <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="email" />
           <FormError error={errors.email} />
         </label>

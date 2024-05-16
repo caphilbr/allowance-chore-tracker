@@ -17,7 +17,7 @@ const Intro = (props) => {
     buttonsToShow = (
       <div className="cell intro-button-container">
         <span className="landing-page-button" onClick={showDashboard} >Show My Dashboard</span>
-        <span className="landing-page-button"><SignOutButton button-styling="landing-page-buttonx" /></span>
+        <span className="landing-page-button"><SignOutButton /></span>
       </div>
     )
   } else {

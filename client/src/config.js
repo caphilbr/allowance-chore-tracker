@@ -8,10 +8,9 @@ const config = {
       },
     },
   },
-  homeBackgroundUrl: "https://www.theagencyre.com/blog/wp-content/uploads/2017/07/Cleaning-Chores-scaled.jpg",
-  // homeBackgroundUrl: "https://allowance-chore-tracker.s3.amazonaws.com/landing-page-background.jpg",
-  titleFontUrl: "https://fontmeme.com/permalink/240513/74a5a9893db5669681de078dc67f3215.png", //CALL ME MAYBE
-  dashboardTitleUrl: "https://fontmeme.com/permalink/240513/30ae31db8534d183f2f7896145bd0775.png"
+  homeBackgroundUrl: "https://allowance-chore-tracker.s3.amazonaws.com/landing-background",
+  titleFontUrl: "https://allowance-chore-tracker.s3.amazonaws.com/chore-title",
+  dashboardTitleUrl: "https://allowance-chore-tracker.s3.amazonaws.com/dashboard-title"
 };
 
 export default config;
