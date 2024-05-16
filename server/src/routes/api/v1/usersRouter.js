@@ -5,6 +5,27 @@ import uploadImage from "../../../services/upLoadImage.js";
 
 const usersRouter = new express.Router();
 
+usersRouter.post("/imageUrl/:id", uploadImage.single("image"), async (req, res) => {
+  try {
+    const child = await User.query().findById(req.params.id)
+    const { body } = req
+    const data = {
+      ...body,
+      image: req.file.location,
+    }
+    
+    const updatedChildRecord = {
+      ...child,
+      imageUrl: data.image
+    }
+    await User.query().findById(req.params.id).update(updatedChildRecord)
+    res.status(200).json({ imageUrl: child.imageUrl })
+  } catch(error) {
+    console.log(error)
+  }
+})
+
+
 usersRouter.post("/imageUrl", uploadImage.single("image"), async (req, res) => {
   try {
     const { body } = req

@@ -6,6 +6,7 @@ import SignOutButton from "./authentication/SignOutButton"
 const Intro = (props) => {
   
   const [shouldRedirect, setShouldRedirect] = useState(false)
+  const [showMore, setShowMore] = useState(false)
 
   const showSignIn = () => props.setLandingDisplay('signin')
   const showSignUp = () => props.setLandingDisplay('signup')
@@ -14,16 +15,34 @@ const Intro = (props) => {
   let buttonsToShow
   if (props.user) {
     buttonsToShow = (
-      <div>
+      <div className="cell intro-button-container">
         <span className="landing-page-button" onClick={showDashboard} >Show My Dashboard</span>
-        <span><SignOutButton button-styling="landing-page-button" /></span>
+        <span className="landing-page-button"><SignOutButton button-styling="landing-page-buttonx" /></span>
       </div>
     )
   } else {
     buttonsToShow = (
-      <div>
+      <div className="cell intro-button-container">
         <span className="landing-page-button" onClick={showSignIn} >Sign In</span>
         <span className="landing-page-button" onClick={showSignUp} >Sign Up</span>
+      </div>
+    )
+  }
+
+  const toggleShowMore = () => setShowMore(!showMore)
+
+  let moreToShow = <span className="cell show-more-button" onClick={toggleShowMore}>▼ SHOW MORE ▼</span>
+  if (showMore) {
+    moreToShow = (
+      <div className="cell show-more-contents">
+        <ul className="more-list">
+          <li>Automatic recurring allowance payments</li>
+          <li>Assign chores to children, with payment when completed</li>
+          <li>Keep track of balances over time</li>
+          <li>Children have their own login and dashboard</li>
+          <li>Add as many children and spouses as you need</li>
+        </ul>
+        <span className="show-more-button" onClick={toggleShowMore}>▲ SHOW LESS ▲</span>
       </div>
     )
   }
@@ -33,14 +52,15 @@ const Intro = (props) => {
   }
 
   return (
-    <>
+    <div className="grid-x">
       <img
-        className="landing-title"
+        className="cell small-12 landing-title"
         src={config.titleFontUrl}
       />
-      <span className="landing-slogan">The easy way to manage <br/> chores and allowances</span>
+      <span className="cell small-12 landing-slogan">The easy way to manage <br/> chores and allowances</span>
+      {moreToShow}
       {buttonsToShow}
-    </>
+    </div>
   )
 }
 

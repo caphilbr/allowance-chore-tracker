@@ -26,9 +26,9 @@ const ParentDashboard = () => {
 
   return (
     <div className="grid-x">
-      <div className="cell small-5 large-3 child-list">
+      <div className="cell small-4 large-2 child-list">
         <h3 className="child-list-header">Children</h3>
-        <div className="add-child-button"><span className="button-styling">Add New Child</span></div>
+        <div className="add-child-button"><span className="button-styling">Add Child</span></div>
         <div className="scroll">
           {childrenList}
         </div>

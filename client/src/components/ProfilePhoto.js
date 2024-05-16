@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Dropzone from 'react-dropzone'
 
 const ProfilePhoto = (props) => {
-
   const [newPhotoUrl, setNewPhotoUrl] = useState({ image: {} })
   
-  const addPhoto = async (event) => {
-    event.preventDefault()
+  const addPhoto = async () => {
     const newPhotoBody = new FormData()
     newPhotoBody.append("image", newPhotoUrl.image)
-  
     try {
       const response = await fetch("/api/v1/users/imageUrl", {
         method: "POST",
@@ -21,11 +18,7 @@ const ProfilePhoto = (props) => {
       if (!response.ok) {
         throw new Error(`${response.status} (${response.statusText})`)
       }
-      const body = await response.json()
-      props.setCurrentUser({
-        ...props.user,
-        imageUrl: body.imageUrl
-      })
+      setNewPhotoUrl({ image: {} })
       location.href = "/profile"      
     } catch (error) {
       console.error(`Error in addPhoto Fetch: ${error.message}`)
@@ -39,41 +32,24 @@ const ProfilePhoto = (props) => {
     })
   }
   
-  let confirmationButton = null
-  let selectNewPhotoButton = (
-    <>
-      <p><span className="button-styling">Select New Photo</span></p>
-    </>
-  )
-  let imageElement = <img src={props.user.imageUrl}/>
-
   if (Object.keys(newPhotoUrl.image).length !== 0) {
-    confirmationButton = (
-      <>
-        {/* <p><span className="">Preview</span></p>
-        <img src={previewUrl} /> */}
-        <input type="submit" className="button-styling" value="Click to Disply New Photo"/>
-      </>
-    )
-    selectNewPhotoButton = null
-    imageElement = null
+    addPhoto()
   }
-  
+      
   return(
     <>
-      {imageElement}
-      <form onSubmit={addPhoto}>
+      <img src={props.user.imageUrl}/>
+      <form>
         <Dropzone onDrop={handleImageUpload}>
           {({ getRootProps, getInputProps }) => (
             <section>
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                {selectNewPhotoButton}
+                <p><span className="button-styling">Select New Photo</span></p>
               </div>
             </section>
           )}
         </Dropzone>
-        {confirmationButton}
       </form>
     </>
   )
