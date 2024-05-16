@@ -23,6 +23,7 @@ const LandingPage = (props) => {
       <img
         className="landing-page-background-img"
         src={config.homeBackgroundUrl}
+        // src="https://allowance-chore-tracker.s3.amazonaws.com/landing-page-background.jpg"
       />
       <div className="cell small-6 landing-page-main">
         {mainContent}

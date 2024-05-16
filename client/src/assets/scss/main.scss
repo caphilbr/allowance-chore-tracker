@@ -2,7 +2,6 @@
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
 
-// place global css here
 *,
 *::before,
 *::after {
@@ -56,7 +55,7 @@
   font-size: 28px;
   color: white;
   font-weight: bold;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   text-shadow: 2px 2px 2px var(--grey-color)
 }
 
@@ -77,7 +76,9 @@
 
 .landing-page-button {
   @extend .button-styling;
-  margin: 1rem 1rem 0 1rem;
+  margin: 1rem 1rem 1rem 1rem;
+  white-space: nowrap;
+  padding: 10px;
 }
 
 .email, .password {
@@ -125,7 +126,7 @@
   color: white;
   font-weight: bold;
   text-shadow: 2px 2px 2px var(--grey-color);
-  margin-right: 2rem;
+  margin-right: 1.5rem;
 }
 
 .add-child-button {
@@ -356,4 +357,32 @@
 
 .test {
   background-color: black;
+}
+
+.show-more-button {
+  margin-bottom: 4rem;
+  color: var(--lightest-color);
+  cursor: pointer;
+}
+
+.show-more-contents {
+  color: var(--lightest-color);
+  font-weight: bold;
+  justify-content: center; 
+}
+
+.intro-button-container {
+  padding: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+}
+
+.more-list {
+  margin: 0 auto 1rem auto;
+  max-width: 20rem;
+}
+
+.more-list li {
+  text-align: left;
 }
