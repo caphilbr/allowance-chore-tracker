@@ -20,19 +20,17 @@
 }
 
 .landing-page-background-img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: -1;
-  width: 100%;  /* Optional: Set width to 100% for full coverage */
-  // height: 100%; /* Optional: Set height to 100% for full coverage */
+  width: 45%;
+  height: auto;
+  display: block;
+  position: absolute;
+  border-radius: 0 0 2rem 0;
 }
 
 .background-color {
-  background-color: var(--dark-color); /* Replace with your desired color */
-  position: fixed;  /* Ensures the background covers the entire viewport */
+  background-color: #7bd1ed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -81,9 +79,16 @@
   padding: 10px;
 }
 
-.email, .password {
+.landing-page-button p {
+  padding: 0;
+  margin: 0;
+}
+
+
+.email, .password, .name {
   max-width: 30rem;
   margin: 0 auto 1rem auto;
+  background-color: var(--lightest-color);
 }
 
 .sign-in-up-title {
@@ -344,7 +349,7 @@
   text-align: center;
 }
 
-.profile-page-top-right {
+.profile-page-details {
   color: var(--darkest-color);
   background-color: var(--lightest-color);
   border-radius: 1rem;
@@ -385,4 +390,26 @@
 
 .more-list li {
   text-align: left;
+}
+
+.sign-in-form {
+  padding: 0 2rem;
+}
+
+.sign-in-form label {
+  color: var(--lightest-color);
+  font-weight: bold;
+  font-size: 110%;
+  text-shadow: 1px 1px 1px darkblue;
+}
+
+.reg-notice {
+  color: var(--lightest-color);
+  font-weight: bold;
+  font-style: italic;
+  font-size: 75%;
+}
+
+.top-bar-left a {
+  margin-right: 1rem;
 }

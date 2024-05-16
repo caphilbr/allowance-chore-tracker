@@ -23,9 +23,14 @@ const ParentDashboard = () => {
     }
     fetchedData()
   },[])
+  
+  const childCount = children.length
+  if (childCount >= 1 && selectedChild.name == "") {
+    setSelectedChild(children[0])
+  }
 
-  return (
-    <div className="grid-x">
+  let contentHolder = (
+    <>
       <div className="cell small-4 large-2 child-list">
         <h3 className="child-list-header">Children</h3>
         <div className="add-child-button"><span className="button-styling">Add Child</span></div>
@@ -34,8 +39,25 @@ const ParentDashboard = () => {
         </div>
       </div>
       <div className="cell small-7 large-9">
-        <ChildDetails child={selectedChild}/>
-      </div>
+        <ChildDetails child={selectedChild} />
+      </div>    
+    </>
+  )
+
+  if (childCount == 0) {
+    contentHolder = (
+      <>
+        <div className="cell child-list">
+          <h3 className="child-list-header">Begin by adding a child to the family...</h3>
+          <div className="add-child-button"><span className="button-styling">Add Child</span></div>
+        </div>
+      </>
+    )
+  }
+
+  return (
+    <div className="grid-x">
+      {contentHolder}
     </div>
   )
 }

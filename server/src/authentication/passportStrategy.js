@@ -2,9 +2,9 @@ import local from "passport-local";
 
 import User from "../models/User.js";
 
-const authHandler = (email, password, done) => {
+const authHandler = (name, password, done) => {
   User.query()
-    .findOne({ email })
+    .findOne({ name })
     .then((user) => {
       if (user) {
         if (user.authenticate(password)) {
@@ -13,8 +13,8 @@ const authHandler = (email, password, done) => {
 
         return done({ invalid: "password credentials" }, false);
       }
-      return done({ invalid: "email credentials" }, false);
+      return done({ invalid: "name credentials" }, false);
     });
 };
 
-export default new local.Strategy({ usernameField: "email" }, authHandler);
+export default new local.Strategy({ usernameField: "name" }, authHandler);

@@ -19,16 +19,17 @@ const LandingPage = (props) => {
   }  
 
   return (
-    <div className="background-color grid-x align-right">
+    <>
       <img
         className="landing-page-background-img"
         src={config.homeBackgroundUrl}
-        // src="https://allowance-chore-tracker.s3.amazonaws.com/landing-page-background.jpg"
       />
-      <div className="cell small-6 landing-page-main">
-        {mainContent}
+      <div className="background-color grid-x align-right">
+        <div className="cell small-6 landing-page-main">
+          {mainContent}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

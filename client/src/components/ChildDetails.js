@@ -28,7 +28,7 @@ const ChildDetails = (props) => {
 
   if (props.child.name === "") {
     details = (
-      <div className="">
+      <div>
         <p className="select-child-message">Select a child <br/> from the left</p>
       </div>
     )

@@ -10,9 +10,9 @@ const TopBar = (props) => {
     <div className="top-bar">
       <div className="top-bar-left">
         <Link className="button-styling" to="/">Home</Link>
+        <Link className="button-styling" to="/dashboard">My Dashboard</Link>
       </div>
       <div className="top-bar-right">
-        <SignOutButton className="button-styling" />
         <ProfileButton user={props.user} />
       </div>
     </div>

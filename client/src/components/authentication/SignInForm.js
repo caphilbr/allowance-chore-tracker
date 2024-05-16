@@ -3,7 +3,7 @@ import config from "../../config";
 import FormError from "../layout/FormError";
 
 const SignInForm = () => {
-  const [userPayload, setUserPayload] = useState({ email: "", password: "" });
+  const [userPayload, setUserPayload] = useState({ name: "", password: "" });
   const [shouldGoHome, setShouldGoHome] = useState(false);
   const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
   const [errors, setErrors] = useState({});
@@ -12,23 +12,20 @@ const SignInForm = () => {
   const validateInput = (payload) => {
     setErrors({});
     setCredentialsErrors("");
-    const { email, password } = payload;
-    const emailRegexp = config.validation.email.regexp.emailRegex;
+    const { name, password } = payload;
     let newErrors = {};
-    if (!email.match(emailRegexp)) {
+    if (name.trim() === "") {
       newErrors = {
         ...newErrors,
-        email: "is invalid",
+        name: "is required",
       };
     }
-
     if (password.trim() === "") {
       newErrors = {
         ...newErrors,
         password: "is required",
       };
     }
-
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
       return true;
@@ -40,6 +37,7 @@ const SignInForm = () => {
     event.preventDefault();
     if (validateInput(userPayload)) {
       try {
+        console.log('in the fetch with payload: ', userPayload)
         const response = await fetch("/api/v1/user-sessions", {
           method: "POST",
           body: JSON.stringify(userPayload),
@@ -84,16 +82,16 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="grid-container" onSubmit={onSubmit}>
+    <div className="sign-in-form" onSubmit={onSubmit}>
       <p className="sign-in-up-title">Sign In</p>
 
       {credentialsErrors ? <p className="callout alert">{credentialsErrors}</p> : null}
 
       <form>
         <label>
-          Email
-          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="email" />
-          <FormError error={errors.email} />
+          Name
+          <input type="text" name="name" value={userPayload.name} onChange={onInputChange} className="name" />
+          <FormError error={errors.name} />
         </label>
         <label>
           Password
