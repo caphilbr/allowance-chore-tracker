@@ -8,7 +8,6 @@ const ChildDetails = (props) => {
   const choreList = props.child.chores.map(chore => {
     return <ChoreTileSmall key={chore.id} chore={chore} />
   })
-  console.log(props.child)
   let details = (
     <>
       <h3 className="child-detail-header">{props.child.nickname}'s Details</h3>
@@ -17,7 +16,7 @@ const ChildDetails = (props) => {
           <ChildPhoto child={props.child} />
         </div>
         <div className="cell small-6 details-right">
-          <Balance />
+          <Balance child={props.child} />
         </div>
         <div className="cell grid-x grid-margin-x grid-margin-y">
           {choreList}

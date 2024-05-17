@@ -42,7 +42,6 @@ const emailInvite = async (emailAddress, inviteUrl) => {
       const sendEmailCommand = new SendEmailCommand(params);
       const sendEmailResponse = await sesClient.send(sendEmailCommand);
   
-      console.log("Email sent successfully from emailInvite v1:", sendEmailResponse.MessageId);
     } catch (error) {
       console.error("Error sending email:", error);
     }

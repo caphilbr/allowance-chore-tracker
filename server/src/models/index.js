@@ -3,5 +3,6 @@ const User = require("./User.js")
 const Chore = require("./Chore.js")
 const Family = require("./Family.js")
 const Invite = require("./Invite.js")
+const Transaction = require("./Transaction.js")
 
-module.exports = { User, Family, Chore, Invite };
+module.exports = { User, Family, Chore, Invite, Transaction };

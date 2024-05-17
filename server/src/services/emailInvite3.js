@@ -36,7 +36,6 @@ const emailInvite3 = async (emailAddress, inviteUrl) => {
   };
 
   const response = await transporter.sendMail(mailOptions);
-  console.log("emailInvite3: ", response)
 
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connection } from "../boot.js";
-import { Family, User, Chore } from "./../models/index.js"
+import { Family, User, Chore, Transaction } from "./../models/index.js"
 
 class Seeder {
   static async seed() {
@@ -54,11 +54,11 @@ class Seeder {
       })
     }
 
-    console.log("Seeding chores...")
-    for (let chore = 1; chore <= 25; chore++) {
+    console.log("Seeding chores & transactions...")
+    for (let chore = 1; chore <= 50; chore++) {
       const family = Math.floor(Math.random() * 2) + 1
       let child
-      if (chore >= 23) {
+      if (chore >= 45) {
         child = null
       } else {
         child = Math.floor(Math.random() * 5) + 3
@@ -67,6 +67,10 @@ class Seeder {
       const month = Math.floor(Math.random() * 12) + 1
       const day = Math.floor(Math.random() * 28) + 1
       const date = new Date(2024, month, day)
+      let isComplete = false
+      if (chore <= 15) {
+        isComplete = true
+      }
       
       await Chore.query().insert({
         name: `testChore${chore}`,
@@ -74,6 +78,30 @@ class Seeder {
         amount: amt,
         dueDate: date,
         familyId: family,
+        userId: child,
+        isComplete: isComplete
+      })
+
+      if (isComplete) {
+        await Transaction.query().insert({
+          amount: amt,
+          type: "chore",
+          choreId: chore,
+          userId: child
+        })
+      }
+    }
+
+    console.log("Seeding some more transactions...")
+    for (let xaction = 1; xaction <= 20; xaction++) {
+      const amt = parseFloat((60 * Math.random()).toFixed(2)) - 30
+
+      const child = Math.floor(Math.random() * 5) + 3
+
+      await Transaction.query().insert({
+        amount: amt,
+        type: "adhoc",
+        choreId: null,
         userId: child
       })
     }
