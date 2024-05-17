@@ -1,21 +1,14 @@
 import React, { useState } from "react";
-import config from "../../config";
 import ErrorList from "../layout/ErrorList";
 import FormError from "../layout/FormError";
 import translateServerErrors from "../../services/translateServerErrors";
 
-const RegistrationForm = () => {
+const InviteRegistrationForm = (props) => {
   const [userPayload, setUserPayload] = useState({
-    username: "(e.g. mother99)",
-    nickname: "",
-    familyName: "(e.g. The Smiths)",
-    email: "",
+    username: "",
     password: "",
-    passwordConfirmation: "",
-    isParent: true,
-    imageUrl: ""
+    passwordConfirmation: ""
   });
-
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
   const [shouldGoHome, setShouldGoHome] = useState(false)
@@ -25,48 +18,33 @@ const RegistrationForm = () => {
     setErrors({});
     setServerErrors({});
     const {
-      email,
       username,
       password,
       passwordConfirmation,
-      familyName
     } = payload
-    const emailRegexp = config.validation.email.regexp.emailRegex;
     let newErrors = {};
-    if (!email.match(emailRegexp)) {
-      newErrors = {
-        ...newErrors,
-        email: "is invalid",
-      };
-    }
     if (password.trim() == "") {
       newErrors = {
         ...newErrors,
-        password: "is required",
+        password: "Password is required",
       };
     }
     if (username.trim() == "") {
       newErrors = {
         ...newErrors,
-        username: "is required",
-      };
-    }
-    if (familyName.trim() == "") {
-      newErrors = {
-        ...newErrors,
-        familyName: "is required",
+        username: "Username is required",
       };
     }
     if (passwordConfirmation.trim() === "") {
       newErrors = {
         ...newErrors,
-        passwordConfirmation: "is required",
+        passwordConfirmation: "Password confirmation is required",
       };
     } else {
       if (passwordConfirmation !== password) {
         newErrors = {
           ...newErrors,
-          passwordConfirmation: "does not match password",
+          passwordConfirmation: "Does not match password",
         };
       }
     }
@@ -83,9 +61,18 @@ const RegistrationForm = () => {
 
     try {
       if (validateInput(userPayload)) {
-        const response = await fetch("/api/v1/users", {
+        const fullUserPayload = {
+          ...userPayload,
+          nickname: props.invite.nickname,
+          email: props.invite.email,
+          isParent: false,
+          imageUrl: "",
+          familyId: props.invite.familyId,
+          inviteId: props.invite.id
+        }
+        const response = await fetch("/api/v1/users/child", {
           method: "POST",
-          body: JSON.stringify(userPayload),
+          body: JSON.stringify(fullUserPayload),
           headers: new Headers({
             "Content-Type": "application/json",
           }),
@@ -114,6 +101,20 @@ const RegistrationForm = () => {
     });
   };
 
+  const goHome = () => {
+    setShouldGoHome(true)
+  }
+
+  const clearForm = () => {
+    setUserPayload({
+      username: "",
+      password: "",
+      passwordConfirmation: ""
+    })
+  }
+
+  const inviteMessage = `Your parent has already provided your email and nickname. Simply choose a username and password and you'll get access to Chore Champions!`
+
   if (shouldGoProfile) {
     location.href = "/profile"
   }
@@ -121,31 +122,16 @@ const RegistrationForm = () => {
   if (shouldGoHome) {
     location.href = "/"
   }
-  
-  const goHome = () => {
-    setShouldGoHome(true)
-  }
 
   return (
     <div className="sign-in-form">
-      <p className="sign-in-up-title">Register a new Family</p>
-      <p className="reg-notice">If you want to add a child or spouse to a an existing family, please login to add them instead of using this form</p>
+      <p className="invite-message">{inviteMessage}</p>
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
         <label>
           Username
           <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
           <FormError error={errors.username} />
-        </label>
-        <label>
-          Family Name
-          <input type="text" name="familyName" value={userPayload.familyName} onChange={onInputChange} className="form-field" />
-          <FormError error={errors.familyName} />
-        </label>
-        <label>
-          Parent Email
-          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="form-field" />
-          <FormError error={errors.email} />
         </label>
         <label>
           Password
@@ -171,9 +157,10 @@ const RegistrationForm = () => {
         </label>
         <input type="submit" className="landing-page-button" value="Register" />
         <span className="landing-page-button" onClick={goHome}>Home</span>
+        <span className="landing-page-button" onClick={clearForm}>Clear</span>
       </form>
     </div>
   );
 };
 
-export default RegistrationForm;
+export default InviteRegistrationForm;

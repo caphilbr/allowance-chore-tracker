@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import SignOutButton from "./authentication/SignOutButton"
+import SignOutButton from "../authentication/SignOutButton"
 
 const ProfileDropdown = () => {
 

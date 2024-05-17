@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ProfileButton from "../ProfileButton";
-
-import SignOutButton from "../authentication/SignOutButton";
+import ProfileButton from "./ProfileButton";
 
 const TopBar = (props) => {
 

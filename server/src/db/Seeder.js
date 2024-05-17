@@ -24,7 +24,8 @@ class Seeder {
       await User.query().insert({
         email: `testParent${parent}@email.com`,
         cryptedPassword: password,
-        name: `testParent${parent}`,
+        username: `testParent${parent}`,
+        nickname: `Mr/Mrs Parent #${parent}`,
         isParent: true,
         imageUrl: photos[parent-1],
         familyId: parent
@@ -45,7 +46,8 @@ class Seeder {
       await User.query().insert({
         email: `testChild${child}@email.com`,
         cryptedPassword: password,
-        name: `testChild${child}`,
+        username: `testChild${child}`,
+        nickname: `Mighty kid #${child}`,
         isParent: false,
         imageUrl: photos[child-1],
         familyId: family[child-1]

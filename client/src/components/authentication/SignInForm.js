@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import config from "../../config";
 import FormError from "../layout/FormError";
 
 const SignInForm = () => {
+
   const [userPayload, setUserPayload] = useState({ name: "", password: "" });
   const [shouldGoHome, setShouldGoHome] = useState(false);
   const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
@@ -12,18 +12,18 @@ const SignInForm = () => {
   const validateInput = (payload) => {
     setErrors({});
     setCredentialsErrors("");
-    const { name, password } = payload;
+    const { username, password } = payload;
     let newErrors = {};
-    if (name.trim() === "") {
+    if (username.trim() === "") {
       newErrors = {
         ...newErrors,
-        name: "is required",
+        username: "Username is required",
       };
     }
     if (password.trim() === "") {
       newErrors = {
         ...newErrors,
-        password: "is required",
+        password: "Email is required",
       };
     }
     setErrors(newErrors);
@@ -37,7 +37,6 @@ const SignInForm = () => {
     event.preventDefault();
     if (validateInput(userPayload)) {
       try {
-        console.log('in the fetch with payload: ', userPayload)
         const response = await fetch("/api/v1/user-sessions", {
           method: "POST",
           body: JSON.stringify(userPayload),
@@ -69,16 +68,16 @@ const SignInForm = () => {
     });
   };
 
+  const goHome = () => {
+    setShouldGoHome(true)
+  }
+
   if (shouldGoDashboard) {
     location.href = "/dashboard"
   }
   
   if (shouldGoHome) {
     location.href = "/"
-  }
-
-  const goHome = () => {
-    setShouldGoHome(true)
   }
 
   return (
@@ -89,9 +88,9 @@ const SignInForm = () => {
 
       <form>
         <label>
-          Name
-          <input type="text" name="name" value={userPayload.name} onChange={onInputChange} className="name" />
-          <FormError error={errors.name} />
+          Username
+          <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
+          <FormError error={errors.username} />
         </label>
         <label>
           Password
@@ -100,7 +99,7 @@ const SignInForm = () => {
             name="password"
             value={userPayload.password}
             onChange={onInputChange}
-            className="password"
+            className="form-field"
           />
           <FormError error={errors.password} />
         </label>

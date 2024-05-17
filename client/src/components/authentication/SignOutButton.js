@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const SignOutButton = () => {
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const signOut = async (event) => {
     event.preventDefault();
@@ -18,7 +18,7 @@ const SignOutButton = () => {
         throw error;
       }
       const respBody = await response.json();
-      setShouldRedirect(true);
+      setShouldRedirect(true)
       return { status: "ok" };
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);

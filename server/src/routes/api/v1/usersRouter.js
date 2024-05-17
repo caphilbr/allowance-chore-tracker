@@ -1,7 +1,8 @@
 import express from "express";
 import { ValidationError } from "objection";
-import { User, Family } from "../../../models/index.js";
+import { User, Family, Invite } from "../../../models/index.js";
 import uploadImage from "../../../services/upLoadImage.js";
+import config from "../../../config.js";
 
 const usersRouter = new express.Router();
 
@@ -25,7 +26,6 @@ usersRouter.post("/imageUrl/:id", uploadImage.single("image"), async (req, res) 
   }
 })
 
-
 usersRouter.post("/imageUrl", uploadImage.single("image"), async (req, res) => {
   try {
     const { body } = req
@@ -44,17 +44,46 @@ usersRouter.post("/imageUrl", uploadImage.single("image"), async (req, res) => {
   }
 })
 
+usersRouter.post("/child", async (req, res) => {
+  const { inviteId } = req.body
+  let childPayload = req.body
+  delete childPayload.passwordConfirmation
+  delete childPayload.inviteId
+  if (childPayload.imageUrl == "") {
+    childPayload.imageUrl = config.defaultProfilePic
+  }
+  try {
+    const persistedUser = await User.query().insertAndFetch(childPayload);
+    const invite = await Invite.query().findById(inviteId).patch({ wasAccepted: true })
+    return req.login(persistedUser, () => {
+      return res.status(201).json({ user: persistedUser });
+    });
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return res.status(422).json({ errors: error.data });
+    }
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 usersRouter.post("/", async (req, res) => {
-  // clean input service function, where we can default the imageUrl and make this below a 'const' again
-  let { email, name, imageUrl, familyName, password } = req.body;
-  const isParent = true
+  let { email, username, imageUrl, familyName, password, nickname, isParent } = req.body;
   if (imageUrl == "") {
-    imageUrl = "https://allowance-chore-tracker.s3.amazonaws.com/default-profile-pic"
+    imageUrl = config.defaultProfilePic
   }
   try {
     const newFamily = await Family.query().insertAndFetch({ name: familyName })
     const familyId = newFamily.id 
-    const persistedUser = await User.query().insertAndFetch({ email, password, name, isParent, imageUrl, familyId });
+    const persistedUser = await User.query().insertAndFetch({
+      email,
+      username,
+      imageUrl,
+      familyId,
+      password,
+      nickname,
+      isParent,
+      familyId
+    });
     return req.login(persistedUser, () => {
       return res.status(201).json({ user: persistedUser });
     });
