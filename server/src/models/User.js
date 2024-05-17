@@ -6,7 +6,7 @@ const Model = require("./Model");
 const saltRounds = 10;
 
 const uniqueFunc = unique({
-  fields: ["name"],
+  fields: ["username"],
   identifiers: ["id"],
 });
 
@@ -26,23 +26,22 @@ class User extends uniqueFunc(Model) {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["email", "name"],
+      required: ["username"],
 
       properties: {
         email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
         cryptedPassword: { type: "string" },
-        name: { type: "string", minLength: 2, maxLength: 30 },
-        imageUrl: { type: "string" }
+        username: { type: "string", minLength: 2, maxLength: 30 }
       },
     };
   }
 
   $beforeInsert() {
-    return this.$checkUniqueness("name");
+    return this.$checkUniqueness("username");
   }
 
   $beforeUpdate() {
-    return this.$checkUniqueness("name");
+    return this.$checkUniqueness("username");
   }
 
   $formatJson(json) {

@@ -6,12 +6,13 @@ import translateServerErrors from "../../services/translateServerErrors";
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({
-    name: "",
-    familyName: "",
+    username: "(e.g. mother99)",
+    nickname: "",
+    familyName: "(e.g. The Smiths)",
     email: "",
     password: "",
     passwordConfirmation: "",
-    isParent: false,
+    isParent: true,
     imageUrl: ""
   });
 
@@ -25,7 +26,7 @@ const RegistrationForm = () => {
     setServerErrors({});
     const {
       email,
-      name,
+      username,
       password,
       passwordConfirmation,
       familyName
@@ -44,10 +45,10 @@ const RegistrationForm = () => {
         password: "is required",
       };
     }
-    if (name.trim() == "") {
+    if (username.trim() == "") {
       newErrors = {
         ...newErrors,
-        name: "is required",
+        username: "is required",
       };
     }
     if (familyName.trim() == "") {
@@ -124,7 +125,7 @@ const RegistrationForm = () => {
   const goHome = () => {
     setShouldGoHome(true)
   }
-  console.log(userPayload)
+
   return (
     <div className="sign-in-form">
       <p className="sign-in-up-title">Register a new Family</p>
@@ -132,18 +133,18 @@ const RegistrationForm = () => {
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
         <label>
-          Account Owner / Parent Name
-          <input type="text" name="name" value={userPayload.name} onChange={onInputChange} className="name" />
-          <FormError error={errors.name} />
+          Username
+          <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
+          <FormError error={errors.username} />
         </label>
         <label>
           Family Name
-          <input type="text" name="familyName" value={userPayload.familyName} onChange={onInputChange} className="name" />
+          <input type="text" name="familyName" value={userPayload.familyName} onChange={onInputChange} className="form-field" />
           <FormError error={errors.familyName} />
         </label>
         <label>
           Parent Email
-          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="email" />
+          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="form-field" />
           <FormError error={errors.email} />
         </label>
         <label>
@@ -153,7 +154,7 @@ const RegistrationForm = () => {
             name="password"
             value={userPayload.password}
             onChange={onInputChange}
-            className="password"
+            className="form-field"
           />
           <FormError error={errors.password} />
         </label>
@@ -164,7 +165,7 @@ const RegistrationForm = () => {
             name="passwordConfirmation"
             value={userPayload.passwordConfirmation}
             onChange={onInputChange}
-            className="password"
+            className="form-field"
           />
           <FormError error={errors.passwordConfirmation} />
         </label>

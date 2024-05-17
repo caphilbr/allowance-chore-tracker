@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import config from "../../config";
 import FormError from "../layout/FormError";
 
 const SignInForm = () => {
@@ -12,12 +11,12 @@ const SignInForm = () => {
   const validateInput = (payload) => {
     setErrors({});
     setCredentialsErrors("");
-    const { name, password } = payload;
+    const { username, password } = payload;
     let newErrors = {};
-    if (name.trim() === "") {
+    if (username.trim() === "") {
       newErrors = {
         ...newErrors,
-        name: "is required",
+        username: "is required",
       };
     }
     if (password.trim() === "") {
@@ -37,7 +36,6 @@ const SignInForm = () => {
     event.preventDefault();
     if (validateInput(userPayload)) {
       try {
-        console.log('in the fetch with payload: ', userPayload)
         const response = await fetch("/api/v1/user-sessions", {
           method: "POST",
           body: JSON.stringify(userPayload),
@@ -89,9 +87,9 @@ const SignInForm = () => {
 
       <form>
         <label>
-          Name
-          <input type="text" name="name" value={userPayload.name} onChange={onInputChange} className="name" />
-          <FormError error={errors.name} />
+          Username
+          <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
+          <FormError error={errors.username} />
         </label>
         <label>
           Password
@@ -100,7 +98,7 @@ const SignInForm = () => {
             name="password"
             value={userPayload.password}
             onChange={onInputChange}
-            className="password"
+            className="form-field"
           />
           <FormError error={errors.password} />
         </label>

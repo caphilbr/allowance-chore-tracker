@@ -46,15 +46,23 @@ usersRouter.post("/imageUrl", uploadImage.single("image"), async (req, res) => {
 
 usersRouter.post("/", async (req, res) => {
   // clean input service function, where we can default the imageUrl and make this below a 'const' again
-  let { email, name, imageUrl, familyName, password } = req.body;
-  const isParent = true
+  let { email, username, imageUrl, familyName, password, nickname, isParent } = req.body;
   if (imageUrl == "") {
     imageUrl = "https://allowance-chore-tracker.s3.amazonaws.com/default-profile-pic"
   }
   try {
     const newFamily = await Family.query().insertAndFetch({ name: familyName })
     const familyId = newFamily.id 
-    const persistedUser = await User.query().insertAndFetch({ email, password, name, isParent, imageUrl, familyId });
+    const persistedUser = await User.query().insertAndFetch({
+      email,
+      username,
+      imageUrl,
+      familyId,
+      password,
+      nickname,
+      isParent,
+      familyId
+    });
     return req.login(persistedUser, () => {
       return res.status(201).json({ user: persistedUser });
     });

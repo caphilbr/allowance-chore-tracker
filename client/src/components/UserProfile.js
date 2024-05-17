@@ -1,6 +1,8 @@
 import React from "react";
 import TopBar from "./layout/TopBar";
 import ProfilePhoto from "./ProfilePhoto";
+import EditNickname from "./EditNickname";
+import EditEmail from "./EditEmail";
 
 
 const UserProfile = (props) => {
@@ -13,9 +15,10 @@ const UserProfile = (props) => {
           <ProfilePhoto user={props.user} setCurrentUser={props.setCurrentUser} />
         </div>
         <div className="cell small-12 large-8 profile-page-details">
-          <h4>Username: {props.user.name}</h4>
-          <h4>Email: {props.user.email}</h4>
-          <h4>User Type: {props.user.isParent ? "Parent" : "Child"}</h4>
+          <h4><span>Username: {props.user.username}</span></h4>
+          <h4><EditNickname /><span>Nickname: {props.user.nickname}</span></h4>
+          <h4><EditEmail /><span>Email: {props.user.email}</span></h4>
+          <h4><span>User Type: {props.user.isParent ? "Parent" : "Child"}</span></h4>
         </div>
       </div>
     </>

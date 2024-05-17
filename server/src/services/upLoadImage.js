@@ -11,10 +11,6 @@ AWS.config.update({
 
 const s3 = new AWS.S3()
 
-console.log("testing: ", config.s3Bucket)
-
-console.log('bucket: ', config.s3Bucket.name)
-
 const uploadImage = multer({
   storage: multerS3({
     s3: s3,
