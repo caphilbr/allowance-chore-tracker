@@ -25,8 +25,7 @@ const emailInvite2 = async (emailAddress, nickname, inviteUrl, code) => {
   });
 
   const emailHTML = `
-    <h2>You have been invited to join CHORE CHAMPIONS!</h2>
-    <h4>${nickname}, you have been invited to join CHORE CHAMPIONS!</H4>
+    <h2>${nickname}, you have been invited to join CHORE CHAMPIONS!</h2>
     <h4>The easy way to manage chores and allowances</h4>
     <a href="${inviteUrl}">CLICK HERE TO ACCEPT THE INVITE & JOIN</a>
     <p>You will need this code to join:</p>

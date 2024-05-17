@@ -15,10 +15,6 @@ const ParentDashboard = () => {
     imageUrl: ""
   })
 
-  const childrenList = children.map(child => {
-    return <ChildTile key={child.id} child={child} setSelectedChild={setSelectedChild} />
-  })
-
   useEffect(() => {
     const fetchedData = async () => {
       const fetchedChildren = await getChildren()
@@ -26,10 +22,27 @@ const ParentDashboard = () => {
     }
     fetchedData()
   },[])
+
+    
+  const toggleAddChild = () => {
+    setShowAddChild(!showAddChild)
+  }
+
+  const childrenList = children.map(child => {
+    return <ChildTile key={child.id} child={child} setSelectedChild={setSelectedChild} />
+  })
   
   const childCount = children.length
   if (childCount >= 1 && selectedChild.name == "") {
     setSelectedChild(children[0])
+  }
+  
+  let emailMessage = ""
+  if (emailStatus === "success") {
+    emailMessage = <p className="email-message">Email invite successfully sent!</p>
+  }
+  if (emailStatus === "error") {
+    emailMessage = <p className="email-message">ERROR in sending email invite</p>
   }
 
   let contentHolder = (
@@ -42,23 +55,14 @@ const ParentDashboard = () => {
         </div>
       </div>
       <div className="cell small-7 large-9">
-        <ChildDetails child={selectedChild} />
+        {showAddChild ?
+          <AddChild showAddChild={showAddChild} setShowAddChild={setShowAddChild} setEmailStatus={setEmailStatus} />
+        :
+          <ChildDetails child={selectedChild} />
+        }
       </div>    
     </>
   )
-
-  
-  let emailMessage = ""
-  if (emailStatus === "success") {
-    emailMessage = <p className="email-message">Email invite successfully sent!</p>
-  }
-  if (emailStatus === "error") {
-    emailMessage = <p className="email-message">ERROR in sending email invite</p>
-  }
-  
-  const toggleAddChild = () => {
-    setShowAddChild(!showAddChild)
-  }
   
   if (childCount == 0) {
     contentHolder = (
