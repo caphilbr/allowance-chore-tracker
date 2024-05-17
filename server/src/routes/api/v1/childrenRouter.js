@@ -1,17 +1,13 @@
 import express from "express";
 import { Family } from "./../../../models/index.js"
 import ChildrenSerializer from "../../../serializers/ChildrenSerializer.js";
-import ChoreSerializer from "../../../serializers/ChoreSerializer.js";
 
 const childrenRouter = new express.Router();
 
 childrenRouter.get("/current", async (req, res) => {
   try {
-    const child = req.user
-    /////////
-    // serialize the Child here
-    /////////
-    child.chores = await ChoreSerializer.dashboard(child)
+    const rawChild = req.user
+    const child = await ChildrenSerializer.childDashboard(rawChild)
     res.status(200).json({ child })
   } catch (error) {
     console.log(error)

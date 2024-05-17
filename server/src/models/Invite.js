@@ -44,7 +44,7 @@ class Invite extends Model {
       }
       return { success: true }
     } catch(error) {
-      console.log()
+      console.log(error)
       return { success: false, errorMessage: error.message }
     }
   }

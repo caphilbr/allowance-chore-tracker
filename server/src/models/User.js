@@ -54,8 +54,17 @@ class User extends uniqueFunc(Model) {
     return serializedJson;
   }
 
+  async balance() {
+    let total = 0
+    const transactionArray = await this.$relatedQuery('transactions')
+    transactionArray.forEach(transaction => {
+      total += parseFloat(transaction.amount)
+    })
+    return total
+  }
+
   static relationMappings() {
-    const { Chore, Family } = require("./index.js")
+    const { Chore, Family, Transaction } = require("./index.js")
     return{
       chores: {
         relation: Model.HasManyRelation,
@@ -71,6 +80,14 @@ class User extends uniqueFunc(Model) {
         join: {
           from: "users.familyId",
           to: "families.id"
+        }
+      },
+      transactions: {
+        relation: Model.HasManyRelation,
+        modelClass: Transaction,
+        join: {
+          from: "users.id",
+          to: "transactions.userId"
         }
       }
     }

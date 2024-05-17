@@ -35,7 +35,6 @@ const App = () => {
     dashBoardContent = <p>Loading...</p>
   }
 
-
   return (
     <Router>
       <Switch>

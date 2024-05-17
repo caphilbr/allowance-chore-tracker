@@ -6,10 +6,12 @@ import ChoreTileRegular from "./ChoreTileRegular";
 import ChildPhoto from "./ChildPhoto";
 
 const ChildDashboard = (props) => {
+
   const [child, setChild] = useState({
     name: "",
     chores: [],
-    imageUrl: ""
+    imageUrl: "",
+    balance: 0
   })
 
   const choreList = child.chores.map(chore => {
