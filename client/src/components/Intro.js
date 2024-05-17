@@ -11,6 +11,8 @@ const Intro = (props) => {
   const showSignIn = () => props.setLandingDisplay('signin')
   const showSignUp = () => props.setLandingDisplay('signup')
   const showDashboard = () => setShouldRedirect(true)
+  const showInvite = () => location.href = "/invite"
+  const toggleShowMore = () => setShowMore(!showMore)
   
   let buttonsToShow
   if (props.user) {
@@ -24,12 +26,11 @@ const Intro = (props) => {
     buttonsToShow = (
       <div className="cell intro-button-container">
         <span className="landing-page-button" onClick={showSignIn} >Sign In</span>
-        <span className="landing-page-button" onClick={showSignUp} >Sign Up</span>
+        <span className="landing-page-button" onClick={showSignUp} >Create A New Family</span>
+        <span className="landing-page-button" onClick={showInvite} >I Have An Invite</span>
       </div>
     )
   }
-
-  const toggleShowMore = () => setShowMore(!showMore)
 
   let moreToShow = <span className="cell show-more-button" onClick={toggleShowMore}>▼ SHOW MORE ▼</span>
   if (showMore) {

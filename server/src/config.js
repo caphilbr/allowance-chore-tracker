@@ -7,10 +7,12 @@ const development = {
   awsSecret: { key: process.env.AWS_SECRET_ACCESS_KEY },
   s3Bucket: { name: process.env.S3_BUCKET_DEVELOPMENT },
   email: { address: process.env.EMAIL_ADDRESS, password: process.env.EMAIL_PASSWORD },
+  smtp: { username: process.env.SMTP_USERNAME, password: process.env.SMTP_PASSWORD },
   nodeEnv: getNodeEnv(),
   session: { secret: process.env.SESSION_SECRET },
   databaseUrl: getDatabaseUrl(getNodeEnv()),
   web: { host: process.env.HOST || "0.0.0.0", port: process.env.PORT || 3000 },
+  defaultProfilePic: "https://allowance-chore-tracker.s3.amazonaws.com/default-profile-pic"
 };
 
 const test = { ...development }

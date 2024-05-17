@@ -9,7 +9,7 @@ const emailInvite = async (emailAddress, inviteUrl) => {
   const AWS_REGION = "us-east-1"
   const subject = 'Chore Champion Invite'
   const bodyHtml = `
-    <h2>You have been invited to join CHORE CHAMPIONS!</h2>
+    <h2>From AWS SendMail: You have been invited to join CHORE CHAMPIONS!</h2>
     <h4>The easy way to manage chores and allowances</h4>
     <a href="${inviteUrl}">CLICK HERE TO JOIN</a>
   `

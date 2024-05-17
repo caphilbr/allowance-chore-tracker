@@ -8,6 +8,7 @@ import TopBar from "./layout/TopBar";
 import Dashboard from "./Dashboard";
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute"
 import UserProfile from "./UserProfile";
+import Invite from "./authentication/Invite";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined)
@@ -43,6 +44,9 @@ const App = () => {
         </Route>
         <Route exact path="/dashboard">
           {dashBoardContent}
+        </Route>
+        <Route exact path="/invite">
+          <Invite user={currentUser} />
         </Route>
         <AuthenticatedRoute
           exact path="/profile"

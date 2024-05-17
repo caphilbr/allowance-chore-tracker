@@ -5,14 +5,15 @@ import config from "./../config.js"
 const AddChild = (props) => {
 
   const [userPayload, setUserPayload] = useState({
-    email: ""
+    email: "",
+    nickname: ""
   })
   const [errors, setErrors] = useState({});
   const [showWaiting, setShowWaiting] = useState(false)
 
   const validateInput = (payload) => {
     setErrors({});
-    const { email } = payload;
+    const { email, nickname } = payload;
     const emailRegexp = config.validation.email.regexp.emailRegex;
     let newErrors = {};
     if (!email.match(emailRegexp)) {
@@ -20,7 +21,13 @@ const AddChild = (props) => {
         ...newErrors,
         email: "Email is invalid",
       };
-    } 
+    }
+    if (nickname.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        nickname: "Nickname is required",
+      };
+    }
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
       return true;
@@ -33,15 +40,17 @@ const AddChild = (props) => {
     if(validateInput(userPayload)) {
       try {
         setShowWaiting(true)
-        const inviteUrl = "https://www.cyclingnews.com"
-        const emailPayload = {...userPayload, inviteUrl: inviteUrl}
-        const response = await fetch("/api/v1/email", {
+        const response = await fetch("/api/v1/invite/email", {
           method: "POST",
-          body: JSON.stringify(emailPayload),
+          body: JSON.stringify(userPayload),
           headers: new Headers({
             "Content-Type": "application/json",
           }),
         });
+        if (!response.ok) {
+          const newError = new Error(response.statusText)
+          throw(newError)
+        }
         setShowWaiting(false)
         props.setEmailStatus('success')
         props.setShowAddChild(!props.showAddChild)
@@ -66,13 +75,16 @@ const AddChild = (props) => {
     props.setShowAddChild(!props.showAddChild)
   }
 
-
   return (
     <div className="invite-form">
       <form onSubmit={handleSubmit}>
         <label>Child Email
           <input type="text" name="email" value={userPayload.email} onChange={handleChange} className="form-field" />
           <FormError error={errors.email} />
+        </label>
+        <label>Child Name
+          <input type="text" name="nickname" value={userPayload.nickname} onChange={handleChange} className="form-field" />
+          <FormError error={errors.nickname} />
         </label>
         {showWaiting ? <p className="email-message">Sending email...</p> : null}
         <input type="submit" className="landing-page-button" value="Invite Child" />

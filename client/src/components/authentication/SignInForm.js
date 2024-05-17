@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormError from "../layout/FormError";
 
 const SignInForm = () => {
+
   const [userPayload, setUserPayload] = useState({ name: "", password: "" });
   const [shouldGoHome, setShouldGoHome] = useState(false);
   const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
@@ -16,13 +17,13 @@ const SignInForm = () => {
     if (username.trim() === "") {
       newErrors = {
         ...newErrors,
-        username: "is required",
+        username: "Username is required",
       };
     }
     if (password.trim() === "") {
       newErrors = {
         ...newErrors,
-        password: "is required",
+        password: "Email is required",
       };
     }
     setErrors(newErrors);
@@ -67,16 +68,16 @@ const SignInForm = () => {
     });
   };
 
+  const goHome = () => {
+    setShouldGoHome(true)
+  }
+
   if (shouldGoDashboard) {
     location.href = "/dashboard"
   }
   
   if (shouldGoHome) {
     location.href = "/"
-  }
-
-  const goHome = () => {
-    setShouldGoHome(true)
   }
 
   return (

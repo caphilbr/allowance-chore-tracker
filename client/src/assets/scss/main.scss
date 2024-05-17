@@ -386,6 +386,7 @@
   color: var(--lightest-color);
   font-weight: bold;
   justify-content: center; 
+  margin: 0 0.5rem;
 }
 
 .intro-button-container {
@@ -447,4 +448,12 @@
 .form-error {
   color: var(--lightest-color);
   font-size: 100%;
+}
+
+.invite-message {
+  color: var(--lightest-color);
+  font-weight: bold;
+  font-size: 125%;
+  justify-content: center; 
+  margin: 1rem 0.5rem 2rem 0.5rem;
 }
