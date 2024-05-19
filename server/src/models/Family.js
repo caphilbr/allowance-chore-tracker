@@ -17,7 +17,7 @@ class Family extends Model {
   }
 
   static relationMappings() {
-    const { Chore, User } = require("./index.js")
+    const { Chore, User, Allowance } = require("./index.js")
     return{
       chores: {
         relation: Model.HasManyRelation,
@@ -33,6 +33,14 @@ class Family extends Model {
         join: {
           from: "families.id",
           to: "users.familyId"
+        }
+      },
+      allowances: {
+        relation: Model.HasManyRelation,
+        modelClass: Allowance,
+        join: {
+          from: "families.id",
+          to: "allowances.familyId"
         }
       }
     }

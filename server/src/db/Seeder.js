@@ -1,6 +1,14 @@
 /* eslint-disable no-console */
 import { connection } from "../boot.js";
-import { Family, User, Chore, Transaction } from "./../models/index.js"
+import currency from "currency.js"
+
+import {
+  Family,
+  User,
+  Chore,
+  Transaction,
+  Allowance,
+} from "./../models/index.js"
 
 class Seeder {
   static async seed() {
@@ -63,7 +71,7 @@ class Seeder {
       } else {
         child = Math.floor(Math.random() * 5) + 3
       }
-      const amt = parseFloat((30 * Math.random()).toFixed(2))
+      const amt = currency(30 * Math.random())
       const month = Math.floor(Math.random() * 12) + 1
       const day = Math.floor(Math.random() * 28) + 1
       const date = new Date(2024, month, day)
@@ -83,9 +91,13 @@ class Seeder {
       })
 
       if (isComplete) {
+        const month = Math.floor(Math.random() * 12) + 1
+        const day = Math.floor(Math.random() * 28) + 1
+        const date = new Date(2023, month, day)
         await Transaction.query().insert({
           amount: amt,
           type: "chore",
+          paymentDate: date,
           choreId: chore,
           userId: child
         })
@@ -94,17 +106,52 @@ class Seeder {
 
     console.log("Seeding some more transactions...")
     for (let xaction = 1; xaction <= 20; xaction++) {
-      const amt = parseFloat((60 * Math.random()).toFixed(2)) - 30
-
+      const amt = currency(60 * Math.random() - 30)
+      const month = Math.floor(Math.random() * 12) + 1
+      const day = Math.floor(Math.random() * 28) + 1
+      const date = new Date(2023, month, day)
       const child = Math.floor(Math.random() * 5) + 3
 
       await Transaction.query().insert({
         amount: amt,
         type: "adhoc",
+        paymentDate: date,
         choreId: null,
         userId: child
       })
     }
+
+    
+    console.log("Seeding allowances...")
+    for (let child = 4; child <= 7; child++) {
+      const amt = currency((5 + 20 * Math.random()).toFixed(0))
+      const month = Math.floor(Math.random() * 12) + 1
+      const day = Math.floor(Math.random() * 28) + 1
+      const firstDate = new Date(2023, month, day)
+      const lastDate = new Date(2025, month, day)
+      let frequency = "weekly"
+      if (child === 3 || child === 5) {
+        frequency = "monthly"
+      }
+      const newAllowance = {
+        amount: amt,
+        firstDate: firstDate,
+        lastDate: lastDate,
+        frequency: frequency,
+        userId: child,
+        familyId: 2
+      }
+      await Allowance.query().insert(newAllowance)
+    }
+    
+    console.log("Generating pending allowance transactions...")
+    for (let allowance = 1; allowance <= 4; allowance++) {
+      const currentAllowance = await Allowance.query().findById(allowance)
+      await currentAllowance.generatePendingAllowance()
+    }
+
+
+
 
     console.log("Done!");
     await connection.destroy();

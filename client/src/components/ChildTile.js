@@ -8,7 +8,7 @@ const ChildTile = (props) => {
 
   return (
     <div onClick={handleChildClick} className="cell child-tile">
-      <p>{props.child.name}</p>
+      <p>{props.child.nickname}</p>
       <img src={props.child.imageUrl} className="circle-image"/>
     </div>
   )

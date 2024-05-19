@@ -4,7 +4,7 @@ import ChoreTileSmall from "./ChoreTileSmall"
 import ChildPhoto from "./ChildPhoto"
 
 const ChildDetails = (props) => {
-  
+
   const choreList = props.child.chores.map(chore => {
     return <ChoreTileSmall key={chore.id} chore={chore} />
   })
@@ -25,7 +25,7 @@ const ChildDetails = (props) => {
     </>
   )
 
-  if (props.child.name === "") {
+  if (props.child.username === "") {
     details = (
       <div>
         <p className="select-child-message">Select a child <br/> from the left</p>

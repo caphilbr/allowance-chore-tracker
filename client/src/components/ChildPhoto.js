@@ -40,7 +40,7 @@ const ChildPhoto = (props) => {
   return(
     <>
       <img src={props.child.imageUrl}/>
-      <p>{props.child.name}</p>
+      <p>{props.child.nickname}</p>
       <form>
         <Dropzone onDrop={handleImageUpload}>
           {({ getRootProps, getInputProps }) => (

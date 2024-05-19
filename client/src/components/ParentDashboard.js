@@ -10,7 +10,8 @@ const ParentDashboard = () => {
   const [emailStatus, setEmailStatus] = useState("")
   const [children, setChildren] = useState([])
   const [selectedChild, setSelectedChild] = useState({
-    name: "",
+    username: "",
+    nickname: "",
     chores: [],
     imageUrl: ""
   })
@@ -33,7 +34,7 @@ const ParentDashboard = () => {
   })
   
   const childCount = children.length
-  if (childCount >= 1 && selectedChild.name == "") {
+  if (childCount >= 1 && selectedChild.username == "") {
     setSelectedChild(children[0])
   }
   
