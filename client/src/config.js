@@ -11,6 +11,16 @@ const config = {
       regexp: {
         codeRegex: /^\d{4}$/,
       }
+    },
+    currency: {
+      regexp: {
+        currencyRegex: /^\$?(\d+(,\d{3})*(\.\d{1,2})?)?$/,
+      }
+    },
+    date: {
+      regexp: {
+        dateRegex: /^\d{4}-\d{2}-\d{2}$/,
+      }
     }
   },
   homeBackgroundUrl: "https://allowance-chore-tracker.s3.amazonaws.com/landing-background",

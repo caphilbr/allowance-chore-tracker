@@ -10,6 +10,7 @@ const ChildDashboard = (props) => {
   const [child, setChild] = useState({
     name: "",
     chores: [],
+    transactions: [],
     imageUrl: "",
     balance: 0
   })

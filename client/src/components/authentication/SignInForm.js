@@ -3,7 +3,7 @@ import FormError from "../layout/FormError";
 
 const SignInForm = () => {
 
-  const [userPayload, setUserPayload] = useState({ name: "", password: "" });
+  const [userPayload, setUserPayload] = useState({ username: "", password: "" });
   const [shouldGoHome, setShouldGoHome] = useState(false);
   const [shouldGoDashboard, setShouldGoDashboard] = useState(false);
   const [errors, setErrors] = useState({});

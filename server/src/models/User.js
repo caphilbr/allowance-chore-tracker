@@ -2,6 +2,7 @@
 const Bcrypt = require("bcrypt");
 const unique = require("objection-unique");
 const Model = require("./Model");
+const currency = require("currency.js")
 
 const saltRounds = 10;
 
@@ -55,16 +56,18 @@ class User extends uniqueFunc(Model) {
   }
 
   async balance() {
-    let total = 0
+    let total = currency(0)
     const transactionArray = await this.$relatedQuery('transactions')
-    transactionArray.forEach(transaction => {
-      total += parseFloat(transaction.amount)
-    })
+    if (transactionArray) {
+      transactionArray.forEach(transaction => {
+        total = total.add(currency(transaction.amount))
+      })
+    }
     return total
   }
 
   static relationMappings() {
-    const { Chore, Family, Transaction } = require("./index.js")
+    const { Chore, Family, Transaction, Allowance, PendingTransaction } = require("./index.js")
     return{
       chores: {
         relation: Model.HasManyRelation,
@@ -89,7 +92,22 @@ class User extends uniqueFunc(Model) {
           from: "users.id",
           to: "transactions.userId"
         }
-      }
+      },
+      allowance: {
+        relation: Model.HasOneRelation,
+        modelClass: Allowance,
+        join: {
+          from: "users.id",
+          to: "allowances.userId"
+        }
+      },
+      pendingTransactions: {
+        relation: Model.HasManyRelation,
+        modelClass: PendingTransaction,
+        join: {
+          from: "users.id",
+          to: "pendingTransactions.userId"
+        }}
     }
   }
 }

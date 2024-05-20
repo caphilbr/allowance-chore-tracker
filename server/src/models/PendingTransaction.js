@@ -1,20 +1,19 @@
 const Model = require("./Model.js")
 
-class Chore extends Model {
+class PendingTransaction extends Model {
   static get tableName() {
-    return "chores"
+    return "pendingTransactions"
   }
 
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name", "amount"],
+      required: ["amount", "type", "userId", "allowanceId", "paymentDate"],
 
       properties: {
-        name: { type: "string", minLength: 2, maxLength: 30 },
-        description: { type: "string", minLength: 2, maxLength: 100 },
         amount: { type: "object" },
-        dueDate: {
+        type: { type: "string" },
+        paymentDate: {
           type: "object",
           properties: {
             createdAt: {
@@ -23,32 +22,32 @@ class Chore extends Model {
             }
           }
         },
-        imageUrl: { type: "string" },
+ 
       },
     }
   }
 
   static relationMappings() {
-    const { User, Family } = require("./index.js")
+    const { Allowance, User } = require("./index.js")
     return{
+      allowance: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Allowance,
+        join: {
+          from: "pendingTransactions.allowanceId",
+          to: "allowances.id"
+        }
+      },
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: "chores.userId",
+          from: "pendingTransactions.userId",
           to: "users.id"
-        }
-      },
-      family: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Family,
-        join: {
-          from: "chores.familyId",
-          to: "families.id"
         }
       }
     }
   }
 }
 
-module.exports = Chore;
+module.exports = PendingTransaction

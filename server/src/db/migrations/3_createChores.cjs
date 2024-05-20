@@ -10,7 +10,7 @@ exports.up = async (knex) => {
     table.bigIncrements("id")
     table.string("name").notNullable()
     table.string("description")
-    table.decimal("amount").notNullable().defaultTo(0)
+    table.string("amount").notNullable().defaultTo("0.00")
     table.date("dueDate")
     table.string("imageUrl")
     table.boolean("isComplete").notNullable().defaultTo(false)

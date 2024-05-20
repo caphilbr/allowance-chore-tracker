@@ -17,7 +17,7 @@ class Family extends Model {
   }
 
   static relationMappings() {
-    const { Chore, User } = require("./index.js")
+    const { Chore, User, Allowance } = require("./index.js")
     return{
       chores: {
         relation: Model.HasManyRelation,
@@ -34,16 +34,27 @@ class Family extends Model {
           from: "families.id",
           to: "users.familyId"
         }
+      },
+      allowances: {
+        relation: Model.HasManyRelation,
+        modelClass: Allowance,
+        join: {
+          from: "families.id",
+          to: "allowances.familyId"
+        }
       }
     }
   }
 
   async children() {
     const users = await this.$relatedQuery("users")
-    const children = users.filter(user => {
-      return !user.isParent
-    })
-    return children
+    if (users) {
+      const children = users.filter(user => {
+        return !user.isParent
+      })
+      return children
+    }
+    return []    
   }
 }
 

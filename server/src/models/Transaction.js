@@ -8,14 +8,21 @@ class Transaction extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["amount", "type", "userId"],
+      required: ["amount", "type", "userId", "paymentDate"],
 
       properties: {
-        amount: {
-          type: "number",
-          pattern: "^(-?\d+)(?:\.\d{0,2})?$"
+        amount: { type: "object" },
+        type: { type: "string" },
+        paymentDate: {
+          type: "object",
+          properties: {
+            createdAt: {
+              type: "string",
+              format: "date"
+            }
+          }
         },
-        type: { type: "string" }
+ 
       },
     }
   }
