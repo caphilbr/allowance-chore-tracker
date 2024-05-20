@@ -5,7 +5,7 @@ import AllowanceSerializer from "./AllowanceSerializer.js"
 class ChildrenSerializer {
 
   static parentDashboardList = async (children) => {
-    const allowedFields = ["id", "nickname", "chores", "imageUrl"]
+    const allowedFields = ["id", "nickname", "chores", "imageUrl", "familyId"]
     const serializedChildren = await Promise.all(children.map(async child => {
       const serializedChild = {}
       allowedFields.forEach(field => {
@@ -14,17 +14,25 @@ class ChildrenSerializer {
       serializedChild.chores = await ChoreSerializer.dashboard(child)
       serializedChild.balance = await child.balance()
       const relatedTransactions = await child.$relatedQuery("transactions")
-      const serializedTransactions = TransactionSerializer.summaryforBalanceList(relatedTransactions)
-      serializedChild.transactions = serializedTransactions
+      if (relatedTransactions) {
+        const serializedTransactions = TransactionSerializer.summaryforBalanceList(relatedTransactions)
+        serializedChild.transactions = serializedTransactions
+      } else {
+        serializedChild.transactions = []
+      }
       const relatedAllowance = await child.$relatedQuery("allowance")
-      serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance)
+      if (relatedAllowance) {
+        serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance)
+      } else {
+        serializedChild.allowance = null
+      }
       return serializedChild
     }))
     return serializedChildren
   }
 
   static childDashboard = async (child) => {
-    const allowedFields = ["id", "nickname", "chores", "imageUrl"]
+    const allowedFields = ["id", "nickname", "chores", "imageUrl", "familyId"]
     const serializedChild = {}
     allowedFields.forEach(field => {
       serializedChild[field] = child[field]
@@ -32,10 +40,18 @@ class ChildrenSerializer {
     serializedChild.chores = await ChoreSerializer.dashboard(child)
     serializedChild.balance = await child.balance()
     const relatedTransactions = await child.$relatedQuery("transactions")
-    const serializedTransactions = TransactionSerializer.summaryforBalanceList(relatedTransactions)
-    serializedChild.transactions = serializedTransactions
+    if (relatedTransactions) {
+      const serializedTransactions = TransactionSerializer.summaryforBalanceList(relatedTransactions)
+      serializedChild.transactions = serializedTransactions
+    } else {
+      serializedChild.transactions = []
+    }
     const relatedAllowance = await child.$relatedQuery("allowance")
-    serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance)
+    if (relatedAllowance) {
+      serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance)
+    } else {
+      serializedChild.allowance = null
+    }
     return serializedChild
   }
 }

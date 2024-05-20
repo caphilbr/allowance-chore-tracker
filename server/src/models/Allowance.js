@@ -65,9 +65,12 @@ class Allowance extends Model {
     }
   }
 
-  async generatePendingAllowance() {
-    /////////////
-    // Note that this method is only called when a new Allowance is established (and by the Seeder)
+  async deletePendingAllowances() {
+    const { PendingTransaction } = require("./index.js")
+    await PendingTransaction.query().delete().where({ allowanceId: this.id })
+  }
+
+  async generatePendingAllowances() {
     const { PendingTransaction } = require("./index.js")
     const { default: addDays } = await import("./../services/addDays.js")
     const { default: addMonths } = await import("./../services/addMonths.js")
@@ -84,11 +87,9 @@ class Allowance extends Model {
           type: "allowance",
           paymentDate: date,
           userId: this.userId,
-          allowanceId: this.id,
-          isPaid: false
+          allowanceId: this.id
         })
       } 
-  
       if (this.frequency === "weekly") {
         date = addDays(date, 7)
       }
@@ -98,7 +99,7 @@ class Allowance extends Model {
     } while (date <= this.lastDate)
   }  
 
-  static async processAllowances(familyId) {
+  static async processPendingAllowances(familyId) {
     const { PendingTransaction, Transaction, Family } = require("./index.js")
     const currency = require("currency.js")
 
@@ -109,17 +110,19 @@ class Allowance extends Model {
     const children = await family.children()
     for (const child of children) {
       const pendingTransactions = await child.$relatedQuery("pendingTransactions")
-      for (const pendingTransaction of pendingTransactions) {
-        if (pendingTransaction.paymentDate <= today && !pendingTransaction.isPaid) {
-          const newTransaction = {
-            amount: currency(pendingTransaction.amount),
-            type: "allowance",
-            paymentDate: pendingTransaction.paymentDate,
-            choreId: null,
-            userId: pendingTransaction.userId
+      if (pendingTransactions) {
+        for (const pendingTransaction of pendingTransactions) {
+          if (pendingTransaction.paymentDate <= today) {
+            const newTransaction = {
+              amount: currency(pendingTransaction.amount),
+              type: "allowance",
+              paymentDate: pendingTransaction.paymentDate,
+              choreId: null,
+              userId: pendingTransaction.userId
+            }
+            await Transaction.query().insert(newTransaction)
+            await PendingTransaction.query().deleteById(pendingTransaction.id)
           }
-          await Transaction.query().insert(newTransaction)
-          await PendingTransaction.query().findById(pendingTransaction.id).patch({ isPaid: true })
         }
       }
     }

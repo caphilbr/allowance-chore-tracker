@@ -147,11 +147,8 @@ class Seeder {
     console.log("Generating pending allowance transactions...")
     for (let allowance = 1; allowance <= 4; allowance++) {
       const currentAllowance = await Allowance.query().findById(allowance)
-      await currentAllowance.generatePendingAllowance()
+      await currentAllowance.generatePendingAllowances()
     }
-
-
-
 
     console.log("Done!");
     await connection.destroy();

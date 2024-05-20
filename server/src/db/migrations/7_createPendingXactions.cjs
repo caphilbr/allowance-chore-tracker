@@ -11,7 +11,6 @@ exports.up = async (knex) => {
     table.string("amount").notNullable().defaultTo("0.00")
     table.string("type").notNullable()
     table.date("paymentDate").notNullable()
-    table.boolean("isPaid").notNullable().defaultTo(false)
     table.bigInteger("userId").notNullable().unsigned().index().references("users.id")
     table.bigInteger("allowanceId").notNullable().unsigned().index().references("allowances.id")
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())

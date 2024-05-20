@@ -48,10 +48,13 @@ class Family extends Model {
 
   async children() {
     const users = await this.$relatedQuery("users")
-    const children = users.filter(user => {
-      return !user.isParent
-    })
-    return children
+    if (users) {
+      const children = users.filter(user => {
+        return !user.isParent
+      })
+      return children
+    }
+    return []    
   }
 }
 

@@ -58,9 +58,11 @@ class User extends uniqueFunc(Model) {
   async balance() {
     let total = currency(0)
     const transactionArray = await this.$relatedQuery('transactions')
-    transactionArray.forEach(transaction => {
-      total = total.add(currency(transaction.amount))
-    })
+    if (transactionArray) {
+      transactionArray.forEach(transaction => {
+        total = total.add(currency(transaction.amount))
+      })
+    }
     return total
   }
 

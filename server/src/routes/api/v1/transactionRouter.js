@@ -6,7 +6,7 @@ const transactionRouter = new express.Router()
 transactionRouter.get("/", async (req, res) => {
   try {
     const family = await (req.user).$relatedQuery("family")
-    await Allowance.processAllowances(family.id)
+    await Allowance.processPendingAllowances(family.id)
     res.status(200).json({})
   } catch(error) {
     res.status(500).json({ error })

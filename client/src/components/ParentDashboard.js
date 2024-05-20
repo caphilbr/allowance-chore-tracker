@@ -49,18 +49,18 @@ const ParentDashboard = () => {
 
   let contentHolder = (
     <>
-      <div className="cell small-4 large-2 child-list">
+      <div className="cell small-4 medium-3 large-2 child-list">
         <h3 className="child-list-header">Children</h3>
         <div className="add-child-button"><span className="button-styling" onClick={toggleAddChild}>Add Child</span></div>
         <div className="scroll">
           {childrenList}
         </div>
       </div>
-      <div className="cell small-7 large-9">
+      <div className="cell small-7 medium-8 large-9">
         {showAddChild ?
           <AddChild showAddChild={showAddChild} setShowAddChild={setShowAddChild} setEmailStatus={setEmailStatus} />
         :
-          <ChildDetails child={selectedChild} />
+          <ChildDetails child={selectedChild} children={children} setChildren={setChildren} />
         }
       </div>    
     </>
