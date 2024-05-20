@@ -16,5 +16,4 @@ rootRouter.use("/api/v1/children", childrenRouter)
 rootRouter.use("/api/v1/invite", inviteRouter)
 rootRouter.use("/api/v1/transaction", transactionRouter)
 
-
 export default rootRouter;

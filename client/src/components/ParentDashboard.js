@@ -13,6 +13,7 @@ const ParentDashboard = () => {
     username: "",
     nickname: "",
     chores: [],
+    transactions: [],
     imageUrl: ""
   })
 

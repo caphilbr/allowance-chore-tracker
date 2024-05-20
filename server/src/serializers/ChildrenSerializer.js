@@ -1,4 +1,6 @@
 import ChoreSerializer from "./ChoreSerializer.js"
+import TransactionSerializer from "./TransactionSerializer.js"
+import AllowanceSerializer from "./AllowanceSerializer.js"
 
 class ChildrenSerializer {
 
@@ -11,6 +13,11 @@ class ChildrenSerializer {
       })
       serializedChild.chores = await ChoreSerializer.dashboard(child)
       serializedChild.balance = await child.balance()
+      const relatedTransactions = await child.$relatedQuery("transactions")
+      const serializedTransactions = TransactionSerializer.summaryforBalanceList(relatedTransactions)
+      serializedChild.transactions = serializedTransactions
+      const relatedAllowance = await child.$relatedQuery("allowance")
+      serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance)
       return serializedChild
     }))
     return serializedChildren
@@ -24,9 +31,13 @@ class ChildrenSerializer {
     })
     serializedChild.chores = await ChoreSerializer.dashboard(child)
     serializedChild.balance = await child.balance()
+    const relatedTransactions = await child.$relatedQuery("transactions")
+    const serializedTransactions = TransactionSerializer.summaryforBalanceList(relatedTransactions)
+    serializedChild.transactions = serializedTransactions
+    const relatedAllowance = await child.$relatedQuery("allowance")
+    serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance)
     return serializedChild
   }
-
 }
 
 export default ChildrenSerializer
