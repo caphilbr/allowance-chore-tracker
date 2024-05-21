@@ -5,8 +5,9 @@ const Balance = (props) => {
 
   return(
     <div className="balance-box">
-      <p>Current Balance</p>
-      <p className="balance-amount">${(props.child.balance).toFixed(2)}</p>
+      <span>Current Balance</span>
+      <br/>
+      <span className="balance-amount">${(props.child.balance).toFixed(2)}</span>
       <div className="horizontal-line" />
       <PastTransactions transactions={props.child.transactions}/>
     </div>
