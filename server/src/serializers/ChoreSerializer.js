@@ -1,7 +1,7 @@
 class ChoreSerializer {
 
   static dashboard = async (child) => {
-    const allowedFields = ["id", "name", "description", "amount", "dueDate"]
+    const allowedFields = ["id", "name", "description", "amount", "dueDate", "status", "isComplete"]
     const relatedChores = await child.$relatedQuery("chores")
     if (relatedChores) {
       const serializedChores = relatedChores.map(chore => {
@@ -11,7 +11,10 @@ class ChoreSerializer {
         })
         return serializedChore
       })
-      return serializedChores
+      const filteredSerializedChores = serializedChores.filter(chore => {
+        return !chore.isComplete
+      })
+      return filteredSerializedChores
     }
     return []
   }

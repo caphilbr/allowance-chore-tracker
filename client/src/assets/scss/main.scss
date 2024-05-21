@@ -618,3 +618,41 @@
   max-height: 70%;
   overflow-y: auto;
 }
+
+.button-styling-small-accept {
+  @extend .button-styling-small;
+  background-color: darkgreen;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0% {
+    background-color: darkgreen;
+  }
+  50% {
+    background-color: lightgreen;
+    color: var(--darkest-color);
+  }
+  100% {
+    background-color: green;
+  }
+}
+
+.button-styling-small-delete {
+  @extend .button-styling-small;
+  background-color: darkred;
+}
+
+.awaiting-approval {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--darkest-color);
+  color: var(--darkest-color);
+  background-color: var(--grey-color);
+}
+
+.chore-tile-buttons {
+  padding-top: 1rem;
+  text-align: right;
+}

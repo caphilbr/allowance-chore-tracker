@@ -12,6 +12,7 @@ exports.up = async (knex) => {
     table.string("description")
     table.string("amount").notNullable().defaultTo("0.00")
     table.date("dueDate")
+    table.string("status").notNullable().defaultTo("open")
     table.string("imageUrl")
     table.boolean("isComplete").notNullable().defaultTo(false)
     table.bigInteger("familyId").unsigned().index().notNullable().references("families.id")

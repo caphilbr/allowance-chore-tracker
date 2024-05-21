@@ -117,7 +117,6 @@ class Allowance extends Model {
               amount: currency(pendingTransaction.amount),
               type: "allowance",
               paymentDate: pendingTransaction.paymentDate,
-              choreId: null,
               userId: pendingTransaction.userId
             }
             await Transaction.query().insert(newTransaction)
