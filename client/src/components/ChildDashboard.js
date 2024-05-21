@@ -28,29 +28,28 @@ const ChildDashboard = (props) => {
   },[])
 
   return (
-    <div className="grid-x grid-margin-y align-center">
-      <div className="cell small-8 medium-6 large-2 child-dash-top-left">
-        <ChildPhoto child={child} />
+    <div className="grid-x grid-margin-y align-center child-dash-scroll">
+      <div className="cell child-dash-title">{child.nickname}</div>
+      <div className="cell small-12 grid-x align-center">
+        <span className="cell small-4 child-dash-top-left">
+          <ChildPhoto child={child} />
+        </span>
+        <span className="cell small-7 child-dash-top-right">
+          <Balance child={child} />
+        </span>
       </div>
-      <div className="cell small-12 large-9 child-dash-top-right"> 
-        <div className="grid-x">
-          <div className="cell small-12 large-3">
-            <Balance child={child} />
-          </div>
-          <div className="cell small-12 large-8">
-            <BalanceChart child={child} />
-          </div>
+      <div className="cell small-11 medium-9 large-8">
+        <div className="chart-container">
+          <div className="cell child-dash-title">Balance Over Time</div>
+          <BalanceChart child={child} />
         </div>
       </div>
       <div className="cell grid-x grid-margin-x">
-        <div className="cell small-6 child-dash-bottom-left">
+        <div className="cell small-12 child-dash-bottom-left">
           <h3 className="child-list-header cell">My Assigned Chores</h3>
-          <div className="scroll grid-x grid-margin-x">
+          <div className="grid-x grid-margin-x">
             {choreList}
           </div>
-        </div>
-        <div className="cell auto">
-          <h3 className="chart">for future use</h3>
         </div>
       </div>
     </div>

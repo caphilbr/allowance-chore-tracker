@@ -85,7 +85,7 @@ const ParentDashboard = () => {
   }
 
   return (
-    <div className="grid-x">
+    <div className="grid-x align-center">
       {contentHolder}
     </div>
   )

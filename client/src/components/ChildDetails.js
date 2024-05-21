@@ -4,6 +4,7 @@ import ChoreTileSmall from "./ChoreTileSmall"
 import ChildPhoto from "./ChildPhoto"
 import ManageAllowance from "./ManageAllowance"
 import AllowanceSummary from "./AllowanceSummary"
+import BalanceChart from "./BalanceChart"
 
 const ChildDetails = (props) => {
   
@@ -15,14 +16,16 @@ const ChildDetails = (props) => {
   let details = (
     <>
       <h3 className="child-detail-header">{props.child.nickname}'s Details</h3>
-      {showManageAllowance ?
-        <ManageAllowance
-          setShowManageAllowance={setShowManageAllowance}
-          child={props.child}
-        />
-      :
-        null
-      }
+      <div className="allowance-container grid-x align-center">
+        {showManageAllowance ?
+          <ManageAllowance
+            setShowManageAllowance={setShowManageAllowance}
+            child={props.child}
+          />
+        :
+          null
+        }
+      </div>
       <div className="grid-x grid-margin-x grid-margin-y child-details scroll">
         <div className="cell small-12 large-6 details-left">
           <ChildPhoto child={props.child} />
@@ -30,6 +33,11 @@ const ChildDetails = (props) => {
         </div>
         <div className="cell small-12 large-6 details-right">
           <Balance child={props.child} />
+        </div>
+        <div className="cell small-12 horizontal-line" />
+        <div className="cell small-12 chart-container">
+          <div className="cell child-dash-title-in-parent">Balance Over Time</div>
+          <BalanceChart child={props.child} />
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="chore-title cell small-12">

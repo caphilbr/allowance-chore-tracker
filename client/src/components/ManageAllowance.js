@@ -162,8 +162,9 @@ const ManageAllowance = (props) => {
   }
 
   const confirmDelete = (
-    <div className="confirm-delete">
-      <span className="detail-option-button" onClick={handleDelete}>Confirm Allowance Delete</span>
+    <div className="confirm-delete align-center">
+      <p>This will delete the allowance, resulting in no future allowance payments. Past allowance payments will remain in the child's balance.</p>
+      <span className="allowance-button" onClick={handleDelete}>Confirm Allowance Delete</span>
     </div>
   )
 
@@ -198,9 +199,9 @@ const ManageAllowance = (props) => {
           <FormError error={errors.lastDate} />
         </label>
 
-        <input type="submit" className="detail-option-button" value="Submit Changes" />
-        <span className="detail-option-button" onClick={onDeleteClick}>Delete This Allowance</span>
-        <span className="detail-option-button" onClick={handleCancel}>Cancel</span>
+        <input type="submit" className="allowance-button" value="Submit Changes" />
+        <span className="allowance-button" onClick={onDeleteClick}>Delete This Allowance</span>
+        <span className="allowance-button" onClick={handleCancel}>Cancel</span>
       </form>
     </div>
   )
