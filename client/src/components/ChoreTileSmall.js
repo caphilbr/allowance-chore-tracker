@@ -31,12 +31,22 @@ const ChoreTileSmall = (props) => {
     setShowDelete(false);
   };
 
+  const handleEdit = () => {
+    props.handleEditChore(props.chore)
+  }
+
+  let description = null
+  if (props.chore.description != "") {
+    description = <p>Description: {props.chore.description}</p>
+  }
+  
   let tileContent = (
     <div className="cell small-12 medium-6 large-3 chore-tile-small">
       <p className="chore-title-small">
         {props.chore.name} - ${props.chore.amount}
       </p>
       <p>Due: {props.chore.dueDate.slice(0, 10)}</p>
+      {description}
       {props.chore.status == "pending" ? (
         <p>
           <span className="button-styling-small-accept" onClick={handleAccept}>
@@ -50,7 +60,7 @@ const ChoreTileSmall = (props) => {
             Pay
           </span>
         ) : null}
-        <span className="button-styling-small">Edit</span>
+        <span className="button-styling-small" onClick={handleEdit}>Edit</span>
         <span className="button-styling-small-delete" onClick={onDeleteClick}>
           Delete
         </span>
@@ -75,7 +85,6 @@ const ChoreTileSmall = (props) => {
       </div>
     );
   }
-  // <div className="confirm-delete-chore align-center">
   return tileContent;
 };
 

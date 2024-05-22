@@ -14,7 +14,6 @@ exports.up = async (knex) => {
     table.date("dueDate")
     table.string("status").notNullable().defaultTo("open")
     table.string("imageUrl")
-    table.boolean("isComplete").notNullable().defaultTo(false)
     table.bigInteger("familyId").unsigned().index().notNullable().references("families.id")
     table.bigInteger("userId").unsigned().index().references("users.id")
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())

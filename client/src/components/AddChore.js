@@ -64,7 +64,6 @@ const AddChore = (props) => {
     return {
       ...currentPayload,
       status: "open",
-      isComplete: false,
       familyId: props.child.familyId,
       userId: props.child.id,
     };
@@ -89,9 +88,8 @@ const AddChore = (props) => {
             throw error;
           }
         } else {
-          const newChore = response.body;
-          console.log(newChore);
-          props.addChoreToList(newChore);
+          const newChore = response.body
+          props.addChoreToList(newChore)
         }
       } catch (error) {
         console.error(`Error in fetch: ${error.message}`);

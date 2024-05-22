@@ -12,7 +12,7 @@ class Chore extends Model {
 
       properties: {
         name: { type: "string", minLength: 2, maxLength: 30 },
-        description: { type: "string", minLength: 2, maxLength: 100 },
+        description: { type: "string", maxLength: 100 },
         amount: { type: "object" },
         dueDate: {
           type: "object",

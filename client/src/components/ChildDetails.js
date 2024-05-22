@@ -6,14 +6,22 @@ import ManageAllowance from "./ManageAllowance";
 import AllowanceSummary from "./AllowanceSummary";
 import BalanceChart from "./BalanceChart";
 import AddChore from "./AddChore";
+import EditChore from "./EditChore";
 
 const ChildDetails = (props) => {
   const [showManageAllowance, setShowManageAllowance] = useState(false);
   const [showAddChore, setShowAddChore] = useState(false);
+  const [showEditChore, setShowEditChore] = useState(false);
+  const [choreToEdit, setChoreToEdit] = useState({})
 
   const handleAddChore = () => {
     setShowAddChore(true);
   };
+
+  const handleEditChore = (choreFromTile) => {
+    setChoreToEdit(choreFromTile)
+    setShowEditChore(true)
+  }
 
   const choreList = props.child.chores.map((chore) => {
     return (
@@ -22,6 +30,7 @@ const ChildDetails = (props) => {
         chore={chore}
         payChore={props.payChore}
         removeChore={props.removeChore}
+        handleEditChore={handleEditChore}
       />
     );
   });
@@ -38,7 +47,15 @@ const ChildDetails = (props) => {
         child={props.child}
         addChoreToList={props.addChoreToList}
       />
-    );
+    )
+  } else if (showEditChore) {
+    popOutBox = (
+      <EditChore
+        setShowEditChore={setShowEditChore}
+        editChore={props.editChore}
+        chore={choreToEdit}
+      />
+    )
   }
 
   let details = (

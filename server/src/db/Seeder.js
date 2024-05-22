@@ -76,9 +76,7 @@ class Seeder {
       const day = Math.floor(Math.random() * 28) + 1
       const date = new Date(2024, month, day)
       let status = "open"
-      let isComplete = false
       if (chore <= 15) {
-        isComplete = true
         status = "done"
       }
       if (chore >=16 && chore <= 22) {
@@ -92,11 +90,10 @@ class Seeder {
         dueDate: date,
         familyId: family,
         userId: child,
-        isComplete: isComplete,
         status: status
       })
 
-      if (isComplete) {
+      if (status == "done") {
         const month = Math.floor(Math.random() * 12) + 1
         const day = Math.floor(Math.random() * 28) + 1
         const date = new Date(2023, month, day)
