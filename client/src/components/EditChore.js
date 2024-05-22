@@ -3,15 +3,14 @@ import ErrorList from "./layout/ErrorList"
 import FormError from "./layout/FormError"
 import isDateInPast from "../services/isDateInPast"
 import config from "../config"
-import postChore from "../services/postChore"
+import patchChore from "../services/patchChore"
 
-const AddChore = (props) => {
-
+const EditChore = (props) => {
   const [chorePayload, setChorePayload] = useState({
-    name: "",
-    description: "",
-    amount: "",
-    dueDate: ""
+    name: props.chore.name,
+    description: props.chore.description,
+    amount: props.chore.amount.toString(),
+    dueDate: props.chore.dueDate.slice(0,10)
   })
   const [errors, setErrors] = useState({})
   const [serverErrors, setServerErrors] = useState({})
@@ -68,14 +67,15 @@ const AddChore = (props) => {
   const setFullPayload = (currentPayload) => {
     return {
       ...currentPayload,
-      status: "open",
-      familyId: props.child.familyId,
-      userId: props.child.id
+      status: props.chore.status,
+      familyId: props.chore.familyId,
+      userId: props.chore.userId,
+      id: props.chore.id
     }
   }
 
   const handleCancel = () => {
-    props.setShowAddChore(false)
+    props.setShowEditChore(false)
   }
 
   const onSubmit = async (event) => {
@@ -83,7 +83,7 @@ const AddChore = (props) => {
     if (validateInput(chorePayload)) {
       try {
         const fullPayLoad = setFullPayload(chorePayload)
-        const response = await postChore(fullPayLoad)
+        const response = await patchChore(fullPayLoad)
         if (!response.ok) {
           if (response.status === 422) {
             setServerErrors(response.error)
@@ -93,8 +93,9 @@ const AddChore = (props) => {
             throw error
           }
         } else {
-          const newChore = response.body
-          props.addChoreToList(newChore)
+          const editedChore = response.body
+          props.editChore(editedChore)
+          props.setShowEditChore(false)
         }
       } catch(error) {
         console.error(`Error in fetch: ${error.message}`)
@@ -112,7 +113,7 @@ const AddChore = (props) => {
 
   return (
     <div className="manage-allowance">
-      <h3>Add New Chore to {props.child.nickname}</h3>      
+      <h3>Edit Chore: {props.chore.name}</h3>      
       <form onSubmit={onSubmit}>
         <ErrorList errors={serverErrors} />
         <label>
@@ -142,4 +143,4 @@ const AddChore = (props) => {
   )
 }
 
-export default AddChore
+export default EditChore

@@ -1,5 +1,6 @@
 const isDateInPast = (dateString) => {
 
+  console.log(dateString)
   const dateObject = new Date(dateString);
   const userOffset = dateObject.getTimezoneOffset() / 60;
   dateObject.setHours(dateObject.getHours() + userOffset);
@@ -13,10 +14,16 @@ const isDateInPast = (dateString) => {
   const todayMonth = today.getMonth() + 1
   const todayDay = today.getDate()
 
-  if (dateYear >= todayYear && dateMonth >= todayMonth && dateDay >= todayDay) {
-    return false
+  if (dateYear < todayYear) {
+    return true
   }
-  return true
+  if (dateYear == todayYear && dateMonth < todayMonth) {
+    return true
+  }
+  if (dateYear == todayYear && dateMonth == todayMonth && dateDay < todayDay) {
+    return true
+  }
+  return false
 }
 
 export default isDateInPast

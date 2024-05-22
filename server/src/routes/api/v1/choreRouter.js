@@ -3,9 +3,25 @@ import { Chore, Transaction } from "../../../models/index.js";
 import currency from "currency.js";
 import { ValidationError } from "objection";
 import cleanNewChoreInput from "../../../services/cleanNewChoreInput.js";
+import cleanEditChoreInput from "../../../services/cleanEditChoreInput.js";
 import TransactionSerializer from "../../../serializers/TransactionSerializer.js";
 
 const choreRouter = express.Router()
+
+choreRouter.patch("/", async (req, res) => {
+  try {
+    const editedChore = cleanEditChoreInput(req.body)
+    const persistedEdit = await Chore.query().patchAndFetchById(editedChore.id, editedChore)
+    res.status(201).json({ chore: persistedEdit })
+  } catch(error) {
+    if (error instanceof ValidationError) {
+      res.status(422).json( {errors: error.data })
+    } else {
+      console.log(error)
+      res.status(500).json( { error } )
+    }
+  }
+})
 
 choreRouter.post("/", async (req, res) => {
   try {
@@ -32,7 +48,7 @@ choreRouter.patch("/pay/:id", async (req, res) => {
       userId: chore.userId
     })
     const serializedTransaction = TransactionSerializer.singleTransactionForBalanceList(newTransaction)
-    await Chore.query().findById(req.params.id).patch({ isComplete: true, status: "done" })
+    await Chore.query().findById(req.params.id).patch({ status: "done" })
     res.status(200).json({ transaction: serializedTransaction })
 
   } catch(error) {
