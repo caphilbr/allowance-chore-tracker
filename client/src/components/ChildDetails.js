@@ -17,7 +17,7 @@ const ChildDetails = (props) => {
   }
 
   const choreList = props.child.chores.map(chore => {
-    return <ChoreTileSmall key={chore.id} chore={chore} />
+    return <ChoreTileSmall key={chore.id} chore={chore} payChore={props.payChore} removeChore={props.removeChore} />
   })
 
   let popOutBox = null
@@ -29,7 +29,7 @@ const ChildDetails = (props) => {
   } else if (showAddChore) {
     popOutBox = <AddChore setShowAddChore={setShowAddChore} child={props.child} addChoreToList={props.addChoreToList} />
   }
-
+  
   let details = (
     <>
       <h3 className="parent-dash-title">{props.child.nickname}'s Details</h3>

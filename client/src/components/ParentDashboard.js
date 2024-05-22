@@ -4,6 +4,8 @@ import ChildTile from "./ChildTile"
 import getChildren from "../services/getChildren"
 import AddChild from './AddChild'
 import sortChoresWithinChildren from '../services/sortChoresWithinChildren'
+import removeChoreFromChildren from '../services/removeChoreFromChildren'
+import payChoreAndUpdateChildren from '../services/payChoreAndUpdateChildren'
 
 const ParentDashboard = () => {
 
@@ -27,6 +29,17 @@ const ParentDashboard = () => {
   const addChoreToList = (choreToAdd) => {
     const updatedChildren = addChoreToChildren(choreToAdd, children)
     setChildren(sortChoresWithinChildren(updatedChildren))
+  }
+
+  const removeChore = (choreToRemove) => {
+    const updatedChildren = removeChoreFromChildren(choreToRemove, children)
+    setChildren(sortChoresWithinChildren(updatedChildren))
+  }
+
+  const payChore = (choreToPay, newTransaction) => {
+    const updatedChildren = payChoreAndUpdateChildren(choreToPay, newTransaction, children)
+    setChildren(updatedChildren)
+    removeChore(choreToPay)
   }
   
   const childCount = children.length
@@ -68,7 +81,7 @@ const ParentDashboard = () => {
         {showAddChild ?
           <AddChild showAddChild={showAddChild} setShowAddChild={setShowAddChild} setEmailStatus={setEmailStatus} />
         :
-          <ChildDetails child={selectedChild} addChoreToList={addChoreToList} />
+          <ChildDetails child={selectedChild} addChoreToList={addChoreToList} removeChore={removeChore} payChore={payChore} />
         }
       </div>    
     </>
