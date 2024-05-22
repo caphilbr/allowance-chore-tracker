@@ -1,8 +1,25 @@
 import express from "express";
 import { Chore, Transaction } from "../../../models/index.js";
 import currency from "currency.js";
+import { ValidationError } from "objection";
+import cleanNewChoreInput from "../../../services/cleanNewChoreInput.js";
 
 const choreRouter = express.Router()
+
+choreRouter.post("/", async (req, res) => {
+  try {
+    let newChore = cleanNewChoreInput(req.body)
+    const persistedChore = await Chore.query().insertAndFetch(newChore)
+    res.status(201).json({ chore: persistedChore })
+  } catch(error) {
+    if (error instanceof ValidationError) {
+      res.status(422).json( {errors: error.data })
+    } else {
+      console.log(error)
+      res.status(500).json( { error } )
+    }
+  }
+})
 
 choreRouter.patch("/pay/:id", async (req, res) => {
   try {
