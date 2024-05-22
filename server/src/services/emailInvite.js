@@ -1,26 +1,15 @@
 import nodemailer from "nodemailer"
 import config from "../config.js"
-// import AWS from "aws-sdk"
 
 const emailInvite = async (emailAddress, nickname, inviteUrl, code) => {
   
-  // AWS.config.update({
-  //   accessKeyId: config.awsAccess.key,
-  //   secretAccessKey: config.awsSecret.key,
-  //   region: "us-east-1"
-  // })
-  
-  // const transporter = nodemailer.createTransport({
-  //   SES: new AWS.SES({
-  //     apiVersion: '2010-12-01'
-  //   })
-  // });
-  
-
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    // service: 'hotmail',
+    host: 'live.smtp.mailtrap.io',
+    port: 587,
+    secure: false,
     auth: {
-      user: config.email.address,
+      user: config.email.username,
       pass: config.email.password
     }
   });
