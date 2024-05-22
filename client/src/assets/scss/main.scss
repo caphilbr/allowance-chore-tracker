@@ -136,17 +136,8 @@
   overflow-y: auto;
 }
 
-.child-list-header {
-  text-align: center;
-  font-size: 28px;
-  color: white;
-  font-weight: bold;
-  text-shadow: 2px 2px 2px var(--grey-color);
-  margin-right: 1.5rem;
-}
-
 .email-message {
-  @extend .child-list-header;
+  @extend .child-dash-title;
   font-size: 20px;
 }
 
@@ -171,16 +162,6 @@
   margin: 0 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
-}
-
-.child-detail-header {
-  text-align: center;
-  font-size: 28px;
-  color: white;
-  font-weight: bold;
-  text-shadow: 2px 2px 2px var(--grey-color);
-  margin-top: 1.7rem;
-  margin-bottom: 2.8rem;
 }
 
 .select-child-message {
@@ -617,4 +598,55 @@
 .child-dash-scroll {
   max-height: 70%;
   overflow-y: auto;
+}
+
+.button-styling-small-accept {
+  @extend .button-styling-small;
+  background-color: darkgreen;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0% {
+    background-color: darkgreen;
+  }
+  50% {
+    background-color: lightgreen;
+    color: var(--darkest-color);
+  }
+  100% {
+    background-color: green;
+  }
+}
+
+.button-styling-small-pay {
+  @extend .button-styling-small;
+  background-color: darkgreen;
+}
+
+
+.button-styling-small-delete {
+  @extend .button-styling-small;
+  background-color: darkred;
+}
+
+.awaiting-approval {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--darkest-color);
+  color: var(--darkest-color);
+  background-color: var(--grey-color);
+}
+
+.chore-tile-buttons {
+  padding-top: 1rem;
+}
+
+.parent-dash-title{
+  color: var(--lightest-color);
+  text-align: center;
+  font-size: 200%;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px var(--grey-color);
 }

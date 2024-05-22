@@ -22,7 +22,6 @@ class Transaction extends Model {
             }
           }
         },
- 
       },
     }
   }
@@ -30,14 +29,6 @@ class Transaction extends Model {
   static relationMappings() {
     const { Chore, User } = require("./index.js")
     return{
-      chore: {
-        relation: Model.HasOneRelation,
-        modelClass: Chore,
-        join: {
-          from: "transactions.choreId",
-          to: "chores.id"
-        }
-      },
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,

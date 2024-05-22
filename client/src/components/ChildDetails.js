@@ -13,9 +13,10 @@ const ChildDetails = (props) => {
   const choreList = props.child.chores.map(chore => {
     return <ChoreTileSmall key={chore.id} chore={chore} />
   })
+
   let details = (
     <>
-      <h3 className="child-detail-header">{props.child.nickname}'s Details</h3>
+      <h3 className="parent-dash-title">{props.child.nickname}'s Details</h3>
       <div className="allowance-container grid-x align-center">
         {showManageAllowance ?
           <ManageAllowance

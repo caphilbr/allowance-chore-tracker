@@ -3,41 +3,44 @@ import ChildDetails from "./ChildDetails"
 import ChildTile from "./ChildTile"
 import getChildren from "../services/getChildren"
 import AddChild from './AddChild'
+import sortChoresWithinChildren from '../services/sortChoresWithinChildren'
 
 const ParentDashboard = () => {
 
   const [showAddChild, setShowAddChild] = useState(false)
   const [emailStatus, setEmailStatus] = useState("")
   const [children, setChildren] = useState([])
-  const [selectedChild, setSelectedChild] = useState({
-    username: "",
-    nickname: "",
-    chores: [],
-    transactions: [],
-    imageUrl: ""
-  })
-
+  const [selectedChildId, setSelectedChildId] = useState(null)
+  
   useEffect(() => {
     const fetchedData = async () => {
       const fetchedChildren = await getChildren()
-      setChildren(fetchedChildren)
+      setChildren(sortChoresWithinChildren(fetchedChildren))
     }
     fetchedData()
   },[])
-
-    
+  
   const toggleAddChild = () => {
     setShowAddChild(!showAddChild)
   }
-
-  const childrenList = children.map(child => {
-    return <ChildTile key={child.id} child={child} setSelectedChild={setSelectedChild} />
-  })
   
   const childCount = children.length
-  if (childCount >= 1 && selectedChild.username == "") {
-    setSelectedChild(children[0])
+  let selectedChild = { chores: [] }
+  if (childCount >= 1) {
+    let childFound
+    if (!selectedChildId) {
+      childFound = [children[0]]
+    } else {
+      childFound = children.filter(child => {
+        return child.id == selectedChildId
+      })
+    }
+    selectedChild = childFound[0]
   }
+  
+  const childrenList = children.map(child => {
+    return <ChildTile key={child.id} child={child} setSelectedChildId={setSelectedChildId} />
+  })
   
   let emailMessage = ""
   if (emailStatus === "success") {
@@ -50,7 +53,7 @@ const ParentDashboard = () => {
   let contentHolder = (
     <>
       <div className="cell small-4 medium-3 large-2 child-list">
-        <h3 className="child-list-header">Children</h3>
+        <h3 className="parent-dash-title">Children</h3>
         <div className="add-child-button"><span className="button-styling" onClick={toggleAddChild}>Add Child</span></div>
         <div className="scroll">
           {childrenList}
@@ -60,7 +63,7 @@ const ParentDashboard = () => {
         {showAddChild ?
           <AddChild showAddChild={showAddChild} setShowAddChild={setShowAddChild} setEmailStatus={setEmailStatus} />
         :
-          <ChildDetails child={selectedChild} children={children} setChildren={setChildren} />
+          <ChildDetails child={selectedChild} />
         }
       </div>    
     </>
@@ -70,7 +73,7 @@ const ParentDashboard = () => {
     contentHolder = (
       <>
         <div className="cell invite-container">
-          <h3 className="child-list-header">Begin by adding a child to the family...</h3>
+          <h3 className="parent-dash-title">Begin by adding a child to the family...</h3>
           {showAddChild ?
             <AddChild showAddChild={showAddChild} setShowAddChild={setShowAddChild} setEmailStatus={setEmailStatus} />
             :

@@ -7,6 +7,7 @@ import childrenRouter from "./api/v1/childrenRouter.js";
 import inviteRouter from "./api/v1/inviteRouter.js";
 import transactionRouter from "./api/v1/transactionRouter.js";
 import allowanceRouter from "./api/v1/allowanceRouter.js";
+import choreRouter from "./api/v1/choreRouter.js";
 
 const rootRouter = new express.Router();
 
@@ -17,5 +18,6 @@ rootRouter.use("/api/v1/children", childrenRouter)
 rootRouter.use("/api/v1/invite", inviteRouter)
 rootRouter.use("/api/v1/transaction", transactionRouter)
 rootRouter.use("/api/v1/allowance", allowanceRouter)
+rootRouter.use("/api/v1/chore", choreRouter)
 
 export default rootRouter;

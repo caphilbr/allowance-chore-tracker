@@ -75,9 +75,14 @@ class Seeder {
       const month = Math.floor(Math.random() * 12) + 1
       const day = Math.floor(Math.random() * 28) + 1
       const date = new Date(2024, month, day)
+      let status = "open"
       let isComplete = false
       if (chore <= 15) {
         isComplete = true
+        status = "done"
+      }
+      if (chore >=16 && chore <= 22) {
+        status = "pending"
       }
       
       await Chore.query().insert({
@@ -87,7 +92,8 @@ class Seeder {
         dueDate: date,
         familyId: family,
         userId: child,
-        isComplete: isComplete
+        isComplete: isComplete,
+        status: status
       })
 
       if (isComplete) {
@@ -96,9 +102,8 @@ class Seeder {
         const date = new Date(2023, month, day)
         await Transaction.query().insert({
           amount: amt,
-          type: "chore",
+          type: `chore: testChore${chore}`,
           paymentDate: date,
-          choreId: chore,
           userId: child
         })
       }
@@ -116,7 +121,6 @@ class Seeder {
         amount: amt,
         type: "adhoc",
         paymentDate: date,
-        choreId: null,
         userId: child
       })
     }

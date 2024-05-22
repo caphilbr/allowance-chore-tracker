@@ -1,53 +1,45 @@
+import nodemailer from "nodemailer"
 import config from "../config.js"
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+// import AWS from "aws-sdk"
 
-
-const emailInvite = async (emailAddress, inviteUrl) => {
+const emailInvite = async (emailAddress, nickname, inviteUrl, code) => {
   
-  const SENDER_ADDRESS = config.email.address
-  const RECIPIENT_ADDRESS = emailAddress
-  const AWS_REGION = "us-east-1"
-  const subject = 'Chore Champion Invite'
-  const bodyHtml = `
-    <h2>From AWS SendMail: You have been invited to join CHORE CHAMPIONS!</h2>
-    <h4>The easy way to manage chores and allowances</h4>
-    <a href="${inviteUrl}">CLICK HERE TO JOIN</a>
-  `
-
-  const sendEmail = async (subject, bodyHtml) => {
-    try {
-      const sesClient = new SESClient({ region: AWS_REGION });
+  // AWS.config.update({
+  //   accessKeyId: config.awsAccess.key,
+  //   secretAccessKey: config.awsSecret.key,
+  //   region: "us-east-1"
+  // })
   
-      const params = {
-        Source: SENDER_ADDRESS,
-        Destination: {
-          ToAddresses: [RECIPIENT_ADDRESS],
-        },
-        Message: {
-          Subject: {
-            Charset: "UTF-8",
-            Data: subject,
-          },
-          Body: {
-            ...(bodyHtml && {
-              Html: {
-                Charset: "UTF-8",
-                Data: bodyHtml,
-              },
-            }),
-          },
-        },
-      };
-
-      const sendEmailCommand = new SendEmailCommand(params);
-      const sendEmailResponse = await sesClient.send(sendEmailCommand);
+  // const transporter = nodemailer.createTransport({
+  //   SES: new AWS.SES({
+  //     apiVersion: '2010-12-01'
+  //   })
+  // });
   
-    } catch (error) {
-      console.error("Error sending email:", error);
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: config.email.address,
+      pass: config.email.password
     }
-  };
+  });
 
-  sendEmail(subject, bodyHtml)
+  const emailHTML = `
+    <h2>${nickname}, you have been invited to join CHORE CHAMPIONS!</h2>
+    <h4>The easy way to manage chores and allowances</h4>
+    <a href="${inviteUrl}">CLICK HERE TO ACCEPT THE INVITE & JOIN</a>
+    <p>You will need this code to join:</p>
+    <h3> CODE: ${code}</h3>
+  `
+  const mailOptions = {
+    from: config.email.address,
+    to: emailAddress,
+    subject: 'Chore Champion Invite',
+    html: emailHTML
+  };
+  const response = await transporter.sendMail(mailOptions);
+  return response
 }
 
 export default emailInvite
