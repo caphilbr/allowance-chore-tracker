@@ -84,12 +84,22 @@ const SignInForm = () => {
     <div className="sign-in-form" onSubmit={onSubmit}>
       <p className="sign-in-up-title">Sign In</p>
 
-      {credentialsErrors ? <p className="callout alert">{credentialsErrors}</p> : null}
+      {credentialsErrors ?
+        <p className="callout alert">{credentialsErrors}</p>
+      :
+        null
+      }
 
       <form>
         <label>
           Username
-          <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="username"
+            value={userPayload.username}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.username} />
         </label>
         <label>

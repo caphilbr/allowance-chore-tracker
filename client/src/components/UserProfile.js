@@ -4,9 +4,7 @@ import ProfilePhoto from "./ProfilePhoto";
 import EditNickname from "./EditNickname";
 import EditEmail from "./EditEmail";
 
-
 const UserProfile = (props) => {
-  
   return (
     <>
       <TopBar user={props.user} />
@@ -15,10 +13,20 @@ const UserProfile = (props) => {
           <ProfilePhoto user={props.user} setCurrentUser={props.setCurrentUser} />
         </div>
         <div className="cell small-12 large-8 profile-page-details">
-          <h4><span>Username: {props.user.username}</span></h4>
-          <h4><EditNickname /><span>Nickname: {props.user.nickname}</span></h4>
-          <h4><EditEmail /><span>Email: {props.user.email}</span></h4>
-          <h4><span>User Type: {props.user.isParent ? "Parent" : "Child"}</span></h4>
+          <h4>
+            <span>Username: {props.user.username}</span>
+          </h4>
+          <h4>
+            <EditNickname />
+            <span>Nickname: {props.user.nickname}</span>
+          </h4>
+          <h4>
+            <EditEmail />
+            <span>Email: {props.user.email}</span>
+          </h4>
+          <h4>
+            <span>User Type: {props.user.isParent ? "Parent" : "Child"}</span>
+          </h4>
         </div>
       </div>
     </>
