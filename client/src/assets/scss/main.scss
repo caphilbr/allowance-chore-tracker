@@ -538,6 +538,24 @@
   margin-bottom: 2rem;
 }
 
+.chore-tile-small-delete-confirm {
+  @extend .chore-tile-small;
+  border: 3px solid red;
+  background-color: rgb(252, 191, 129);
+  color: var(--lightest-color);
+  font-weight: bold;
+  text-shadow: 1px 1px 1px var(--grey-color);
+}
+
+// .chore-tile-small-delete-confirm span {
+//   background-color: red;
+// }
+
+.chore-tile-small-delete-confirm p {
+  color: var(--darkest-color);
+  margin-bottom: 2rem;
+}
+
 .child-pic img {
   margin-bottom: 1.5rem;
 }
@@ -624,10 +642,9 @@
   background-color: darkgreen;
 }
 
-
 .button-styling-small-delete {
   @extend .button-styling-small;
-  background-color: darkred;
+  background-color: red;
 }
 
 .awaiting-approval {
