@@ -36,8 +36,8 @@ class Invite extends Model {
     
     const inviteUrl = "http://localhost:3000/invite"
     try {
-      const { default: emailInvite2 } = await import("./../services/emailInvite2.js");
-      const response = await emailInvite2(this.email, this.nickname, inviteUrl, this.code)
+      const { default: emailInvite } = await import("./../services/emailInvite.js");
+      const response = await emailInvite(this.email, this.nickname, inviteUrl, this.code)
       if (response instanceof Error) {
         const newError = new Error(response.message)
         throw (newError)

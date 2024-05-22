@@ -24,9 +24,8 @@ choreRouter.patch("/pay/:id", async (req, res) => {
 
 choreRouter.patch("/submit/:id", async (req, res) => {
   try {
-    const chore = await Chore.query().findById(req.params.id).patch({ status: "pending" })
-    console.log("chore to submit", chore)
-    res.status(200).json({})
+    const chore = await Chore.query().patchAndFetchById(req.params.id, { status: "pending" })
+    res.status(200).json({ chore })
   } catch(error) {
     console.log(error)
     res.status(500).json({ error })

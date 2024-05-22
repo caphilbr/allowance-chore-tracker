@@ -25,6 +25,11 @@ const ChoreTileSmall = (props) => {
         null
       }
       <p>
+        {props.chore.status != "pending" ?
+          <span className="button-styling-small-pay" onClick={handleAccept}>Pay</span>
+        :
+          null
+        }
         <span className="button-styling-small">Edit</span>
         <span className="button-styling-small-delete">Delete</span>
       </p>

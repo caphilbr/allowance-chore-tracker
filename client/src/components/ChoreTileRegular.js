@@ -8,7 +8,8 @@ const ChoreTileRegular = (props) => {
         `/api/v1/chore/submit/${props.chore.id}`,
         { method: "PATCH" }
       )
-      location.href = "/dashboard"
+      const parsedData = await response.json()
+      props.updateChoreState(parsedData.chore)
     } catch(error) {
       console.log(error)
     }
@@ -25,19 +26,19 @@ const ChoreTileRegular = (props) => {
   }
 
   return(
-    <div className="cell small-12 chore-tile-regular grid-x grid-margin-x">
-      <div className="cell small-6">
+    <div className="cell small-12 large-6 chore-tile-regular grid-x grid-margin-x">
+      <div className="cell">
         <p className="chore-title-regular">{props.chore.name} - ${props.chore.amount}</p>
         <p>Due: {(props.chore.dueDate).slice(0, 10)}</p>
+        {description}
       </div>
-      <p className="cell small-5 chore-tile-buttons">
+      <p className="cell chore-tile-buttons">
         {props.chore.status == "open" ?
           <span className="button-styling" onClick={handleSubmit}>Submit for Payment</span>
         :
-          <span className="awaiting-approval" onClick={handleSubmit}>Awaiting Approval from Parent</span>
+          <span className="awaiting-approval">Awaiting Approval from Parent</span>
         }
       </p>
-      {description}
     </div> 
   )
 }

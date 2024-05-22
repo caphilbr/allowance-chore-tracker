@@ -4,8 +4,9 @@ import Balance from "./Balance"
 import BalanceChart from "./BalanceChart";
 import ChoreTileRegular from "./ChoreTileRegular";
 import ChildPhoto from "./ChildPhoto";
+import sortChoresWithinChild from "../services/sortChoresWithinChild";
 
-const ChildDashboard = (props) => {
+const ChildDashboard = () => {
 
   const [child, setChild] = useState({
     name: "",
@@ -15,14 +16,26 @@ const ChildDashboard = (props) => {
     balance: 0
   })
 
+  const updateChoreState = (updatedChore) => {
+    const newChoreList = child.chores.filter(chore => {
+      return chore.id != updatedChore.id
+    })
+    newChoreList.push(updatedChore)
+    const updatedChild = {
+      ...child,
+      chores: newChoreList
+    }
+    setChild(sortChoresWithinChild(updatedChild))
+  }
+
   const choreList = child.chores.map(chore => {
-    return <ChoreTileRegular key={chore.id} chore={chore} />
+    return <ChoreTileRegular key={chore.id} chore={chore} updateChoreState={updateChoreState} />
   })
 
   useEffect(() => {
     const fetchedData = async () => {
       const fetchedChild = await getChild()
-      setChild(fetchedChild)
+      setChild(sortChoresWithinChild(fetchedChild))
     }
     fetchedData()
   },[])
@@ -46,7 +59,7 @@ const ChildDashboard = (props) => {
       </div>
       <div className="cell grid-x grid-margin-x">
         <div className="cell small-12 child-dash-bottom-left">
-          <h3 className="child-list-header cell">My Assigned Chores</h3>
+          <h3 className="child-dash-title cell">My Assigned Chores</h3>
           <div className="grid-x grid-margin-x">
             {choreList}
           </div>
