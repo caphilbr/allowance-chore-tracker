@@ -5,27 +5,36 @@ import ChildPhoto from "./ChildPhoto"
 import ManageAllowance from "./ManageAllowance"
 import AllowanceSummary from "./AllowanceSummary"
 import BalanceChart from "./BalanceChart"
+import AddChore from "./AddChore"
 
 const ChildDetails = (props) => {
   
   const [showManageAllowance, setShowManageAllowance] = useState(false)
+  const [showAddChore, setShowAddChore] = useState(false)
+
+  const handleAddChore = () => {
+    setShowAddChore(true)
+  }
 
   const choreList = props.child.chores.map(chore => {
     return <ChoreTileSmall key={chore.id} chore={chore} />
   })
 
+  let popOutBox = null
+  if (showManageAllowance) {
+    popOutBox = <ManageAllowance
+      setShowManageAllowance={setShowManageAllowance}
+      child={props.child}
+    />
+  } else if (showAddChore) {
+    popOutBox = <AddChore setShowAddChore={setShowAddChore} child={props.child} addChoreToList={props.addChoreToList} />
+  }
+
   let details = (
     <>
       <h3 className="parent-dash-title">{props.child.nickname}'s Details</h3>
-      <div className="allowance-container grid-x align-center">
-        {showManageAllowance ?
-          <ManageAllowance
-            setShowManageAllowance={setShowManageAllowance}
-            child={props.child}
-          />
-        :
-          null
-        }
+      <div className="popout-container grid-x align-center">
+        {popOutBox}
       </div>
       <div className="grid-x grid-margin-x grid-margin-y child-details scroll">
         <div className="cell small-12 large-6 details-left">
@@ -42,7 +51,7 @@ const ChildDetails = (props) => {
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="chore-title cell small-12">
-          <span className="detail-option-button">Manage Chores</span>
+          <span className="detail-option-button" onClick={handleAddChore}>Add Chore</span>
         </div>
         <div className="cell grid-x grid-margin-x grid-margin-y">
           {choreList}

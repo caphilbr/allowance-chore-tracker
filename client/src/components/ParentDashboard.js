@@ -23,6 +23,11 @@ const ParentDashboard = () => {
   const toggleAddChild = () => {
     setShowAddChild(!showAddChild)
   }
+
+  const addChoreToList = (choreToAdd) => {
+    const updatedChildren = addChoreToChildren(choreToAdd, children)
+    setChildren(sortChoresWithinChildren(updatedChildren))
+  }
   
   const childCount = children.length
   let selectedChild = { chores: [] }
@@ -63,7 +68,7 @@ const ParentDashboard = () => {
         {showAddChild ?
           <AddChild showAddChild={showAddChild} setShowAddChild={setShowAddChild} setEmailStatus={setEmailStatus} />
         :
-          <ChildDetails child={selectedChild} />
+          <ChildDetails child={selectedChild} addChoreToList={addChoreToList} />
         }
       </div>    
     </>

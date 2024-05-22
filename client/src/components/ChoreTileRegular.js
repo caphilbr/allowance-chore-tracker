@@ -16,7 +16,7 @@ const ChoreTileRegular = (props) => {
   }
   
   let description = null
-  if ((props.chore.description).trim() !== "") {
+  if (props.chore.description && props.chore.description != "") {
     description = (
       <div className="cell small-6 description">
         <p>Description:</p>
