@@ -1,44 +1,43 @@
 import React, { useState, useEffect } from "react";
 import getChild from "../services/getChild";
-import Balance from "./Balance"
+import Balance from "./Balance";
 import BalanceChart from "./BalanceChart";
 import ChoreTileRegular from "./ChoreTileRegular";
 import ChildPhoto from "./ChildPhoto";
 import sortChoresWithinChild from "../services/sortChoresWithinChild";
 
 const ChildDashboard = () => {
-
   const [child, setChild] = useState({
     name: "",
     chores: [],
     transactions: [],
     imageUrl: "",
-    balance: 0
-  })
+    balance: 0,
+  });
 
   const updateChoreState = (updatedChore) => {
-    const newChoreList = child.chores.filter(chore => {
-      return chore.id != updatedChore.id
-    })
-    newChoreList.push(updatedChore)
+    const newChoreList = child.chores.filter((chore) => {
+      return chore.id != updatedChore.id;
+    });
+    newChoreList.push(updatedChore);
     const updatedChild = {
       ...child,
-      chores: newChoreList
-    }
-    setChild(sortChoresWithinChild(updatedChild))
-  }
+      chores: newChoreList,
+    };
+    setChild(sortChoresWithinChild(updatedChild));
+  };
 
-  const choreList = child.chores.map(chore => {
-    return <ChoreTileRegular key={chore.id} chore={chore} updateChoreState={updateChoreState} />
-  })
+  const choreList = child.chores.map((chore) => {
+    return <ChoreTileRegular key={chore.id} chore={chore} updateChoreState={updateChoreState} />;
+  });
 
   useEffect(() => {
     const fetchedData = async () => {
-      const fetchedChild = await getChild()
-      setChild(sortChoresWithinChild(fetchedChild))
-    }
-    fetchedData()
-  },[])
+      const fetchedChild = await getChild();
+      setChild(sortChoresWithinChild(fetchedChild));
+    };
+    fetchedData();
+  }, []);
 
   return (
     <div className="grid-x grid-margin-y align-center child-dash-scroll">
@@ -60,13 +59,11 @@ const ChildDashboard = () => {
       <div className="cell grid-x grid-margin-x">
         <div className="cell small-12 child-dash-bottom-left">
           <h3 className="child-dash-title cell">My Assigned Chores</h3>
-          <div className="grid-x grid-margin-x">
-            {choreList}
-          </div>
+          <div className="grid-x grid-margin-x">{choreList}</div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChildDashboard
+export default ChildDashboard;

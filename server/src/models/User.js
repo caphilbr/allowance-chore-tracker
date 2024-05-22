@@ -2,7 +2,7 @@
 const Bcrypt = require("bcrypt");
 const unique = require("objection-unique");
 const Model = require("./Model");
-const currency = require("currency.js")
+const currency = require("currency.js");
 
 const saltRounds = 10;
 
@@ -32,7 +32,7 @@ class User extends uniqueFunc(Model) {
       properties: {
         email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
         cryptedPassword: { type: "string" },
-        username: { type: "string", minLength: 2, maxLength: 30 }
+        username: { type: "string", minLength: 2, maxLength: 30 },
       },
     };
   }
@@ -56,59 +56,60 @@ class User extends uniqueFunc(Model) {
   }
 
   async balance() {
-    let total = currency(0)
-    const transactionArray = await this.$relatedQuery('transactions')
+    let total = currency(0);
+    const transactionArray = await this.$relatedQuery("transactions");
     if (transactionArray) {
-      transactionArray.forEach(transaction => {
-        total = total.add(currency(transaction.amount))
-      })
+      transactionArray.forEach((transaction) => {
+        total = total.add(currency(transaction.amount));
+      });
     }
-    return total
+    return total;
   }
 
   static relationMappings() {
-    const { Chore, Family, Transaction, Allowance, PendingTransaction } = require("./index.js")
-    return{
+    const { Chore, Family, Transaction, Allowance, PendingTransaction } = require("./index.js");
+    return {
       chores: {
         relation: Model.HasManyRelation,
         modelClass: Chore,
         join: {
           from: "users.id",
-          to: "chores.userId"
-        }
+          to: "chores.userId",
+        },
       },
       family: {
         relation: Model.BelongsToOneRelation,
         modelClass: Family,
         join: {
           from: "users.familyId",
-          to: "families.id"
-        }
+          to: "families.id",
+        },
       },
       transactions: {
         relation: Model.HasManyRelation,
         modelClass: Transaction,
         join: {
           from: "users.id",
-          to: "transactions.userId"
-        }
+          to: "transactions.userId",
+        },
       },
       allowance: {
         relation: Model.HasOneRelation,
         modelClass: Allowance,
         join: {
           from: "users.id",
-          to: "allowances.userId"
-        }
+          to: "allowances.userId",
+        },
       },
       pendingTransactions: {
         relation: Model.HasManyRelation,
         modelClass: PendingTransaction,
         join: {
           from: "users.id",
-          to: "pendingTransactions.userId"
-        }}
-    }
+          to: "pendingTransactions.userId",
+        },
+      },
+    };
   }
 }
 

@@ -1,8 +1,8 @@
-const Model = require("./Model.js")
+const Model = require("./Model.js");
 
 class Chore extends Model {
   static get tableName() {
-    return "chores"
+    return "chores";
   }
 
   static get jsonSchema() {
@@ -19,35 +19,35 @@ class Chore extends Model {
           properties: {
             createdAt: {
               type: "string",
-              format: "date"
-            }
-          }
+              format: "date",
+            },
+          },
         },
         imageUrl: { type: "string" },
       },
-    }
+    };
   }
 
   static relationMappings() {
-    const { User, Family } = require("./index.js")
-    return{
+    const { User, Family } = require("./index.js");
+    return {
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
           from: "chores.userId",
-          to: "users.id"
-        }
+          to: "users.id",
+        },
       },
       family: {
         relation: Model.BelongsToOneRelation,
         modelClass: Family,
         join: {
           from: "chores.familyId",
-          to: "families.id"
-        }
-      }
-    }
+          to: "families.id",
+        },
+      },
+    };
   }
 }
 

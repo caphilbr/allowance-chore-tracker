@@ -1,8 +1,8 @@
-const Model = require("./Model.js")
+const Model = require("./Model.js");
 
 class Family extends Model {
   static get tableName() {
-    return "families"
+    return "families";
   }
 
   static get jsonSchema() {
@@ -11,51 +11,51 @@ class Family extends Model {
       required: ["name"],
 
       properties: {
-        name: { type: "string", minLength: 2, maxLength: 30 }
+        name: { type: "string", minLength: 2, maxLength: 30 },
       },
-    }
+    };
   }
 
   static relationMappings() {
-    const { Chore, User, Allowance } = require("./index.js")
-    return{
+    const { Chore, User, Allowance } = require("./index.js");
+    return {
       chores: {
         relation: Model.HasManyRelation,
         modelClass: Chore,
         join: {
           from: "families.id",
-          to: "chores.familyId"
-        }
+          to: "chores.familyId",
+        },
       },
       users: {
         relation: Model.HasManyRelation,
         modelClass: User,
         join: {
           from: "families.id",
-          to: "users.familyId"
-        }
+          to: "users.familyId",
+        },
       },
       allowances: {
         relation: Model.HasManyRelation,
         modelClass: Allowance,
         join: {
           from: "families.id",
-          to: "allowances.familyId"
-        }
-      }
-    }
+          to: "allowances.familyId",
+        },
+      },
+    };
   }
 
   async children() {
-    const users = await this.$relatedQuery("users")
+    const users = await this.$relatedQuery("users");
     if (users) {
-      const children = users.filter(user => {
-        return !user.isParent
-      })
-      return children
+      const children = users.filter((user) => {
+        return !user.isParent;
+      });
+      return children;
     }
-    return []    
+    return [];
   }
 }
 
-module.exports = Family
+module.exports = Family;
