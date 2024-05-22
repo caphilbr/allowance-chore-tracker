@@ -1,45 +1,57 @@
-import React, { useState } from "react"
-import Balance from "./Balance"
-import ChoreTileSmall from "./ChoreTileSmall"
-import ChildPhoto from "./ChildPhoto"
-import ManageAllowance from "./ManageAllowance"
-import AllowanceSummary from "./AllowanceSummary"
-import BalanceChart from "./BalanceChart"
-import AddChore from "./AddChore"
+import React, { useState } from "react";
+import Balance from "./Balance";
+import ChoreTileSmall from "./ChoreTileSmall";
+import ChildPhoto from "./ChildPhoto";
+import ManageAllowance from "./ManageAllowance";
+import AllowanceSummary from "./AllowanceSummary";
+import BalanceChart from "./BalanceChart";
+import AddChore from "./AddChore";
 
 const ChildDetails = (props) => {
-  
-  const [showManageAllowance, setShowManageAllowance] = useState(false)
-  const [showAddChore, setShowAddChore] = useState(false)
+  const [showManageAllowance, setShowManageAllowance] = useState(false);
+  const [showAddChore, setShowAddChore] = useState(false);
 
   const handleAddChore = () => {
-    setShowAddChore(true)
-  }
+    setShowAddChore(true);
+  };
 
-  const choreList = props.child.chores.map(chore => {
-    return <ChoreTileSmall key={chore.id} chore={chore} payChore={props.payChore} removeChore={props.removeChore} />
-  })
+  const choreList = props.child.chores.map((chore) => {
+    return (
+      <ChoreTileSmall
+        key={chore.id}
+        chore={chore}
+        payChore={props.payChore}
+        removeChore={props.removeChore}
+      />
+    );
+  });
 
-  let popOutBox = null
+  let popOutBox = null;
   if (showManageAllowance) {
-    popOutBox = <ManageAllowance
-      setShowManageAllowance={setShowManageAllowance}
-      child={props.child}
-    />
+    popOutBox = (
+      <ManageAllowance setShowManageAllowance={setShowManageAllowance} child={props.child} />
+    );
   } else if (showAddChore) {
-    popOutBox = <AddChore setShowAddChore={setShowAddChore} child={props.child} addChoreToList={props.addChoreToList} />
+    popOutBox = (
+      <AddChore
+        setShowAddChore={setShowAddChore}
+        child={props.child}
+        addChoreToList={props.addChoreToList}
+      />
+    );
   }
-  
+
   let details = (
     <>
       <h3 className="parent-dash-title">{props.child.nickname}'s Details</h3>
-      <div className="popout-container grid-x align-center">
-        {popOutBox}
-      </div>
+      <div className="popout-container grid-x align-center">{popOutBox}</div>
       <div className="grid-x grid-margin-x grid-margin-y child-details scroll">
         <div className="cell small-12 large-6 details-left">
           <ChildPhoto child={props.child} />
-          <AllowanceSummary setShowManageAllowance={setShowManageAllowance} allowance={props.child.allowance} />
+          <AllowanceSummary
+            setShowManageAllowance={setShowManageAllowance}
+            allowance={props.child.allowance}
+          />
         </div>
         <div className="cell small-12 large-6 details-right">
           <Balance child={props.child} />
@@ -51,28 +63,26 @@ const ChildDetails = (props) => {
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="chore-title cell small-12">
-          <span className="detail-option-button" onClick={handleAddChore}>Add Chore</span>
+          <span className="detail-option-button" onClick={handleAddChore}>
+            Add Chore
+          </span>
         </div>
-        <div className="cell grid-x grid-margin-x grid-margin-y">
-          {choreList}
-        </div>
+        <div className="cell grid-x grid-margin-x grid-margin-y">{choreList}</div>
       </div>
     </>
-  )
+  );
 
   if (props.child.username === "") {
     details = (
       <div>
-        <p className="select-child-message">Select a child <br/> from the left</p>
+        <p className="select-child-message">
+          Select a child <br /> from the left
+        </p>
       </div>
-    )
+    );
   }
 
-  return (
-    <>
-      {details}
-    </>
-  )
-}
+  return <>{details}</>;
+};
 
-export default ChildDetails
+export default ChildDetails;

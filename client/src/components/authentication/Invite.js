@@ -30,7 +30,9 @@ const Invite = (props) => {
             className="cell small-12 landing-title"
             src={config.titleFontUrl}
           />
-          <span className="cell small-12 landing-slogan">Invitation to Join</span>
+          <span className="cell small-12 landing-slogan">
+            Invitation to Join
+          </span>
           {props.user ? 
             <>
               <p className="show-more-contents">
@@ -39,7 +41,9 @@ const Invite = (props) => {
                 visit your Dashboard.
                 </p>  
               <div className="cell intro-button-container">
-                <span className="landing-page-button" onClick={goDashboard}>My Dashboard</span>
+                <span className="landing-page-button" onClick={goDashboard}>
+                  My Dashboard
+                </span>
                 <span className="landing-page-button"><SignOutButton /></span>
               </div>
             </>
@@ -48,7 +52,10 @@ const Invite = (props) => {
               {isValidCode ?
                 <InviteRegistrationForm invite={invite} />
                 :
-                <InviteCodeForm setInvite={setInvite} setIsValidCode={setIsValidCode} />
+                <InviteCodeForm
+                  setInvite={setInvite}
+                  setIsValidCode={setIsValidCode}
+                />
               }
             </>
           }

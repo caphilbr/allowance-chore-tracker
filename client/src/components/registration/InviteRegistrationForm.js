@@ -7,21 +7,17 @@ const InviteRegistrationForm = (props) => {
   const [userPayload, setUserPayload] = useState({
     username: "",
     password: "",
-    passwordConfirmation: ""
+    passwordConfirmation: "",
   });
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
-  const [shouldGoHome, setShouldGoHome] = useState(false)
+  const [shouldGoHome, setShouldGoHome] = useState(false);
   const [shouldGoProfile, setShouldGoProfile] = useState(false);
 
   const validateInput = (payload) => {
     setErrors({});
     setServerErrors({});
-    const {
-      username,
-      password,
-      passwordConfirmation,
-    } = payload
+    const { username, password, passwordConfirmation } = payload;
     let newErrors = {};
     if (password.trim() == "") {
       newErrors = {
@@ -68,8 +64,8 @@ const InviteRegistrationForm = (props) => {
           isParent: false,
           imageUrl: "",
           familyId: props.invite.familyId,
-          inviteId: props.invite.id
-        }
+          inviteId: props.invite.id,
+        };
         const response = await fetch("/api/v1/users/child", {
           method: "POST",
           body: JSON.stringify(fullUserPayload),
@@ -102,25 +98,25 @@ const InviteRegistrationForm = (props) => {
   };
 
   const goHome = () => {
-    setShouldGoHome(true)
-  }
+    setShouldGoHome(true);
+  };
 
   const clearForm = () => {
     setUserPayload({
       username: "",
       password: "",
-      passwordConfirmation: ""
-    })
-  }
+      passwordConfirmation: "",
+    });
+  };
 
-  const inviteMessage = `Your parent has already provided your email and nickname. Simply choose a username and password and you'll get access to Chore Champions!`
+  const inviteMessage = `Your parent has already provided your email and nickname. Simply choose a username and password and you'll get access to Chore Champions!`;
 
   if (shouldGoProfile) {
-    location.href = "/profile"
+    location.href = "/profile";
   }
 
   if (shouldGoHome) {
-    location.href = "/"
+    location.href = "/";
   }
 
   return (
@@ -130,7 +126,13 @@ const InviteRegistrationForm = (props) => {
       <form onSubmit={onSubmit}>
         <label>
           Username
-          <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="username"
+            value={userPayload.username}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.username} />
         </label>
         <label>
@@ -156,8 +158,12 @@ const InviteRegistrationForm = (props) => {
           <FormError error={errors.passwordConfirmation} />
         </label>
         <input type="submit" className="landing-page-button" value="Register" />
-        <span className="landing-page-button" onClick={goHome}>Home</span>
-        <span className="landing-page-button" onClick={clearForm}>Clear</span>
+        <span className="landing-page-button" onClick={goHome}>
+          Home
+        </span>
+        <span className="landing-page-button" onClick={clearForm}>
+          Clear
+        </span>
       </form>
     </div>
   );

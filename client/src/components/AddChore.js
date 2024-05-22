@@ -1,31 +1,26 @@
-import React, { useState } from "react"
-import ErrorList from "./layout/ErrorList"
-import FormError from "./layout/FormError"
-import isDateInPast from "../services/isDateInPast"
-import config from "../config"
-import postChore from "../services/postChore"
+import React, { useState } from "react";
+import ErrorList from "./layout/ErrorList";
+import FormError from "./layout/FormError";
+import isDateInPast from "../services/isDateInPast";
+import config from "../config";
+import postChore from "../services/postChore";
 
 const AddChore = (props) => {
-
   const [chorePayload, setChorePayload] = useState({
     name: "",
     description: "",
     amount: "",
-    dueDate: ""
-  })
-  const [errors, setErrors] = useState({})
-  const [serverErrors, setServerErrors] = useState({})
+    dueDate: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState({});
 
   const validateInput = (payload) => {
     setErrors({});
     setServerErrors({});
-    const {
-      name,
-      amount,
-      dueDate
-    } = payload
-    const currencyRegexp = config.validation.currency.regexp.currencyRegex
-    const dateRegexp = config.validation.date.regexp.dateRegex
+    const { name, amount, dueDate } = payload;
+    const currencyRegexp = config.validation.currency.regexp.currencyRegex;
+    const dateRegexp = config.validation.date.regexp.dateRegex;
     let newErrors = {};
     if (!amount.match(currencyRegexp)) {
       newErrors = {
@@ -49,7 +44,7 @@ const AddChore = (props) => {
       newErrors = {
         ...newErrors,
         dueDate: "Cannot set due date in the past",
-      };      
+      };
     }
     if (name.trim() == "") {
       newErrors = {
@@ -64,46 +59,46 @@ const AddChore = (props) => {
     }
     return false;
   };
-  
+
   const setFullPayload = (currentPayload) => {
     return {
       ...currentPayload,
       status: "open",
       isComplete: false,
       familyId: props.child.familyId,
-      userId: props.child.id
-    }
-  }
+      userId: props.child.id,
+    };
+  };
 
   const handleCancel = () => {
-    props.setShowAddChore(false)
-  }
+    props.setShowAddChore(false);
+  };
 
   const onSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (validateInput(chorePayload)) {
       try {
-        const fullPayLoad = setFullPayload(chorePayload)
-        const response = await postChore(fullPayLoad)
+        const fullPayLoad = setFullPayload(chorePayload);
+        const response = await postChore(fullPayLoad);
         if (!response.ok) {
           if (response.status === 422) {
-            setServerErrors(response.error)
+            setServerErrors(response.error);
           } else {
-            const errorMessage = `${response.status} (${response.error.message})`
-            const error = new Error(errorMessage)
-            throw error
+            const errorMessage = `${response.status} (${response.error.message})`;
+            const error = new Error(errorMessage);
+            throw error;
           }
         } else {
-          const newChore = response.body
-          console.log(newChore)
-          props.addChoreToList(newChore)
+          const newChore = response.body;
+          console.log(newChore);
+          props.addChoreToList(newChore);
         }
-      } catch(error) {
-        console.error(`Error in fetch: ${error.message}`)
-        location.href = "/dashboard"
+      } catch (error) {
+        console.error(`Error in fetch: ${error.message}`);
+        location.href = "/dashboard";
       }
     }
-  }
+  };
 
   const onInputChange = (event) => {
     setChorePayload({
@@ -114,34 +109,60 @@ const AddChore = (props) => {
 
   return (
     <div className="manage-allowance">
-      <h3>Add New Chore to {props.child.nickname}</h3>      
+      <h3>Add New Chore to {props.child.nickname}</h3>
       <form onSubmit={onSubmit}>
         <ErrorList errors={serverErrors} />
         <label>
           Chore Name
-          <input type="text" name="name" value={chorePayload.name} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="name"
+            value={chorePayload.name}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.name} />
         </label>
         <label>
           Description
-          <input type="text" name="description" value={chorePayload.description} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="description"
+            value={chorePayload.description}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.description} />
         </label>
         <label>
           Amount
-          <input type="text" name="amount" value={chorePayload.amount} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="amount"
+            value={chorePayload.amount}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.amount} />
         </label>
         <label>
           Due Date
-          <input type="date" name="dueDate" value={chorePayload.dueDate} onChange={onInputChange} className="form-field" />
+          <input
+            type="date"
+            name="dueDate"
+            value={chorePayload.dueDate}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.dueDate} />
         </label>
         <input type="submit" className="allowance-button" value="Submit Chore" />
-        <span className="allowance-button" onClick={handleCancel}>Cancel</span>
+        <span className="allowance-button" onClick={handleCancel}>
+          Cancel
+        </span>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddChore
+export default AddChore;

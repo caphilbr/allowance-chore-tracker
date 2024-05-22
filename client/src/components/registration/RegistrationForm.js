@@ -13,24 +13,18 @@ const RegistrationForm = () => {
     password: "",
     passwordConfirmation: "",
     isParent: true,
-    imageUrl: ""
+    imageUrl: "",
   });
 
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
-  const [shouldGoHome, setShouldGoHome] = useState(false)
+  const [shouldGoHome, setShouldGoHome] = useState(false);
   const [shouldGoProfile, setShouldGoProfile] = useState(false);
 
   const validateInput = (payload) => {
     setErrors({});
     setServerErrors({});
-    const {
-      email,
-      username,
-      password,
-      passwordConfirmation,
-      familyName
-    } = payload
+    const { email, username, password, passwordConfirmation, familyName } = payload;
     const emailRegexp = config.validation.email.regexp.emailRegex;
     let newErrors = {};
     if (!email.match(emailRegexp)) {
@@ -115,36 +109,57 @@ const RegistrationForm = () => {
   };
 
   if (shouldGoProfile) {
-    location.href = "/profile"
+    location.href = "/profile";
   }
 
   if (shouldGoHome) {
-    location.href = "/"
+    location.href = "/";
   }
-  
+
   const goHome = () => {
-    setShouldGoHome(true)
-  }
+    setShouldGoHome(true);
+  };
 
   return (
     <div className="sign-in-form">
       <p className="sign-in-up-title">Register a new Family</p>
-      <p className="reg-notice">If you want to add a child or spouse to a an existing family, please login to add them instead of using this form</p>
+      <p className="reg-notice">
+        If you want to add a child or spouse to a an existing family, please login to add them
+        instead of using this form
+      </p>
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
         <label>
           Username
-          <input type="text" name="username" value={userPayload.username} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="username"
+            value={userPayload.username}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.username} />
         </label>
         <label>
           Family Name
-          <input type="text" name="familyName" value={userPayload.familyName} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="familyName"
+            value={userPayload.familyName}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.familyName} />
         </label>
         <label>
           Parent Email
-          <input type="text" name="email" value={userPayload.email} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="email"
+            value={userPayload.email}
+            onChange={onInputChange}
+            className="form-field"
+          />
           <FormError error={errors.email} />
         </label>
         <label>
@@ -170,7 +185,9 @@ const RegistrationForm = () => {
           <FormError error={errors.passwordConfirmation} />
         </label>
         <input type="submit" className="landing-page-button" value="Register" />
-        <span className="landing-page-button" onClick={goHome}>Home</span>
+        <span className="landing-page-button" onClick={goHome}>
+          Home
+        </span>
       </form>
     </div>
   );

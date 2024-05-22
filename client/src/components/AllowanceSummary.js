@@ -1,16 +1,13 @@
-import React from "react"
+import React from "react";
 
 const AllowanceSummary = (props) => {
-  
-  
   const handleManageAllowClick = () => {
-    props.setShowManageAllowance(true)
-  }
-  
-  
+    props.setShowManageAllowance(true);
+  };
+
   return (
     <div className="allowance-summary">
-      {props.allowance ? 
+      {props.allowance ? (
         <>
           <p>Current Allowance</p>
           <div className="horizontal-line" />
@@ -31,12 +28,16 @@ const AllowanceSummary = (props) => {
             </tbody>
           </table>
         </>
-        :
-        <p>No allowance has been set</p>     
-      }
-      <div className="manage-allowance-button-container"><span className="detail-option-button" onClick={handleManageAllowClick}>Manage Allowance</span></div>
+      ) : (
+        <p>No allowance has been set</p>
+      )}
+      <div className="manage-allowance-button-container">
+        <span className="detail-option-button" onClick={handleManageAllowClick}>
+          Manage Allowance
+        </span>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AllowanceSummary
+export default AllowanceSummary;

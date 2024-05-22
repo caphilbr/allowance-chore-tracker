@@ -1,15 +1,14 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import FormError from "./layout/FormError";
-import config from "./../config.js"
+import config from "./../config.js";
 
 const AddChild = (props) => {
-
   const [userPayload, setUserPayload] = useState({
     email: "",
-    nickname: ""
-  })
+    nickname: "",
+  });
   const [errors, setErrors] = useState({});
-  const [showWaiting, setShowWaiting] = useState(false)
+  const [showWaiting, setShowWaiting] = useState(false);
 
   const validateInput = (payload) => {
     setErrors({});
@@ -33,13 +32,13 @@ const AddChild = (props) => {
       return true;
     }
     return false;
-  }
+  };
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    if(validateInput(userPayload)) {
+    event.preventDefault();
+    if (validateInput(userPayload)) {
       try {
-        setShowWaiting(true)
+        setShowWaiting(true);
         const response = await fetch("/api/v1/invite/email", {
           method: "POST",
           body: JSON.stringify(userPayload),
@@ -48,50 +47,66 @@ const AddChild = (props) => {
           }),
         });
         if (!response.ok) {
-          const newError = new Error(response.statusText)
-          throw(newError)
+          const newError = new Error(response.statusText);
+          throw newError;
         }
-        setShowWaiting(false)
-        props.setEmailStatus('success')
-        props.setShowAddChild(!props.showAddChild)
+        setShowWaiting(false);
+        props.setEmailStatus("success");
+        props.setShowAddChild(!props.showAddChild);
       } catch (err) {
-        props.setEmailStatus('error')
-        props.setShowAddChild(!props.showAddChild)
+        props.setEmailStatus("error");
+        props.setShowAddChild(!props.showAddChild);
         console.error(`Error in sending email: ${err.message}`);
       }
     }
-  }
+  };
 
   const handleChange = (event) => {
     setUserPayload({
       ...userPayload,
       [event.currentTarget.name]: event.currentTarget.value,
     });
-  }
+  };
 
   const handleCancel = () => {
-    props.setEmailStatus('')
-    setShowWaiting(false)
-    props.setShowAddChild(!props.showAddChild)
-  }
+    props.setEmailStatus("");
+    setShowWaiting(false);
+    props.setShowAddChild(!props.showAddChild);
+  };
 
   return (
     <div className="invite-form">
       <form onSubmit={handleSubmit}>
-        <label>Child Email
-          <input type="text" name="email" value={userPayload.email} onChange={handleChange} className="form-field" />
+        <label>
+          Child Email
+          <input
+            type="text"
+            name="email"
+            value={userPayload.email}
+            onChange={handleChange}
+            className="form-field"
+          />
           <FormError error={errors.email} />
         </label>
-        <label>Child Name
-          <input type="text" name="nickname" value={userPayload.nickname} onChange={handleChange} className="form-field" />
+        <label>
+          Child Name
+          <input
+            type="text"
+            name="nickname"
+            value={userPayload.nickname}
+            onChange={handleChange}
+            className="form-field"
+          />
           <FormError error={errors.nickname} />
         </label>
         {showWaiting ? <p className="email-message">Sending email...</p> : null}
         <input type="submit" className="landing-page-button" value="Invite Child" />
-        <span className="landing-page-button" onClick={handleCancel}>Cancel</span>
+        <span className="landing-page-button" onClick={handleCancel}>
+          Cancel
+        </span>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddChild
+export default AddChild;
