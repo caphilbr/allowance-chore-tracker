@@ -7,6 +7,7 @@ import sortChoresWithinChildren from "../services/sortChoresWithinChildren";
 import removeChoreFromChildren from "../services/removeChoreFromChildren";
 import payChoreAndUpdateChildren from "../services/payChoreAndUpdateChildren";
 import editChoreWithinChildren from "../services/editChoreWithinChildren";
+import addTransactionToChildren from "../services/addTransactionToChildren"
 
 const ParentDashboard = () => {
   const [showAddChild, setShowAddChild] = useState(false);
@@ -25,6 +26,11 @@ const ParentDashboard = () => {
   const toggleAddChild = () => {
     setShowAddChild(!showAddChild);
   };
+
+  const addTranscation = (transactionToAdd) => {
+    const updatedChildren = addTransactionToChildren(transactionToAdd, children);
+    setChildren(updatedChildren)
+  }
 
   const addChoreToList = (choreToAdd) => {
     const updatedChildren = addChoreToChildren(choreToAdd, children);
@@ -98,6 +104,7 @@ const ParentDashboard = () => {
             addChoreToList={addChoreToList}
             removeChore={removeChore}
             payChore={payChore}
+            addTranscation={addTranscation}
           />
         )}
       </div>

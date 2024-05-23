@@ -14,7 +14,7 @@ const config = {
     },
     currency: {
       regexp: {
-        currencyRegex: /^\$?(\d+(,\d{3})*(\.\d{1,2})?)?$/,
+        currencyRegex: /^(\$)?(-?\d+(,\d{3})*(\.\d{1,2})?)?$/,
       }
     },
     date: {

@@ -1,6 +1,5 @@
 const isDateInPast = (dateString) => {
 
-  console.log(dateString)
   const dateObject = new Date(dateString);
   const userOffset = dateObject.getTimezoneOffset() / 60;
   dateObject.setHours(dateObject.getHours() + userOffset);
