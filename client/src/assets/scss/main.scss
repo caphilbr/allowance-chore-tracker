@@ -351,6 +351,18 @@
   max-height: 350px;
 }
 
+.profile-page-details td {
+  font-size: 125%;
+}
+
+.profile-category {
+  font-weight: bold;
+}
+
+.profile-category span {
+  color: var(--darkest-color);
+}
+
 .test {
   background-color: black;
 }
@@ -425,7 +437,7 @@
 }
 
 .form-error {
-  color: var(--lightest-color);
+  // color: var(--lightest-color);
   font-size: 100%;
 }
 

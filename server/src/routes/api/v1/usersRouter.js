@@ -6,6 +6,28 @@ import config from "../../../config.js";
 
 const usersRouter = new express.Router();
 
+
+usersRouter.patch("/", async (req, res) => {
+  try {
+    const updatedUser = {
+      ...req.user,
+      email: req.body.email,
+      nickname: req.body.nickname
+    }
+    const persistedUser = await User.query().updateAndFetchById(updatedUser.id, updatedUser)
+    res.status(200).json({ user: persistedUser });
+
+  } catch(error) {
+    console.log(error)
+    if (error instanceof ValidationError) {
+      res.status(422).json({ errors: error.data });
+    } else {
+      console.log(error);
+      res.status(500).json({ error });
+    }
+  }
+})
+
 usersRouter.post("/imageUrl/:id", uploadImage.single("image"), async (req, res) => {
   try {
     const child = await User.query().findById(req.params.id);
