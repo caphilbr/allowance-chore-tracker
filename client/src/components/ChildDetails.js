@@ -7,13 +7,19 @@ import AllowanceSummary from "./AllowanceSummary";
 import BalanceChart from "./BalanceChart";
 import AddChore from "./AddChore";
 import EditChore from "./EditChore";
+import ManualTransaction from "./ManualTransaction";
 
 const ChildDetails = (props) => {
   const [showManageAllowance, setShowManageAllowance] = useState(false);
   const [showAddChore, setShowAddChore] = useState(false);
   const [showEditChore, setShowEditChore] = useState(false);
+  const [showManualTransaction, setShowManualTransaction] = useState(false)
   const [choreToEdit, setChoreToEdit] = useState({})
 
+  const handleManualTransaction = () => {
+    setShowManualTransaction(true)
+  }
+  
   const handleAddChore = () => {
     setShowAddChore(true);
   };
@@ -56,6 +62,14 @@ const ChildDetails = (props) => {
         chore={choreToEdit}
       />
     )
+  } else if (showManualTransaction) {
+    popOutBox = (
+      <ManualTransaction
+        child={props.child}
+        setShowManualTransaction={setShowManualTransaction}
+        addTranscation={props.addTranscation}
+      />
+    )
   }
 
   let details = (
@@ -72,6 +86,9 @@ const ChildDetails = (props) => {
         </div>
         <div className="cell small-12 large-6 details-right">
           <Balance child={props.child} />
+          <span className="button-styling" onClick={handleManualTransaction}>
+            Add Manual Transaction
+          </span>
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="cell small-12 chart-container">
