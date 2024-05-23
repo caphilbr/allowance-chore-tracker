@@ -20,7 +20,7 @@ const App = () => {
       setCurrentUser(null);
     }
   };
-
+  console.log('user in app.js ->', currentUser)
   useEffect(() => {
     fetchCurrentUser();
   }, []);
@@ -28,7 +28,7 @@ const App = () => {
   let dashBoardContent = (
     <>
       <TopBar user={currentUser} />
-      <Dashboard user={currentUser} />
+      <Dashboard setCurrentUser={setCurrentUser} user={currentUser} />
     </>
   )
   if (!currentUser) {

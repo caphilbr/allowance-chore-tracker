@@ -34,7 +34,7 @@ class ChildrenSerializer {
   };
 
   static childDashboard = async (child) => {
-    const allowedFields = ["id", "nickname", "chores", "imageUrl", "familyId"];
+    const allowedFields = ["id", "nickname", "chores", "imageUrl", "familyId", "quizDate"];
     const serializedChild = {};
     allowedFields.forEach((field) => {
       serializedChild[field] = child[field];
@@ -57,6 +57,28 @@ class ChildrenSerializer {
     }
     return serializedChild;
   };
+
+  static fullChildUser = async (child) => {
+    const serializedChild = child;
+    serializedChild.chores = await ChoreSerializer.dashboard(child);
+    serializedChild.balance = await child.balance();
+    const relatedTransactions = await child.$relatedQuery("transactions");
+    if (relatedTransactions) {
+      const serializedTransactions =
+        TransactionSerializer.summaryforBalanceList(relatedTransactions);
+      serializedChild.transactions = serializedTransactions;
+    } else {
+      serializedChild.transactions = [];
+    }
+    const relatedAllowance = await child.$relatedQuery("allowance");
+    if (relatedAllowance) {
+      serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance);
+    } else {
+      serializedChild.allowance = null;
+    }
+    return serializedChild;
+  };
+
 }
 
 export default ChildrenSerializer;

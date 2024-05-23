@@ -106,7 +106,7 @@ const AddChore = (props) => {
   };
 
   return (
-    <div className="manage-allowance">
+    <div className="popout-box">
       <h3>Add New Chore to {props.child.nickname}</h3>
       <form onSubmit={onSubmit}>
         <ErrorList errors={serverErrors} />

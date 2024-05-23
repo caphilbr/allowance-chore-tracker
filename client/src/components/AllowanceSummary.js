@@ -31,7 +31,7 @@ const AllowanceSummary = (props) => {
       ) : (
         <p>No allowance has been set</p>
       )}
-      <div className="manage-allowance-button-container">
+      <div className="popout-box-button-container">
         <span className="detail-option-button" onClick={handleManageAllowClick}>
           Manage Allowance
         </span>

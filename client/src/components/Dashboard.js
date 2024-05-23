@@ -5,7 +5,8 @@ import ChildDashboard from "./ChildDashboard"
 
 const Dashboard = (props) => {
 
-  let mainContent = <ChildDashboard />
+  console.log('user in Dashboard.js ->', props.user)
+  let mainContent = <ChildDashboard user={props.user} setCurrentUser={props.setCurrentUser}/>
   if (props.user.isParent) {
     mainContent = <ParentDashboard />
   }

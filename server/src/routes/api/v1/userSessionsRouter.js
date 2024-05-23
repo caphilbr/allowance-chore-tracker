@@ -1,5 +1,7 @@
 import express from "express";
 import passport from "passport";
+import ChildrenSerializer from "./../../../serializers/ChildrenSerializer.js"
+import Allowance from "../../../models/Allowance.js";
 
 const sessionRouter = new express.Router();
 
@@ -25,7 +27,20 @@ sessionRouter.post("/", (req, res, next) => {
 
 sessionRouter.get("/current", async (req, res) => {
   if (req.user) {
-    res.status(200).json(req.user);
+    try {
+      const family = await (req.user).$relatedQuery("family")
+      await Allowance.processPendingAllowances(family.id)
+      if (!(req.user.isParent)) {
+        const child = await ChildrenSerializer.fullChildUser(req.user);
+        console.log('child is ', child)
+        res.status(200).json(child);
+      }
+      console.log('req.user is ', req.user)
+      res.status(200).json(req.user);
+    } catch(error) {
+      console.log('uanble to update pending allowances (or perhaps get the child details)', error.message)
+      res.status(500).json({ error })
+    }
   } else {
     res.status(401).json(undefined);
   }

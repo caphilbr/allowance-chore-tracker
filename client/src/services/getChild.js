@@ -1,6 +1,6 @@
 const getChild = async () => {
   try {
-    const response = await fetch("/api/v1/children/current")
+    const response = await fetch("/api/v1/users/child-version")
     const parsedData = await response.json()
     return parsedData.child
   } catch(error) {

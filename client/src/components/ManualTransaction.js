@@ -70,7 +70,7 @@ const ManualTransaction = (props) => {
         }
       } catch(error) {
         console.error(`Error in fetch: ${error.message}`);
-        // location.href = "/dashboard";
+        location.href = "/dashboard";
       }
     }
   }
@@ -87,7 +87,7 @@ const ManualTransaction = (props) => {
   }
 
   return (
-    <div className="manage-allowance">
+    <div className="popout-box">
       <h3>New Manual Transaction</h3>
       <form onSubmit={onSubmit}>
       <ErrorList errors={serverErrors} />

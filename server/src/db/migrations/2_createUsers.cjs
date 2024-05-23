@@ -13,6 +13,7 @@ exports.up = async (knex) => {
     table.string("nickname").notNullable()
     table.string("email")
     table.string("imageUrl")
+    table.date("quizDate").defaultTo("2000-12-31")
     table.boolean("isParent").notNullable().defaultTo(false)
     table.bigInteger("familyId").notNullable().unsigned().index().references("families.id")
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())

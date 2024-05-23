@@ -9,14 +9,15 @@ const usersRouter = new express.Router();
 
 usersRouter.patch("/", async (req, res) => {
   try {
-    const updatedUser = {
-      ...req.user,
-      email: req.body.email,
-      nickname: req.body.nickname
-    }
+    let updatedUser = req.user
+    Object.keys(req.body).forEach(key => {
+      updatedUser = {
+        ...updatedUser,
+        [key]: req.body[key]
+      }
+    })
     const persistedUser = await User.query().updateAndFetchById(updatedUser.id, updatedUser)
     res.status(200).json({ user: persistedUser });
-
   } catch(error) {
     console.log(error)
     if (error instanceof ValidationError) {
