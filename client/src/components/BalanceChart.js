@@ -20,18 +20,18 @@ const BalanceChart = (props) => {
     const height = 400 - margin.top - margin.bottom
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-
+    
     d3.select(svgRef.current).selectAll("*").remove()
     const svg = d3.select(svgRef.current)
-      .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('preserveAspectRatio', 'xMinYMin meet')
-      .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`)
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('preserveAspectRatio', 'xMinYMin meet')
+    .append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`)
     const x = d3.scaleTime().range([0, innerWidth]);
     const y = d3.scaleLinear().range([innerHeight, 0]);
     const valueline = d3.line()
-      .x(d => x(d.date))
-      .y(d => y(d.balance));
+    .x(d => x(d.date))
+    .y(d => y(d.balance));
     const axisEndPoints = graphAxis(
       new Date(d3.min(transactionsWithBalance, d => d.date)),
       d3.min(transactionsWithBalance, d => d.balance),
@@ -39,7 +39,7 @@ const BalanceChart = (props) => {
     )
     x.domain([axisEndPoints.xMin, axisEndPoints.xMax]);
     y.domain([axisEndPoints.yMin, axisEndPoints.yMax]);
-
+    
     svg.append('path')
       .data([transactionsWithBalance])
       .attr('class', 'line')
@@ -89,7 +89,6 @@ const BalanceChart = (props) => {
         .tickFormat(d => `$${d}`)
         .ticks(5)
       )
-    
    }, [props])
 
   return(

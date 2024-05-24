@@ -9,6 +9,7 @@ import payChoreAndUpdateChildren from "../services/payChoreAndUpdateChildren";
 import editChoreWithinChildren from "../services/editChoreWithinChildren";
 import addTransactionToChildren from "../services/addTransactionToChildren"
 import addChoreToChildren from "../services/addChoreToChildren"
+import ChildListHorizontal from "./ChildListHorizontal";
 
 const ParentDashboard = () => {
   const [showAddChild, setShowAddChild] = useState(false);
@@ -69,7 +70,14 @@ const ParentDashboard = () => {
   }
 
   const childrenList = children.map((child) => {
-    return <ChildTile key={child.id} child={child} setSelectedChildId={setSelectedChildId} />;
+    return (
+      <ChildTile
+        key={child.id}
+        child={child}
+        setSelectedChildId={setSelectedChildId}
+        selectedChildId={selectedChildId}
+      />
+    )
   });
 
   let emailMessage = "";
@@ -81,17 +89,9 @@ const ParentDashboard = () => {
   }
 
   let contentHolder = (
-    <>
-      <div className="cell small-4 medium-3 large-2 child-list">
-        <h3 className="parent-dash-title">Children</h3>
-        <div className="add-child-button">
-          <span className="button-styling" onClick={toggleAddChild}>
-            Add Child
-          </span>
-        </div>
-        <div className="scroll">{childrenList}</div>
-      </div>
-      <div className="cell small-7 medium-8 large-9">
+    <div className="grid-x">
+      <ChildListHorizontal toggleAddChild={toggleAddChild} childrenList={childrenList} />
+      <div className="cell grid-x align-center">
         {showAddChild ? (
           <AddChild
             showAddChild={showAddChild}
@@ -99,17 +99,18 @@ const ParentDashboard = () => {
             setEmailStatus={setEmailStatus}
           />
         ) : (
-          <ChildDetails
-            child={selectedChild}
-            editChore={editChore}
-            addChoreToList={addChoreToList}
-            removeChore={removeChore}
-            payChore={payChore}
-            addTranscation={addTranscation}
-          />
+          null
         )}
+        <ChildDetails
+          child={selectedChild}
+          editChore={editChore}
+          addChoreToList={addChoreToList}
+          removeChore={removeChore}
+          payChore={payChore}
+          addTranscation={addTranscation}
+        />
       </div>
-    </>
+    </div>
   );
 
   if (childCount == 0) {
