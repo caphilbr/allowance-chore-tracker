@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from "react";
-import getChild from "../services/getChild";
+import getChildRelations from "../services/getChildRelations";
 import Balance from "./Balance";
 import BalanceChart from "./BalanceChart";
 import ChoreTileRegular from "./ChoreTileRegular";
 import ChildPhoto from "./ChildPhoto";
 import sortChoresWithinChild from "../services/sortChoresWithinChild";
 
-const ChildDashboard = () => {
-  const [child, setChild] = useState({
-    name: "",
+const ChildDashboard = (props) => {
+  const [childRelations, setChildRelations] = useState({
     chores: [],
     transactions: [],
-    imageUrl: "",
     balance: 0,
+    allowance: {}
   });
 
+  const child = {
+    ...props.user,
+    ...childRelations
+  }
+  console.log(child)
+
   const updateChoreState = (updatedChore) => {
-    const newChoreList = child.chores.filter((chore) => {
+    const newChoreList = childRelations.chores.filter((chore) => {
       return chore.id != updatedChore.id;
     });
     newChoreList.push(updatedChore);
-    const updatedChild = {
-      ...child,
+    const updatedChildRelations = {
+      ...childRelations,
       chores: newChoreList,
     };
-    setChild(sortChoresWithinChild(updatedChild));
+    setChildRelations(sortChoresWithinChild(updatedChildRelations));
   };
 
-  const choreList = child.chores.map((chore) => {
+  const choreList = childRelations.chores.map((chore) => {
     return <ChoreTileRegular key={chore.id} chore={chore} updateChoreState={updateChoreState} />;
   });
 
   useEffect(() => {
     const fetchedData = async () => {
-      const fetchedChild = await getChild();
-      setChild(sortChoresWithinChild(fetchedChild));
+      const fetchedChildRelations = await getChildRelations();
+      setChildRelations(sortChoresWithinChild(fetchedChildRelations));
     };
     fetchedData();
   }, []);

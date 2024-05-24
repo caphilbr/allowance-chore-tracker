@@ -4,11 +4,11 @@ import ChildrenSerializer from "../../../serializers/ChildrenSerializer.js";
 
 const childrenRouter = new express.Router();
 
-childrenRouter.get("/current", async (req, res) => {
+childrenRouter.get("/child-relations", async (req, res) => {
   try {
     const rawChild = req.user;
-    const child = await ChildrenSerializer.childDashboard(rawChild);
-    res.status(200).json({ child });
+    const childRelations = await ChildrenSerializer.allRelations(rawChild);
+    res.status(200).json({ childRelations });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });

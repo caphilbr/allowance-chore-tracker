@@ -8,6 +8,7 @@ import removeChoreFromChildren from "../services/removeChoreFromChildren";
 import payChoreAndUpdateChildren from "../services/payChoreAndUpdateChildren";
 import editChoreWithinChildren from "../services/editChoreWithinChildren";
 import addTransactionToChildren from "../services/addTransactionToChildren"
+import addChoreToChildren from "../services/addChoreToChildren"
 
 const ParentDashboard = () => {
   const [showAddChild, setShowAddChild] = useState(false);
