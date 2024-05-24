@@ -10,9 +10,13 @@ const Balance = (props) => {
       <span className="balance-amount">${(props.child.balance).toFixed(2)}</span>
       <div className="horizontal-line" />
       <PastTransactions transactions={props.child.transactions}/>
-      <span id="manual-transaction-button" onClick={props.handleManualTransaction}>
-        Add Manual Transaction
-      </span>
+      {props.user.isParent ? 
+        <span id="manual-transaction-button" onClick={props.handleManualTransaction}>
+          Add Manual Transaction
+        </span>
+      :
+        null
+      }
     </div>
   )
 }

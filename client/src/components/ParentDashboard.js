@@ -11,7 +11,7 @@ import addTransactionToChildren from "../services/addTransactionToChildren"
 import addChoreToChildren from "../services/addChoreToChildren"
 import ChildListHorizontal from "./ChildListHorizontal";
 
-const ParentDashboard = () => {
+const ParentDashboard = (props) => {
   const [showAddChild, setShowAddChild] = useState(false);
   const [emailStatus, setEmailStatus] = useState("");
   const [children, setChildren] = useState([]);
@@ -89,7 +89,7 @@ const ParentDashboard = () => {
   }
 
   let contentHolder = (
-    <div className="grid-x">
+    <div className="cell grid-x">
       <ChildListHorizontal toggleAddChild={toggleAddChild} childrenList={childrenList} />
       <div className="cell grid-x align-center">
         {showAddChild ? (
@@ -102,6 +102,7 @@ const ParentDashboard = () => {
           null
         )}
         <ChildDetails
+          user={props.user}
           child={selectedChild}
           editChore={editChore}
           addChoreToList={addChoreToList}
@@ -139,7 +140,7 @@ const ParentDashboard = () => {
     );
   }
 
-  return <div className="grid-x align-center">{contentHolder}</div>;
+  return <div className="align-center full-screen scroll-full-screen">{contentHolder}</div>;
 };
 
 export default ParentDashboard;

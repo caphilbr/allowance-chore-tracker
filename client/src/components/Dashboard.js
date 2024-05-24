@@ -7,7 +7,7 @@ const Dashboard = (props) => {
 
   let mainContent = <ChildDashboard user={props.user} setCurrentUser={props.setCurrentUser} />
   if (props.user.isParent) {
-    mainContent = <ParentDashboard />
+    mainContent = <ParentDashboard user={props.user} />
   }
 
   return (
