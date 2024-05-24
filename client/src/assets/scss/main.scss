@@ -113,26 +113,54 @@
 }
 
 .child-tile {
-  border: 1px solid transparent;
-  border-radius: 1rem;
-  padding: 0.3rem;
-  background-color: var(--lightest-color);
-  margin: 0.5rem;
+  margin: 0.5rem 0.2rem 0 0.2rem;
   text-align: center;
-  width: 93%;
+  width: 10rem;
+  height: 7rem;
   font-weight: bold;
-  color: var(--darkest-color);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease-in-out;
+  color: var(--lightest-color);
   cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  border-radius: 10%;
+  padding-top: 0.2rem;
+}
+
+.child-tile-add {
+  @extend .child-tile;
+}
+
+.child-tile-add p {
+  margin-top: 1rem;
+}
+
+.child-tile p {
+  margin-bottom: 0.1rem;
 }
 
 .child-tile:hover {
+  background-color: var(--dark-color);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.child-tile-selected {
+  @extend .child-tile;
   background-color: var(--light-color);
+  color: var(--darkest-color);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.center-contents {
+  text-align: center;
+}
+
+.horizontal-scroll {
+  overflow-x: auto;
+
 }
 
 .scroll {
-  max-height: 40%;
+  max-height: 50rem;
   overflow-y: auto;
 }
 
@@ -148,9 +176,10 @@
 
 .circle-image {
   border-radius: 50%;
-  margin-bottom: 0.3rem;
-  max-width: 100%;
-  height: auto;
+  margin-bottom: 0.1rem;
+  margin-top: 0.1rem;
+  max-height: 4rem;
+  width: auto;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
   transition: box-shadow 0.3s ease-in-out;
 }
@@ -162,6 +191,8 @@
   margin: 0 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
+  // max-height: 65%;
+  // overflow-y: auto;
 }
 
 .select-child-message {
@@ -264,11 +295,6 @@
   border-radius: 1rem;
   padding: 2rem 0.5rem;
   margin: 0 1rem;
-}
-
-.chart {
-  border-radius: 0.75rem;
-  border: 1px black solid;
 }
 
 .chore-tile-regular {
@@ -452,6 +478,7 @@
   margin-top: 0.25rem;
   font-size: 14px;
   text-align: left;
+  margin-bottom: 1rem;
 }
 
 .align-amt-right {
@@ -461,6 +488,7 @@
 .transaction-table-container {
   max-height: 27rem;
   overflow-y: auto;
+  margin-bottom: 2rem;
 }
 
 .detail-option-button {
@@ -482,6 +510,7 @@
   color: var(--lightest-color);
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
+  text-align: center;
 }
 
 .popout-box label {
@@ -555,6 +584,8 @@
 
 .child-pic img {
   margin-bottom: 1.5rem;
+  max-height: 15rem;
+  width: auto;
 }
 
 .manage-allowance-button-container {
@@ -593,6 +624,10 @@
   text-align: center;
 }
 
+.chart-container {
+  max-width: 75rem;
+}
+
 .chart-container svg {
   background-color: var(--lightest-color);
   border-radius: 1rem;
@@ -606,8 +641,14 @@
 .child-dash-title-in-parent {
   @extend .child-dash-title;
   color: var(--darkest-color);
+  font-size: 150%;
+  text-shadow: none;
+}
+
+#manual-transaction-button {
+  @extend .button-styling;
   font-size: 100%;
-  text-shadow: 1px 1px 1px var(--grey-color);
+  margin-top: 5rem;
 }
 
 .child-dash-scroll {
@@ -663,6 +704,7 @@
   font-size: 200%;
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
+  margin-top: 1rem;
 }
 
 .popout-box-quiz {
