@@ -1,6 +1,6 @@
-const sortChoresWithinChild = (child) => {
+const sortChoresWithinChild = (childRelations) => {
 
-    const sortedChoresByDueDate = child.chores.sort((a, b) => {
+    const sortedChoresByDueDate = childRelations.chores.sort((a, b) => {
     if (new Date(a.dueDate) < new Date(b.dueDate)) {
       return -1
     } else if (new Date(a.dueDate) > new Date(b.dueDate)) {
@@ -18,9 +18,9 @@ const sortChoresWithinChild = (child) => {
       return 0
     })
  
-    child.chores = sortedChoredByStatus
+    childRelations.chores = sortedChoredByStatus
 
-    return child
+    return childRelations
 }
 
 export default sortChoresWithinChild

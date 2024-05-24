@@ -33,29 +33,25 @@ class ChildrenSerializer {
     return serializedChildren;
   };
 
-  static childDashboard = async (child) => {
-    const allowedFields = ["id", "nickname", "chores", "imageUrl", "familyId"];
-    const serializedChild = {};
-    allowedFields.forEach((field) => {
-      serializedChild[field] = child[field];
-    });
-    serializedChild.chores = await ChoreSerializer.dashboard(child);
-    serializedChild.balance = await child.balance();
+  static allRelations = async (child) => {
+    const allRelations = {};
+    allRelations.chores = await ChoreSerializer.dashboard(child);
+    allRelations.balance = await child.balance();
     const relatedTransactions = await child.$relatedQuery("transactions");
     if (relatedTransactions) {
       const serializedTransactions =
         TransactionSerializer.summaryforBalanceList(relatedTransactions);
-      serializedChild.transactions = serializedTransactions;
+        allRelations.transactions = serializedTransactions;
     } else {
-      serializedChild.transactions = [];
+      allRelations.transactions = [];
     }
     const relatedAllowance = await child.$relatedQuery("allowance");
     if (relatedAllowance) {
-      serializedChild.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance);
+      allRelations.allowance = AllowanceSerializer.forManageAllowance(relatedAllowance);
     } else {
-      serializedChild.allowance = null;
+      allRelations.allowance = null;
     }
-    return serializedChild;
+    return allRelations;
   };
 }
 

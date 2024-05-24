@@ -90,6 +90,7 @@ const AddChore = (props) => {
         } else {
           const newChore = response.body
           props.addChoreToList(newChore)
+          props.setShowAddChore(false)
         }
       } catch (error) {
         console.error(`Error in fetch: ${error.message}`);
