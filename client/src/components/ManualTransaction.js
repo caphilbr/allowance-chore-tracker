@@ -87,7 +87,7 @@ const ManualTransaction = (props) => {
   }
 
   return (
-    <div className="manage-allowance">
+    <div className="popout-box">
       <h3>New Manual Transaction</h3>
       <form onSubmit={onSubmit}>
       <ErrorList errors={serverErrors} />

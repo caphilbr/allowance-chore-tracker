@@ -471,7 +471,7 @@
   padding: 10px;
 }
 
-.manage-allowance {
+.popout-box {
   position: fixed;
   z-index: 999;
   box-shadow: 0px 0px 5rem rgba(0, 0, 0, 1);
@@ -484,7 +484,7 @@
   text-shadow: 1px 1px 1px var(--grey-color);
 }
 
-.manage-allowance label {
+.popout-box label {
   color: var(--lightest-color);
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
@@ -663,4 +663,29 @@
   font-size: 200%;
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
+}
+
+.popout-box-quiz {
+  @extend .popout-box;
+  margin-top: 1rem;
+  width: 50%;
+}
+
+.button-styling-loading {
+  @extend .button-styling;
+  animation: flash 1s infinite;  
+}
+
+.quiz-answers {
+  @extend .button-styling-small;
+  background-color: var(--dark-color);
+  border: 1px solid var(--darkest-color);
+  padding: 0.25rem;
+}
+
+.quiz-answer-container{
+  margin: 1rem 0 2rem 0;
+  border: 1px solid var(--darkest-color);
+  border-radius: 1rem;
+  padding: 1rem;
 }

@@ -30,7 +30,6 @@ const UserProfile = (props) => {
       };
     }
     if (nickname.trim() == "") {
-      console.log('in the if')
       newErrors = {
         ...newErrors,
         nickname: "Nickname is required",
@@ -47,7 +46,6 @@ const UserProfile = (props) => {
   const fetchHandling = async () => {
     try {
       const response = await patchUser(userPayload)
-      console.log('rsponse ', response)
       if (!response.ok) {
         if (response.status === 422) {
           setServerErrors(response.error)
