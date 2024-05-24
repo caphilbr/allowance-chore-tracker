@@ -169,7 +169,7 @@ const ManageAllowance = (props) => {
   );
 
   return (
-    <div className="manage-allowance">
+    <div className="popout-box">
       <h3>{props.child.nickname} Allowance</h3>
       {showDelete ? confirmDelete : null}
 

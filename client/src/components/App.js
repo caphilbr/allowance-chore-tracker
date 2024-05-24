@@ -28,7 +28,7 @@ const App = () => {
   let dashBoardContent = (
     <>
       <TopBar user={currentUser} />
-      <Dashboard user={currentUser} />
+      <Dashboard user={currentUser} setCurrentUser={setCurrentUser} />
     </>
   )
   if (!currentUser) {

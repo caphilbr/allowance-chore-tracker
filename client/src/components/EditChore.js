@@ -112,7 +112,7 @@ const EditChore = (props) => {
   };
 
   return (
-    <div className="manage-allowance">
+    <div className="popout-box">
       <h3>Edit Chore: {props.chore.name}</h3>      
       <form onSubmit={onSubmit}>
         <ErrorList errors={serverErrors} />
