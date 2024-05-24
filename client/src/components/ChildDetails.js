@@ -76,7 +76,7 @@ const ChildDetails = (props) => {
     <>
       <h3 className="cell parent-dash-title">{props.child.nickname}'s Details</h3>
       <div className="cell popout-container grid-x align-center">{popOutBox}</div>
-      <div className="grid-x grid-margin-x grid-margin-y child-details scroll align-center">
+      <div className="grid-x grid-margin-x grid-margin-y child-details align-center">
         <div className="cell small-12 large-6 details-left">
           <ChildPhoto child={props.child} />
           <AllowanceSummary
@@ -85,7 +85,7 @@ const ChildDetails = (props) => {
           />
         </div>
         <div className="cell small-12 large-6 details-right">
-          <Balance child={props.child} handleManualTransaction={handleManualTransaction} />
+          <Balance user={props.user} child={props.child} handleManualTransaction={handleManualTransaction} />
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="cell small-12 chart-container">

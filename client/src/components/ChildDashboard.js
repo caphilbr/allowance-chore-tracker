@@ -103,7 +103,7 @@ const ChildDashboard = (props) => {
           }          
         </span>
         <span className="cell small-7 child-dash-top-right">
-          <Balance child={child} />
+          <Balance user={props.user} child={child} />
         </span>
       </div>
       <div className="cell small-11 medium-9 large-8">

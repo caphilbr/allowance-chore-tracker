@@ -1,3 +1,5 @@
+import isMoreThan2DaysOld from "./isMoreThan2DaysOld";
+
 const transactionBalances = (transactions) => {
   const sortedTransactions = transactions.sort((a, b) => {
     if (a.paymentDate < b.paymentDate) {
@@ -22,11 +24,14 @@ const transactionBalances = (transactions) => {
     transactionsWithBalance.push(newEntry);
   }
 
-  const todayEntry = {
-    date: new Date(),
-    balance: transactionsWithBalance[transactionsWithBalance.length - 1].balance,
-  };
-  transactionsWithBalance.push(todayEntry);
+  const lastTransactionDate = transactionsWithBalance[transactionsWithBalance.length-1].date
+  if (isMoreThan2DaysOld(lastTransactionDate)) {
+    const todayEntry = {
+      date: new Date(),
+      balance: transactionsWithBalance[transactionsWithBalance.length - 1].balance,
+    };
+    transactionsWithBalance.push(todayEntry);
+  }
 
   return transactionsWithBalance;
 };
