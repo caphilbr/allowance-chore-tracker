@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { Model: ObjectionModel, ValidationError } = require("objection");
+const { Model: ObjectionModel, ValidationError } = require("objection")
 
 /**
  * Abstract model for Transporter ORM
@@ -11,23 +11,30 @@ const { Model: ObjectionModel, ValidationError } = require("objection");
  */
 class Model extends ObjectionModel {
   $beforeInsert() {
-    this.createdAt = new Date().toISOString();
-    this.updatedAt = new Date().toISOString();
+    this.createdAt = new Date().toISOString()
+    this.updatedAt = new Date().toISOString()
   }
 
   $beforeUpdate() {
-    this.updatedAt = new Date().toISOString();
+    this.updatedAt = new Date().toISOString()
   }
 
   async $checkUniqueness(property) {
-    const existingRecord = await this.constructor.query().where(property, this[property]).first();
+    const existingRecord = await this.constructor
+      .query()
+      .where(property, this[property])
+      .first()
 
     if (existingRecord && existingRecord.id !== this.id) {
-      const errorObject = {};
-      errorObject[property] = [{ keyword: "unique", message: "already in use" }];
-      throw new ValidationError({ type: "ModelValidation", status: 400, data: errorObject });
+      const errorObject = {}
+      errorObject[property] = [{ keyword: "unique", message: "already in use" }]
+      throw new ValidationError({
+        type: "ModelValidation",
+        status: 400,
+        data: errorObject,
+      })
     }
   }
 }
 
-module.exports = Model;
+module.exports = Model

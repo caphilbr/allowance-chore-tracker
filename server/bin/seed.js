@@ -1,3 +1,3 @@
-import Seeder from "../src/db/Seeder.js";
+import Seeder from "../src/db/Seeder.js"
 
-await Seeder.seed();
+await Seeder.seed()

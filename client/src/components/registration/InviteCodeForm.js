@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-import FormError from "../layout/FormError"
+import FormError from "../shared/FormError"
 import config from "../../config"
 
 const InviteCodeForm = (props) => {
-
   const [inputCode, setInputCode] = useState("")
   const [error, setError] = useState("")
   const [shouldGoHome, setShouldGoHome] = useState(false)
@@ -11,21 +10,21 @@ const InviteCodeForm = (props) => {
   const onInputChange = (event) => {
     setInputCode(event.currentTarget.value)
   }
-  
+
   const goHome = () => {
     setShouldGoHome(true)
   }
 
   const validateInput = (codeEntry) => {
     setError("")
-    const codeRegexp = config.validation.code.regexp.codeRegex;
+    const codeRegexp = config.validation.code.regexp.codeRegex
     if (!codeEntry.match(codeRegexp)) {
       setError("Code must be 4 digits between 0 and 9")
     }
     if (error == "") return true
     return false
   }
-  
+
   const onSubmit = async (event) => {
     event.preventDefault()
     if (validateInput(inputCode)) {
@@ -38,9 +37,9 @@ const InviteCodeForm = (props) => {
             setError("Invalid Invite Code")
             throw newError
           } else if (response.status == 403) {
-              const newError = new Error("Code has already been used")
-              setError("Code has already been used")
-              throw newError
+            const newError = new Error("Code has already been used")
+            setError("Code has already been used")
+            throw newError
           } else {
             const newError = new Error(response.statusText)
             setError("An error occurred. Please try again later.")
@@ -49,7 +48,7 @@ const InviteCodeForm = (props) => {
         }
         props.setInvite(parsedData.invite)
         props.setIsValidCode(true)
-      } catch(error) {
+      } catch (error) {
         console.log(error)
       }
     }
@@ -64,11 +63,23 @@ const InviteCodeForm = (props) => {
       <form onSubmit={onSubmit}>
         <label>
           Invitation Code From The Invite Email
-          <input type="text" name="inputCode" value={inputCode} onChange={onInputChange} className="form-field" />
+          <input
+            type="text"
+            name="inputCode"
+            value={inputCode}
+            onChange={onInputChange}
+            className="form-field"
+          />
         </label>
         <FormError error={error} />
-        <input type="submit" className="landing-page-button" value="Submit Code" />
-        <span className="landing-page-button" onClick={goHome}>Home</span>
+        <input
+          type="submit"
+          className="landing-page-button"
+          value="Submit Code"
+        />
+        <span className="landing-page-button" onClick={goHome}>
+          Home
+        </span>
       </form>
     </div>
   )

@@ -1,8 +1,8 @@
-const Model = require("./Model.js");
+const Model = require("./Model.js")
 
 class Family extends Model {
   static get tableName() {
-    return "families";
+    return "families"
   }
 
   static get jsonSchema() {
@@ -13,11 +13,11 @@ class Family extends Model {
       properties: {
         name: { type: "string", minLength: 2, maxLength: 30 },
       },
-    };
+    }
   }
 
   static relationMappings() {
-    const { Chore, User, Allowance } = require("./index.js");
+    const { Chore, User, Allowance } = require("./index.js")
     return {
       chores: {
         relation: Model.HasManyRelation,
@@ -43,19 +43,19 @@ class Family extends Model {
           to: "allowances.familyId",
         },
       },
-    };
+    }
   }
 
   async children() {
-    const users = await this.$relatedQuery("users");
+    const users = await this.$relatedQuery("users")
     if (users) {
       const children = users.filter((user) => {
-        return !user.isParent;
-      });
-      return children;
+        return !user.isParent
+      })
+      return children
     }
-    return [];
+    return []
   }
 }
 
-module.exports = Family;
+module.exports = Family

@@ -18,9 +18,9 @@ class Transaction extends Model {
           properties: {
             createdAt: {
               type: "string",
-              format: "date"
-            }
-          }
+              format: "date",
+            },
+          },
         },
       },
     }
@@ -28,15 +28,15 @@ class Transaction extends Model {
 
   static relationMappings() {
     const { Chore, User } = require("./index.js")
-    return{
+    return {
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
           from: "transactions.userId",
-          to: "users.id"
-        }
-      }
+          to: "users.id",
+        },
+      },
     }
   }
 }

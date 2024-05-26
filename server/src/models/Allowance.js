@@ -1,14 +1,21 @@
-const Model = require("./Model.js");
+const Model = require("./Model.js")
 
 class Allowance extends Model {
   static get tableName() {
-    return "allowances";
+    return "allowances"
   }
 
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["amount", "firstDate", "lastDate", "frequency", "userId", "familyId"],
+      required: [
+        "amount",
+        "firstDate",
+        "lastDate",
+        "frequency",
+        "userId",
+        "familyId",
+      ],
 
       properties: {
         amount: { type: "object" },
@@ -32,11 +39,11 @@ class Allowance extends Model {
           },
         },
       },
-    };
+    }
   }
 
   static relationMappings() {
-    const { User, Family, PendingTransaction } = require("./index.js");
+    const { User, Family, PendingTransaction } = require("./index.js")
     return {
       family: {
         relation: Model.BelongsToOneRelation,
@@ -62,23 +69,23 @@ class Allowance extends Model {
           to: "users.id",
         },
       },
-    };
+    }
   }
 
   async deletePendingAllowances() {
-    const { PendingTransaction } = require("./index.js");
-    await PendingTransaction.query().delete().where({ allowanceId: this.id });
+    const { PendingTransaction } = require("./index.js")
+    await PendingTransaction.query().delete().where({ allowanceId: this.id })
   }
 
   async generatePendingAllowances() {
-    const { PendingTransaction } = require("./index.js");
-    const { default: addDays } = await import("./../services/addDays.js");
-    const { default: addMonths } = await import("./../services/addMonths.js");
-    const currency = require("currency.js");
+    const { PendingTransaction } = require("./index.js")
+    const { default: addDays } = await import("./../services/addDays.js")
+    const { default: addMonths } = await import("./../services/addMonths.js")
+    const currency = require("currency.js")
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    let date = this.firstDate;
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    let date = this.firstDate
 
     do {
       if (date >= today) {
@@ -88,28 +95,30 @@ class Allowance extends Model {
           paymentDate: date,
           userId: this.userId,
           allowanceId: this.id,
-        });
+        })
       }
       if (this.frequency === "weekly") {
-        date = addDays(date, 7);
+        date = addDays(date, 7)
       }
       if (this.frequency === "monthly") {
-        date = addMonths(date, 1);
+        date = addMonths(date, 1)
       }
-    } while (date <= this.lastDate);
+    } while (date <= this.lastDate)
   }
 
   static async processPendingAllowances(familyId) {
-    const { PendingTransaction, Transaction, Family } = require("./index.js");
-    const currency = require("currency.js");
+    const { PendingTransaction, Transaction, Family } = require("./index.js")
+    const currency = require("currency.js")
 
-    const today = new Date();
-    today.setHours(23, 59, 59, 999);
+    const today = new Date()
+    today.setHours(23, 59, 59, 999)
 
-    const family = await Family.query().findById(familyId);
-    const children = await family.children();
+    const family = await Family.query().findById(familyId)
+    const children = await family.children()
     for (const child of children) {
-      const pendingTransactions = await child.$relatedQuery("pendingTransactions");
+      const pendingTransactions = await child.$relatedQuery(
+        "pendingTransactions",
+      )
       if (pendingTransactions) {
         for (const pendingTransaction of pendingTransactions) {
           if (pendingTransaction.paymentDate <= today) {
@@ -118,9 +127,9 @@ class Allowance extends Model {
               type: "allowance",
               paymentDate: pendingTransaction.paymentDate,
               userId: pendingTransaction.userId,
-            };
-            await Transaction.query().insert(newTransaction);
-            await PendingTransaction.query().deleteById(pendingTransaction.id);
+            }
+            await Transaction.query().insert(newTransaction)
+            await PendingTransaction.query().deleteById(pendingTransaction.id)
           }
         }
       }
@@ -128,4 +137,4 @@ class Allowance extends Model {
   }
 }
 
-module.exports = Allowance;
+module.exports = Allowance

@@ -1,6 +1,6 @@
-import express from "express";
-import Invite from "../../../models/Invite.js";
-import createCode from "../../../services/createCode.js";
+import express from "express"
+import Invite from "../../../models/Invite.js"
+import createCode from "../../../services/createCode.js"
 
 const inviteRouter = express.Router()
 
@@ -12,16 +12,16 @@ inviteRouter.post("/email", async (req, res) => {
       nickname: nickname,
       code: createCode(),
       wasAccepted: false,
-      familyId: req.user.familyId
+      familyId: req.user.familyId,
     }
     const invite = await Invite.query().insertAndFetch(newInvite)
     const response = await invite.sendInvite()
     if (!response.success) {
       const newError = new Error(response.errorMessage)
-      throw(newError)
+      throw newError
     }
     res.status(200).json({})
-  } catch(error) {
+  } catch (error) {
     console.log(error)
     res.status(500).json({ error })
   }
@@ -35,15 +35,15 @@ inviteRouter.get("/:code", async (req, res) => {
     if (!invite) {
       const newError = new Error("Could not find invite code")
       errorStatus = 404
-      throw(newError)
+      throw newError
     }
     if (invite.wasAccepted) {
       const newError = new Error("Invite already accepted")
       errorStatus = 403
-      throw(newError)
+      throw newError
     }
     res.status(200).json({ invite })
-  } catch(error) {
+  } catch (error) {
     if (!errorStatus) {
       errorStatus = 500
     }

@@ -1,4 +1,4 @@
-import showDate from "../services/showDate.js";
+import showDate from "../services/showDate.js"
 
 class AllowanceSerializer {
   static forManageAllowance(allowanceObject) {
@@ -10,17 +10,17 @@ class AllowanceSerializer {
       "frequency",
       "userId",
       "familyId",
-    ];
-    const serializedAllowance = {};
+    ]
+    const serializedAllowance = {}
     allowedFields.forEach((field) => {
       if (field == "firstDate" || field == "lastDate") {
-        serializedAllowance[field] = showDate(allowanceObject[field]);
+        serializedAllowance[field] = showDate(allowanceObject[field])
       } else {
-        serializedAllowance[field] = allowanceObject[field];
+        serializedAllowance[field] = allowanceObject[field]
       }
-    });
-    return serializedAllowance;
+    })
+    return serializedAllowance
   }
 }
 
-export default AllowanceSerializer;
+export default AllowanceSerializer

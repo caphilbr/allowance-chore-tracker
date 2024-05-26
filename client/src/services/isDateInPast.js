@@ -1,8 +1,7 @@
 const isDateInPast = (dateString) => {
-
-  const dateObject = new Date(dateString);
-  const userOffset = dateObject.getTimezoneOffset() / 60;
-  dateObject.setHours(dateObject.getHours() + userOffset);
+  const dateObject = new Date(dateString)
+  const userOffset = dateObject.getTimezoneOffset() / 60
+  dateObject.setHours(dateObject.getHours() + userOffset)
 
   const date = new Date(dateObject)
   const dateYear = date.getFullYear()

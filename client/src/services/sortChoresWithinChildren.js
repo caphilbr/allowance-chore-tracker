@@ -1,16 +1,14 @@
 const sortChoresWithinChildren = (childrenList) => {
-
-  const childrenWithSortedChores = childrenList.map(child => {
-    
+  const childrenWithSortedChores = childrenList.map((child) => {
     const sortedChoresByDueDate = child.chores.sort((a, b) => {
-    if (new Date(a.dueDate) < new Date(b.dueDate)) {
-      return -1
-    } else if (new Date(a.dueDate) > new Date(b.dueDate)) {
-      return 1
-    }
-    return 0
+      if (new Date(a.dueDate) < new Date(b.dueDate)) {
+        return -1
+      } else if (new Date(a.dueDate) > new Date(b.dueDate)) {
+        return 1
+      }
+      return 0
     })
-    
+
     const sortedChoredByStatus = sortedChoresByDueDate.sort((a, b) => {
       if (a.status == "pending" && b.status != "pending") {
         return -1
@@ -19,7 +17,7 @@ const sortChoresWithinChildren = (childrenList) => {
       }
       return 0
     })
-    
+
     child.chores = sortedChoredByStatus
     return child
   })

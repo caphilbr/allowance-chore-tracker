@@ -1,15 +1,15 @@
-import React from "react";
-import { Redirect, Route } from "react-router";
+import React from "react"
+import { Redirect, Route } from "react-router"
 
 const AuthenticationCheck = ({ component: Component, user, ...rest }) => {
   if (user === undefined) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
   if (user !== null) {
-    return <Component user={user} {...rest} />;
+    return <Component user={user} {...rest} />
   }
-  return <Redirect to="/user-sessions/new" />;
-};
+  return <Redirect to="/user-sessions/new" />
+}
 
 const AuthenticatedRoute = ({ component, user, ...rest }) => {
   return (
@@ -19,7 +19,7 @@ const AuthenticatedRoute = ({ component, user, ...rest }) => {
     >
       <AuthenticationCheck user={user} component={component} {...rest} />
     </Route>
-  );
-};
+  )
+}
 
-export default AuthenticatedRoute;
+export default AuthenticatedRoute

@@ -1,39 +1,35 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 const SignOutButton = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const signOut = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const response = await fetch("/api/v1/user-sessions", {
         method: "delete",
         headers: new Headers({
           "Content-Type": "application/json",
         }),
-      });
+      })
       if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`;
-        const error = new Error(errorMessage);
-        throw error;
+        const errorMessage = `${response.status} (${response.statusText})`
+        const error = new Error(errorMessage)
+        throw error
       }
-      const respBody = await response.json();
+      const respBody = await response.json()
       setShouldRedirect(true)
-      return { status: "ok" };
+      return { status: "ok" }
     } catch (err) {
-      console.error(`Error in fetch: ${err.message}`);
+      console.error(`Error in fetch: ${err.message}`)
     }
-  };
-
-  if (shouldRedirect) {
-    location.href = "/";
   }
 
-  return (
-    <p onClick={signOut}>
-      Sign Out
-    </p>
-  );
-};
+  if (shouldRedirect) {
+    location.href = "/"
+  }
 
-export default SignOutButton;
+  return <p onClick={signOut}>Sign Out</p>
+}
+
+export default SignOutButton

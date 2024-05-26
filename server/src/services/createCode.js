@@ -1,9 +1,9 @@
 const createCode = () => {
   let codeString = ""
   for (let i = 1; i <= 4; i++) {
-    codeString += Math.floor(10 * Math.random()) 
+    codeString += Math.floor(10 * Math.random())
   }
-  return codeString  
+  return codeString
 }
 
 export default createCode

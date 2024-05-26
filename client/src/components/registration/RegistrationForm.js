@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import config from "../../config";
-import ErrorList from "../layout/ErrorList";
-import FormError from "../layout/FormError";
-import translateServerErrors from "../../services/translateServerErrors";
+import React, { useState } from "react"
+import config from "../../config"
+import ErrorList from "../shared/ErrorList"
+import FormError from "../shared/FormError"
+import translateServerErrors from "../../services/translateServerErrors"
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({
@@ -14,66 +14,67 @@ const RegistrationForm = () => {
     passwordConfirmation: "",
     isParent: true,
     imageUrl: "",
-  });
+  })
 
-  const [errors, setErrors] = useState({});
-  const [serverErrors, setServerErrors] = useState({});
-  const [shouldGoHome, setShouldGoHome] = useState(false);
-  const [shouldGoProfile, setShouldGoProfile] = useState(false);
+  const [errors, setErrors] = useState({})
+  const [serverErrors, setServerErrors] = useState({})
+  const [shouldGoHome, setShouldGoHome] = useState(false)
+  const [shouldGoProfile, setShouldGoProfile] = useState(false)
 
   const validateInput = (payload) => {
-    setErrors({});
-    setServerErrors({});
-    const { email, username, password, passwordConfirmation, familyName } = payload;
-    const emailRegexp = config.validation.email.regexp.emailRegex;
-    let newErrors = {};
+    setErrors({})
+    setServerErrors({})
+    const { email, username, password, passwordConfirmation, familyName } =
+      payload
+    const emailRegexp = config.validation.email.regexp.emailRegex
+    let newErrors = {}
     if (!email.match(emailRegexp)) {
       newErrors = {
         ...newErrors,
         email: "is invalid",
-      };
+      }
     }
     if (password.trim() == "") {
       newErrors = {
         ...newErrors,
         password: "is required",
-      };
+      }
     }
     if (username.trim() == "") {
       newErrors = {
         ...newErrors,
         username: "is required",
-      };
+      }
     }
     if (familyName.trim() == "") {
       newErrors = {
         ...newErrors,
         familyName: "is required",
-      };
+      }
     }
     if (passwordConfirmation.trim() === "") {
       newErrors = {
         ...newErrors,
         passwordConfirmation: "is required",
-      };
+      }
     } else {
       if (passwordConfirmation !== password) {
         newErrors = {
           ...newErrors,
           passwordConfirmation: "does not match password",
-        };
+        }
       }
     }
 
-    setErrors(newErrors);
+    setErrors(newErrors)
     if (Object.keys(newErrors).length === 0) {
-      return true;
+      return true
     }
-    return false;
-  };
+    return false
+  }
 
   const onSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
       if (validateInput(userPayload)) {
@@ -83,49 +84,49 @@ const RegistrationForm = () => {
           headers: new Headers({
             "Content-Type": "application/json",
           }),
-        });
+        })
         if (!response.ok) {
           if (response.status === 422) {
-            const body = await response.json();
-            const newServerErrors = translateServerErrors(body.errors);
-            return setServerErrors(newServerErrors);
+            const body = await response.json()
+            const newServerErrors = translateServerErrors(body.errors)
+            return setServerErrors(newServerErrors)
           }
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-          throw error;
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw error
         }
-        return setShouldGoProfile(true);
+        return setShouldGoProfile(true)
       }
     } catch (err) {
-      console.error(`Error in fetch: ${err.message}`);
+      console.error(`Error in fetch: ${err.message}`)
     }
-  };
+  }
 
   const onInputChange = (event) => {
     setUserPayload({
       ...userPayload,
       [event.currentTarget.name]: event.currentTarget.value,
-    });
-  };
+    })
+  }
 
   if (shouldGoProfile) {
-    location.href = "/profile";
+    location.href = "/profile"
   }
 
   if (shouldGoHome) {
-    location.href = "/";
+    location.href = "/"
   }
 
   const goHome = () => {
-    setShouldGoHome(true);
-  };
+    setShouldGoHome(true)
+  }
 
   return (
     <div className="sign-in-form">
       <p className="sign-in-up-title">Register a new Family</p>
       <p className="reg-notice">
-        If you want to add a child or spouse to a an existing family, please login to add them
-        instead of using this form
+        If you want to add a child or spouse to a an existing family, please
+        login to add them instead of using this form
       </p>
       <ErrorList errors={serverErrors} />
       <form onSubmit={onSubmit}>
@@ -190,7 +191,7 @@ const RegistrationForm = () => {
         </span>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm

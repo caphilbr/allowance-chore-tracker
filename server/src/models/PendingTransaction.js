@@ -18,34 +18,33 @@ class PendingTransaction extends Model {
           properties: {
             createdAt: {
               type: "string",
-              format: "date"
-            }
-          }
+              format: "date",
+            },
+          },
         },
- 
       },
     }
   }
 
   static relationMappings() {
     const { Allowance, User } = require("./index.js")
-    return{
+    return {
       allowance: {
         relation: Model.BelongsToOneRelation,
         modelClass: Allowance,
         join: {
           from: "pendingTransactions.allowanceId",
-          to: "allowances.id"
-        }
+          to: "allowances.id",
+        },
       },
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
           from: "pendingTransactions.userId",
-          to: "users.id"
-        }
-      }
+          to: "users.id",
+        },
+      },
     }
   }
 }
