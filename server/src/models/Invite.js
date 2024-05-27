@@ -1,49 +1,54 @@
 const Model = require("./Model.js")
 
 class Invite extends Model {
-  
   static get tableName() {
     return "invites"
   }
-  
+
   static get jsonSchema() {
     return {
       type: "object",
       required: ["email"],
-      
+
       properties: {
         email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
-        nickname: { type: "string", minLength: 1, maxLength: 30 }
+        nickname: { type: "string", minLength: 1, maxLength: 30 },
       },
     }
   }
-  
+
   static relationMappings() {
     const { Family } = require("./index.js")
-    return{
+    return {
       family: {
         relation: Model.BelongsToOneRelation,
         modelClass: Family,
         join: {
           from: "invites.familyId",
-          to: "families.id"
-        }
-      }
+          to: "families.id",
+        },
+      },
     }
   }
-  
+
   async sendInvite() {
-    
     const inviteUrl = "http://localhost:3000/invite"
     try {
-      const { default: emailInvite } = await import("./../services/emailInvite.js");
-      const response = await emailInvite(this.email, this.nickname, inviteUrl, this.code)
+      const { default: emailInvite } = await import(
+        "./../services/emailInvite.js"
+      )
+      const response = await emailInvite(
+        this.email,
+        this.nickname,
+        inviteUrl,
+        this.code,
+      )
       if (response instanceof Error) {
         const newError = new Error(response.message)
-        throw (newError)
+        throw newError
       }
       return { success: true }
-    } catch(error) {
+    } catch (error) {
       console.log(error)
       return { success: false, errorMessage: error.message }
     }

@@ -1,27 +1,27 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const Bcrypt = require("bcrypt");
-const unique = require("objection-unique");
-const Model = require("./Model");
-const currency = require("currency.js");
+const Bcrypt = require("bcrypt")
+const unique = require("objection-unique")
+const Model = require("./Model")
+const currency = require("currency.js")
 
-const saltRounds = 10;
+const saltRounds = 10
 
 const uniqueFunc = unique({
   fields: ["username"],
   identifiers: ["id"],
-});
+})
 
 class User extends uniqueFunc(Model) {
   static get tableName() {
-    return "users";
+    return "users"
   }
 
   set password(newPassword) {
-    this.cryptedPassword = Bcrypt.hashSync(newPassword, saltRounds);
+    this.cryptedPassword = Bcrypt.hashSync(newPassword, saltRounds)
   }
 
   authenticate(password) {
-    return Bcrypt.compareSync(password, this.cryptedPassword);
+    return Bcrypt.compareSync(password, this.cryptedPassword)
   }
 
   static get jsonSchema() {
@@ -34,40 +34,46 @@ class User extends uniqueFunc(Model) {
         cryptedPassword: { type: "string" },
         username: { type: "string", minLength: 2, maxLength: 30 },
       },
-    };
+    }
   }
 
   $beforeInsert() {
-    return this.$checkUniqueness("username");
+    return this.$checkUniqueness("username")
   }
 
   $beforeUpdate() {
-    return this.$checkUniqueness("username");
+    return this.$checkUniqueness("username")
   }
 
   $formatJson(json) {
-    const serializedJson = super.$formatJson(json);
+    const serializedJson = super.$formatJson(json)
 
     if (serializedJson.cryptedPassword) {
-      delete serializedJson.cryptedPassword;
+      delete serializedJson.cryptedPassword
     }
 
-    return serializedJson;
+    return serializedJson
   }
 
   async balance() {
-    let total = currency(0);
-    const transactionArray = await this.$relatedQuery("transactions");
+    let total = currency(0)
+    const transactionArray = await this.$relatedQuery("transactions")
     if (transactionArray) {
       transactionArray.forEach((transaction) => {
-        total = total.add(currency(transaction.amount));
-      });
+        total = total.add(currency(transaction.amount))
+      })
     }
-    return total;
+    return total
   }
 
   static relationMappings() {
-    const { Chore, Family, Transaction, Allowance, PendingTransaction } = require("./index.js");
+    const {
+      Chore,
+      Family,
+      Transaction,
+      Allowance,
+      PendingTransaction,
+    } = require("./index.js")
     return {
       chores: {
         relation: Model.HasManyRelation,
@@ -109,8 +115,8 @@ class User extends uniqueFunc(Model) {
           to: "pendingTransactions.userId",
         },
       },
-    };
+    }
   }
 }
 
-module.exports = User;
+module.exports = User

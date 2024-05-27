@@ -271,6 +271,18 @@
   padding: 0.5rem 1rem;
 }
 
+.top-bar-right {
+  padding-right: 0.25rem;
+  color: var(--darkest-color);
+  cursor: pointer;
+  border-radius: 35%;
+}
+
+.top-bar-right:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
 .child-dash-top-left {
   text-align: center;  
   font-weight: bold;
@@ -323,6 +335,7 @@
   height: 3rem;
   width: auto;
   cursor: pointer;
+  margin-right: 0.5rem;
 }
 
 .dropdown {
@@ -452,6 +465,8 @@
 }
 
 .form-error {
+  padding: 0.1rem;
+  background-color: red;
   color: var(--lightest-color);
   font-size: 100%;
 }
@@ -519,8 +534,6 @@
   text-shadow: 1px 1px 1px var(--grey-color);
 }
 
-
-
 .allowance-summary {
   border: 3px solid rgb(220, 220, 220);
   border-radius: 0.5rem;
@@ -530,12 +543,20 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
   margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  max-width: 20rem;
   text-align: left;
 }
 
 .allowance-summary p {
   text-align: center;
   font-size: 150%;
+}
+
+.allowance-summary td {
+  font-weight: normal;
 }
 
 .allowance-summary table {
@@ -615,13 +636,13 @@
 .child-dash-title {
   color: var(--lightest-color);
   text-align: center;
-  font-size: 200%;
+  font-size: 100%;
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
 }
 
 .chart-container {
-  text-align: center;
+  margin: 0 auto;
 }
 
 .chart-container {
@@ -634,7 +655,6 @@
 }
 
 .chart-container g {
-  font-size: 16px;
   font-weight: bold;
 }
 
@@ -730,9 +750,21 @@
   border: 1px solid var(--darkest-color);
   border-radius: 1rem;
   padding: 1rem;
+  background-color: var(--lightest-color);
+  color: black;
+  text-shadow: none;
 }
 
 .full-screen {
   height: 75vh;
   overflow-y: auto;
+}
+
+.waiting-quiz {
+  background-color: var(--grey-color);
+  margin: 3rem 5rem;
+  cursor: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  display: inline-block;
 }

@@ -1,7 +1,7 @@
 const removeChoreFromChildren = (choreToRemove, children) => {
-  const updatedChildren = children.filter(child => {
+  const updatedChildren = children.filter((child) => {
     if (child.id == choreToRemove.userId) {
-      child.chores = child.chores.filter(chore => {
+      child.chores = child.chores.filter((chore) => {
         return chore.id != choreToRemove.id
       })
     }

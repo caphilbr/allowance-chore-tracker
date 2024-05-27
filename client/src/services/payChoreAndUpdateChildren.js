@@ -1,8 +1,9 @@
 const payChoreAndUpdateChildren = (choreToPay, newTransaction, children) => {
-  const updatedChildren = children.filter(child => {
+  const updatedChildren = children.filter((child) => {
     if (child.id == choreToPay.userId) {
       child.transactions.push(newTransaction)
-      child.balance = parseFloat(child.balance) + parseFloat(newTransaction.amount)
+      child.balance =
+        parseFloat(child.balance) + parseFloat(newTransaction.amount)
     }
     return child
   })

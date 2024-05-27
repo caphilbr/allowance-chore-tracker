@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { hot } from "react-hot-loader/root";
-import "../assets/scss/main.scss";
-import getCurrentUser from "../services/getCurrentUser";
-import LandingPage from "./LandingPage";
-import TopBar from "./layout/TopBar";
-import Dashboard from "./Dashboard";
+import React, { useState, useEffect } from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { hot } from "react-hot-loader/root"
+import "../assets/scss/main.scss"
+import getCurrentUser from "../services/fetch/getCurrentUser"
+import LandingPage from "./navigation/LandingPage"
+import TopBar from "./navigation/TopBar"
+import Dashboard from "./utilities/Dashboard"
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute"
-import UserProfile from "./UserProfile";
-import Invite from "./authentication/Invite";
+import UserProfile from "./navigation/UserProfile"
+import Invite from "./registration/Invite"
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined)
   const fetchCurrentUser = async () => {
     try {
-      const user = await getCurrentUser();
+      const user = await getCurrentUser()
       setCurrentUser(user)
     } catch (err) {
-      setCurrentUser(null);
+      setCurrentUser(null)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchCurrentUser();
-  }, []);
+    fetchCurrentUser()
+  }, [])
 
   let dashBoardContent = (
     <>
@@ -48,14 +48,15 @@ const App = () => {
           <Invite user={currentUser} />
         </Route>
         <AuthenticatedRoute
-          exact path="/profile"
+          exact
+          path="/profile"
           component={UserProfile}
           user={currentUser}
           setCurrentUser={setCurrentUser}
         />
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
-export default hot(App);
+export default hot(App)

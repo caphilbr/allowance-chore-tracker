@@ -1,27 +1,27 @@
-import currency from "currency.js";
+import currency from "currency.js"
 
 const cleanNewChoreInput = (inputObject) => {
-  const cleanInput = {};
+  const cleanInput = {}
   Object.keys(inputObject).forEach((key) => {
     if (key == "amount") {
-      cleanInput[key] = currency(inputObject[key]);
+      cleanInput[key] = currency(inputObject[key])
     } else if (key == "dueDate") {
       if (inputObject[key] == "") {
-        const today = new Date();
+        const today = new Date()
         const oneYearFromToday = new Date(
           today.getFullYear() + 1,
           today.getMonth(),
           today.getDate(),
-        );
-        cleanInput[key] = oneYearFromToday;
+        )
+        cleanInput[key] = oneYearFromToday
       } else {
-        cleanInput[key] = new Date(inputObject[key]);
+        cleanInput[key] = new Date(inputObject[key])
       }
     } else if (inputObject[key] != "") {
-      cleanInput[key] = inputObject[key];
+      cleanInput[key] = inputObject[key]
     }
-  });
-  return cleanInput;
-};
+  })
+  return cleanInput
+}
 
-export default cleanNewChoreInput;
+export default cleanNewChoreInput

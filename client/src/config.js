@@ -1,4 +1,3 @@
-
 const config = {
   nodeEnv: process.env["NODE_ENV"] || "development",
   validation: {
@@ -10,22 +9,24 @@ const config = {
     code: {
       regexp: {
         codeRegex: /^\d{4}$/,
-      }
+      },
     },
     currency: {
       regexp: {
         currencyRegex: /^(\$)?(-?\d+(,\d{3})*(\.\d{1,2})?)?$/,
-      }
+      },
     },
     date: {
       regexp: {
         dateRegex: /^\d{4}-\d{2}-\d{2}$/,
-      }
-    }
+      },
+    },
   },
-  homeBackgroundUrl: "https://allowance-chore-tracker.s3.amazonaws.com/landing-background",
+  homeBackgroundUrl:
+    "https://allowance-chore-tracker.s3.amazonaws.com/landing-background",
   titleFontUrl: "https://allowance-chore-tracker.s3.amazonaws.com/chore-title",
-  dashboardTitleUrl: "https://allowance-chore-tracker.s3.amazonaws.com/dashboard-title"
+  dashboardTitleUrl:
+    "https://allowance-chore-tracker.s3.amazonaws.com/dashboard-title",
 }
 
-export default config;
+export default config

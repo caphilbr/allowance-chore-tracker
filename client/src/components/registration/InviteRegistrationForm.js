@@ -1,59 +1,59 @@
-import React, { useState } from "react";
-import ErrorList from "../layout/ErrorList";
-import FormError from "../layout/FormError";
-import translateServerErrors from "../../services/translateServerErrors";
+import React, { useState } from "react"
+import ErrorList from "../utilities/ErrorList"
+import FormError from "../utilities/FormError"
+import translateServerErrors from "../../utilities/translateServerErrors"
 
 const InviteRegistrationForm = (props) => {
   const [userPayload, setUserPayload] = useState({
     username: "",
     password: "",
     passwordConfirmation: "",
-  });
-  const [errors, setErrors] = useState({});
-  const [serverErrors, setServerErrors] = useState({});
-  const [shouldGoHome, setShouldGoHome] = useState(false);
-  const [shouldGoProfile, setShouldGoProfile] = useState(false);
+  })
+  const [errors, setErrors] = useState({})
+  const [serverErrors, setServerErrors] = useState({})
+  const [shouldGoHome, setShouldGoHome] = useState(false)
+  const [shouldGoProfile, setShouldGoProfile] = useState(false)
 
   const validateInput = (payload) => {
-    setErrors({});
-    setServerErrors({});
-    const { username, password, passwordConfirmation } = payload;
-    let newErrors = {};
+    setErrors({})
+    setServerErrors({})
+    const { username, password, passwordConfirmation } = payload
+    let newErrors = {}
     if (password.trim() == "") {
       newErrors = {
         ...newErrors,
         password: "Password is required",
-      };
+      }
     }
     if (username.trim() == "") {
       newErrors = {
         ...newErrors,
         username: "Username is required",
-      };
+      }
     }
     if (passwordConfirmation.trim() === "") {
       newErrors = {
         ...newErrors,
         passwordConfirmation: "Password confirmation is required",
-      };
+      }
     } else {
       if (passwordConfirmation !== password) {
         newErrors = {
           ...newErrors,
           passwordConfirmation: "Does not match password",
-        };
+        }
       }
     }
 
-    setErrors(newErrors);
+    setErrors(newErrors)
     if (Object.keys(newErrors).length === 0) {
-      return true;
+      return true
     }
-    return false;
-  };
+    return false
+  }
 
   const onSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
       if (validateInput(userPayload)) {
@@ -65,58 +65,58 @@ const InviteRegistrationForm = (props) => {
           imageUrl: "",
           familyId: props.invite.familyId,
           inviteId: props.invite.id,
-        };
+        }
         const response = await fetch("/api/v1/users/child", {
           method: "POST",
           body: JSON.stringify(fullUserPayload),
           headers: new Headers({
             "Content-Type": "application/json",
           }),
-        });
+        })
         if (!response.ok) {
           if (response.status === 422) {
-            const body = await response.json();
-            const newServerErrors = translateServerErrors(body.errors);
-            return setServerErrors(newServerErrors);
+            const body = await response.json()
+            const newServerErrors = translateServerErrors(body.errors)
+            return setServerErrors(newServerErrors)
           }
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-          throw error;
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw error
         }
-        return setShouldGoProfile(true);
+        return setShouldGoProfile(true)
       }
     } catch (err) {
-      console.error(`Error in fetch: ${err.message}`);
+      console.error(`Error in fetch: ${err.message}`)
     }
-  };
+  }
 
   const onInputChange = (event) => {
     setUserPayload({
       ...userPayload,
       [event.currentTarget.name]: event.currentTarget.value,
-    });
-  };
+    })
+  }
 
   const goHome = () => {
-    setShouldGoHome(true);
-  };
+    setShouldGoHome(true)
+  }
 
   const clearForm = () => {
     setUserPayload({
       username: "",
       password: "",
       passwordConfirmation: "",
-    });
-  };
+    })
+  }
 
-  const inviteMessage = `Your parent has already provided your email and nickname. Simply choose a username and password and you'll get access to Chore Champions!`;
+  const inviteMessage = `Your parent has already provided your email and nickname. Simply choose a username and password and you'll get access to Chore Champions!`
 
   if (shouldGoProfile) {
-    location.href = "/profile";
+    location.href = "/profile"
   }
 
   if (shouldGoHome) {
-    location.href = "/";
+    location.href = "/"
   }
 
   return (
@@ -166,7 +166,7 @@ const InviteRegistrationForm = (props) => {
         </span>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default InviteRegistrationForm;
+export default InviteRegistrationForm

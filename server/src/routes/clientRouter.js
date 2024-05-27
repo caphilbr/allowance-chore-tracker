@@ -1,22 +1,28 @@
-import express from "express";
+import express from "express"
 
-import getClientIndexPath from "../config/getClientIndexPath.js";
+import getClientIndexPath from "../config/getClientIndexPath.js"
 
-const router = new express.Router();
+const router = new express.Router()
 
-const clientRoutes = ["/", "/user-sessions/new", "/users/new", "/dashboard", "/invite"];
-const authedClientRoutes = ["/profile"];
+const clientRoutes = [
+  "/",
+  "/user-sessions/new",
+  "/users/new",
+  "/dashboard",
+  "/invite",
+]
+const authedClientRoutes = ["/profile"]
 
 router.get(clientRoutes, (req, res) => {
-  res.sendFile(getClientIndexPath());
-});
+  res.sendFile(getClientIndexPath())
+})
 
 router.get(authedClientRoutes, (req, res) => {
   if (req.user) {
-    res.sendFile(getClientIndexPath());
+    res.sendFile(getClientIndexPath())
   } else {
-    res.redirect("/user-sessions/new");
+    res.redirect("/user-sessions/new")
   }
-});
+})
 
-export default router;
+export default router

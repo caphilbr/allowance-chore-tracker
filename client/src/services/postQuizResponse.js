@@ -1,8 +1,7 @@
-import postTransaction from './postTransaction'
-import patchUser from './patchUser'
+import postTransaction from "./fetch/postTransaction"
+import patchUser from "./fetch/patchUser"
 
 const postQuizResponse = async (isCorrect, userId) => {
-
   let amount = "1"
   let type = "quiz: incorrect"
   if (isCorrect) {
@@ -13,7 +12,7 @@ const postQuizResponse = async (isCorrect, userId) => {
     amount: amount,
     type: type,
     paymentDate: new Date(),
-    userId: userId
+    userId: userId,
   }
 
   const transactionResponse = await postTransaction(newTransaction)
@@ -25,7 +24,12 @@ const postQuizResponse = async (isCorrect, userId) => {
     return userResponse
   }
 
-  return { ok: true, status: 200, transaction: transactionResponse, user: userResponse }
+  return {
+    ok: true,
+    status: 200,
+    transaction: transactionResponse,
+    user: userResponse,
+  }
 }
 
 export default postQuizResponse

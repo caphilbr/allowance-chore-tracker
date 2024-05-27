@@ -1,7 +1,7 @@
 const editChoreWithinChildren = (choreToEdit, children) => {
-  const updatedChildren = children.map(child => {
+  const updatedChildren = children.map((child) => {
     if (child.id == choreToEdit.userId) {
-      const updatedChores = child.chores.map(chore => {
+      const updatedChores = child.chores.map((chore) => {
         if (chore.id == choreToEdit.id) {
           return choreToEdit
         }
