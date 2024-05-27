@@ -127,9 +127,9 @@ const ParentDashboard = (props) => {
     contentHolder = (
       <>
         <div className="cell invite-container">
-          <h3 className="parent-dash-title">
+          <h4 className="parent-dash-title">
             Begin by adding a child to the family...
-          </h3>
+          </h4>
           {showAddChild ? (
             <AddChild
               showAddChild={showAddChild}

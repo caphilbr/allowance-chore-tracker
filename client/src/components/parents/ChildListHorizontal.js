@@ -7,7 +7,7 @@ const ChildListHorizontal = (props) => {
       <div className="cell center-contents">
         <div className="horizontal-scroll">
           <div className="cell child-tile-add" onClick={props.toggleAddChild}>
-            <FontAwesomeIcon icon="fas fa-plus-circle" className="fa-4x" />
+            <FontAwesomeIcon icon="fas fa-plus-circle" className="fa-2x" />
             <p>Add Child</p>
           </div>
           {props.childrenList}

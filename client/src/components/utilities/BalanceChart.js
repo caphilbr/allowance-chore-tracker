@@ -86,7 +86,7 @@ const BalanceChart = (props) => {
         .ticks(5),
     )
   }, [props])
-
+  
   return <svg ref={svgRef} />
 }
 

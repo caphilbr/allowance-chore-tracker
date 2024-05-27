@@ -3,7 +3,6 @@ import config from "../config.js"
 
 const emailInvite = async (emailAddress, nickname, inviteUrl, code) => {
   const transporter = nodemailer.createTransport({
-    // service: 'hotmail',
     host: "live.smtp.mailtrap.io",
     port: 587,
     secure: false,

@@ -57,15 +57,18 @@ const ChildDashboard = (props) => {
     setQuizEligible(false)
   }
 
-  const choreList = childRelations.chores.map((chore) => {
-    return (
-      <ChoreTileRegular
-        key={chore.id}
-        chore={chore}
-        updateChoreState={updateChoreState}
-      />
-    )
-  })
+  let choreList = <span>Chores will appear when assigned</span>
+  if (child.chores.length > 0) {
+    choreList = childRelations.chores.map((chore) => {
+      return (
+        <ChoreTileRegular
+          key={chore.id}
+          chore={chore}
+          updateChoreState={updateChoreState}
+        />
+      )
+    })
+  }
 
   useEffect(() => {
     const fetchedData = async () => {
@@ -97,6 +100,11 @@ const ChildDashboard = (props) => {
     }
   }
 
+  let showBalanceChart = false
+  if (child.transactions.length > 0) {
+    showBalanceChart = true
+  }
+
   return (
     <div className="grid-x grid-margin-y align-center child-dash-scroll">
       <div className="cell child-dash-title">{child.nickname}</div>
@@ -122,13 +130,17 @@ const ChildDashboard = (props) => {
       <div className="cell small-11 medium-9 large-8">
         <div className="chart-container">
           <div className="cell child-dash-title">Balance Over Time</div>
-          <BalanceChart child={child} />
+          {showBalanceChart ?
+            <BalanceChart child={child} />
+          :
+            <span>Chart will appear after your first transaction</span>
+          }
         </div>
       </div>
       <div className="cell grid-x grid-margin-x">
         <div className="cell small-12 child-dash-bottom-left">
           <h3 className="child-dash-title cell">My Assigned Chores</h3>
-          <div className="grid-x grid-margin-x">{choreList}</div>
+          <div className="grid-x grid-margin-x align-center">{choreList}</div>
         </div>
       </div>
     </div>

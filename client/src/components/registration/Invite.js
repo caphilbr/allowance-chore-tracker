@@ -23,7 +23,7 @@ const Invite = (props) => {
         className="landing-page-background-img"
         src={config.homeBackgroundUrl}
       />
-      <div className="background-color grid-x align-right">
+      <div className="background-color grid-x align-right full-screen-intro">
         <div className="cell small-6 landing-page-main">
           <img
             className="cell small-12 landing-title"
