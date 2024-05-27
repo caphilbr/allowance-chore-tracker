@@ -227,7 +227,6 @@
 
 .details-right {
   text-align: center;
-  // font-size: 150%;
   font-weight: bold;
   color: var(--darkest-color);
 }
@@ -289,6 +288,7 @@
   color: var(--darkest-color);
   padding: 2rem 0.5rem;
   margin: 0 1rem;
+  align-content: center;
 }
 
 .child-dash-top-left img {
@@ -517,21 +517,28 @@
 .popout-box {
   position: fixed;
   z-index: 999;
-  box-shadow: 0px 0px 5rem rgba(0, 0, 0, 1);
-  margin-top: 2rem;
+  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 1);
+  margin-top: 0.5rem;
   background-color: var(--dark-color);
   border-radius: 1rem;
-  padding: 4rem;
+  padding: 0.25rem;
   color: var(--lightest-color);
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
   text-align: center;
+  height: 65vh;
+  overflow-y: auto;
 }
 
 .popout-box label {
   color: var(--lightest-color);
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
+}
+
+.popout-box h3 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 .allowance-summary {
@@ -545,7 +552,6 @@
   margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
-
   max-width: 20rem;
   text-align: left;
 }
@@ -601,6 +607,11 @@
 .chore-tile-small-delete-confirm p {
   color: var(--darkest-color);
   margin-bottom: 2rem;
+}
+
+.child-pic {
+  text-align: center;
+  align-content: center;
 }
 
 .child-pic img {
@@ -672,7 +683,7 @@
 }
 
 .child-dash-scroll {
-  max-height: 70%;
+  height: 75vh;
   overflow-y: auto;
 }
 
@@ -762,9 +773,28 @@
 
 .waiting-quiz {
   background-color: var(--grey-color);
-  margin: 3rem 5rem;
+  margin: 3rem auto;
   cursor: none;
   padding: 0.5rem;
   border-radius: 0.25rem;
   display: inline-block;
+}
+
+.button-styling-quiz {
+  @extend .button-styling;
+  border-radius: 50%;
+  animation: quizFlash 1s infinite;
+}
+
+@keyframes quizFlash {
+  0% {
+    background-color: darkgreen;
+  }
+  50% {
+    background-color: lightgreen;
+    color: var(--darkest-color);
+  }
+  100% {
+    background-color: green;
+  }
 }

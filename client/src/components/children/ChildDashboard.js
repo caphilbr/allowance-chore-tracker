@@ -101,11 +101,11 @@ const ChildDashboard = (props) => {
     <div className="grid-x grid-margin-y align-center child-dash-scroll">
       <div className="cell child-dash-title">{child.nickname}</div>
       <div className="cell small-12 grid-x align-center">
-        <span className="cell small-4 child-dash-top-left">
-          {popOutBox}
+        {popOutBox}
+        <span className="cell small-10 child-dash-top-left">
           <ChildPhoto child={child} />
           {quizEligible ? (
-            <span className="button-styling" onClick={handleQuizClick}>
+            <span className="button-styling-quiz" onClick={handleQuizClick}>
               Quiz Me!
             </span>
           ) : (
@@ -115,7 +115,7 @@ const ChildDashboard = (props) => {
             </span>
           )}
         </span>
-        <span className="cell small-7 child-dash-top-right">
+        <span className="cell small-12 child-dash-top-right">
           <Balance user={props.user} child={child} />
         </span>
       </div>

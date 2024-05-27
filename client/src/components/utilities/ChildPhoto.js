@@ -41,9 +41,9 @@ const ChildPhoto = (props) => {
             <section>
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <p>
+                <p className="center-contents">
                   <span className="button-styling-child-pic">
-                    Select New Photo
+                    New Photo
                   </span>
                 </p>
               </div>

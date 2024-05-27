@@ -152,7 +152,7 @@ const ParentDashboard = (props) => {
   }
 
   return (
-    <div className="align-center full-screen scroll-full-screen">
+    <div className="align-center full-screen">
       {contentHolder}
     </div>
   )
