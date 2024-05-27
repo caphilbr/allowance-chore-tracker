@@ -115,7 +115,7 @@
 .child-tile {
   margin: 0.5rem 0.2rem 0 0.2rem;
   text-align: center;
-  width: 8rem;
+  // width: 8rem;
   height: 5rem;
   font-weight: bold;
   color: var(--lightest-color);
@@ -128,11 +128,11 @@
 
 .child-tile-add {
   @extend .child-tile;
-  padding-top: 1rem;
+  padding-top: 0.8rem;
 }
 
 .child-tile-add p {
-  margin-top: .1rem;
+  margin-top: .28rem;
 }
 
 .child-tile p {
@@ -154,10 +154,6 @@
 
 .center-contents {
   text-align: center;
-}
-
-.horizontal-scroll {
-  overflow-x: auto;
 }
 
 .scroll {
@@ -748,7 +744,7 @@
 .popout-box-quiz {
   @extend .popout-box;
   margin-top: 0.5rem;
-  padding-top: 2rem;
+  padding: 2rem 1rem;
   width: 90vw;
 }
 
@@ -759,19 +755,23 @@
 
 .quiz-answers {
   @extend .button-styling-small;
-  background-color: var(--dark-color);
+  background-color: var(--medium-color);
   border: 1px solid var(--darkest-color);
-  padding: 0.25rem;
+  padding: 0.25rem 1rem;
+  color: var(--darkest-color);
+  font-size: 100%;
 }
 
 .quiz-answer-container{
   margin: 0.5rem 0 0.5rem 0;
   border: 1px solid var(--darkest-color);
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 0.25rem;
   background-color: var(--lightest-color);
   color: black;
   text-shadow: none;
+  margin-bottom: 1rem;
+  
 }
 
 .full-screen {

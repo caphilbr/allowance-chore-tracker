@@ -5,9 +5,9 @@ const ChildTile = (props) => {
     props.setSelectedChildId(props.child.id)
   }
 
-  let styling = "child-tile"
+  let styling = "cell small-2 child-tile"
   if (props.child.id == props.selectedChildId) {
-    styling = "child-tile-selected"
+    styling = "cell small-2 child-tile-selected"
   }
 
   return (

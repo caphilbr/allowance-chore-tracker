@@ -153,7 +153,7 @@ const AddChore = (props) => {
         <input
           type="submit"
           className="allowance-button"
-          value="Submit Chore"
+          value="Submit"
         />
         <span className="allowance-button" onClick={handleCancel}>
           Cancel
