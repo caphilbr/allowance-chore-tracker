@@ -408,6 +408,11 @@
   margin: 0 0.5rem;
 }
 
+.intro {
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .intro-button-container {
   padding: 1rem 0;
   display: flex;
@@ -526,7 +531,7 @@
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
   text-align: center;
-  height: 65vh;
+  height: 60vh;
   overflow-y: auto;
 }
 
@@ -740,7 +745,7 @@
 
 .popout-box-quiz {
   @extend .popout-box;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   width: 50%;
 }
 
@@ -757,7 +762,7 @@
 }
 
 .quiz-answer-container{
-  margin: 1rem 0 2rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   border: 1px solid var(--darkest-color);
   border-radius: 1rem;
   padding: 1rem;
