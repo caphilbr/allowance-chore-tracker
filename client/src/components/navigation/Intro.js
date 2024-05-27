@@ -68,9 +68,9 @@ const Intro = (props) => {
   }
 
   return (
-    <div className="grid-x full-screen-intro">
-      <img className="cell small-12 landing-title" src={config.titleFontUrl} />
-      <span className="cell small-12 landing-slogan">
+    <div className="grid-y intro">
+      <img className="cell landing-title" src={config.titleFontUrl} />
+      <span className="cell landing-slogan">
         The easy way to manage <br /> chores and allowances
       </span>
       {moreToShow}
