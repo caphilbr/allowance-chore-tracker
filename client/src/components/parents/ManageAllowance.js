@@ -210,10 +210,10 @@ const ManageAllowance = (props) => {
           <input
             type="submit"
             className="allowance-button"
-            value="Submit Changes"
+            value="Submit"
           />
           <span className="allowance-button" onClick={onDeleteClick}>
-            Delete This Allowance
+            Delete Allowance
           </span>
           <span className="allowance-button" onClick={handleCancel}>
             Cancel

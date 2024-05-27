@@ -72,14 +72,16 @@ const InviteCodeForm = (props) => {
           />
         </label>
         <FormError error={error} />
-        <input
-          type="submit"
-          className="landing-page-button"
-          value="Submit Code"
-        />
-        <span className="landing-page-button" onClick={goHome}>
-          Home
-        </span>
+        <div className="intro-button-container">
+          <input
+            type="submit"
+            className="landing-page-button"
+            value="Submit Code"
+          />
+          <span className="landing-page-button" onClick={goHome}>
+            Home
+          </span>
+        </div>
       </form>
     </div>
   )
