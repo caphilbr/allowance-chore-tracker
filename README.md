@@ -22,12 +22,12 @@ Shared features
 
 ## Usage
 
-Navigate to [https://www.example.com](https://www.example.com)
+Navigate to [Chore Champion](https://allowance-chore-tracker-46cd68f48ad0.herokuapp.com/)
 
 Use these test logins...
 
    ```
-   username: "testParent2"  
+   username: "testParent1"  
    password: "password"
    ```
 
@@ -48,13 +48,13 @@ Use these test logins...
 ## Backlog/Roadmap
 
 - Register and login using Google account
-- Allow children to request 'cash-out' amounts from their bala
+- Allow children to request 'cash-out' amounts from their balance
 - Setup a new child without them having an email
 - Add to profile page (change password, change username, view/edit family name)
 - Allow for text invites to children for registration
 - Incorporate the child registration code into the registration link
 - Parent can see outstanding child invites
-- Archive chores (set to inactive) rather than delete
+- Archive chores (i.e., set to inactive) rather than delete
 - Ability to archive a child
 - Parent can see chores past due date and edit/archive/pay them
 - Add more parents to a family (e.g., spouses)
