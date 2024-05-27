@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import TopBar from "./TopBar"
 import ProfilePhoto from "./ProfilePhoto"
-import patchUser from "../../services/patchUser"
-import ErrorList from "../shared/ErrorList"
-import FormError from "../shared/FormError"
+import patchUser from "../../services/fetch/patchUser"
+import ErrorList from "../utilities/ErrorList"
+import FormError from "../utilities/FormError"
 import config from "../../config"
 
 const UserProfile = (props) => {
@@ -43,22 +43,13 @@ const UserProfile = (props) => {
   }
 
   const fetchHandling = async () => {
-    try {
-      const response = await patchUser(userPayload)
-      if (!response.ok) {
-        if (response.status === 422) {
-          setServerErrors(response.error)
-        } else {
-          const errorMessage = `${response.status} (${response.error.message})`
-          const error = new Error(errorMessage)
-          throw error
-        }
-      } else {
-        const editedUser = response.body
-        props.setCurrentUser(editedUser)
-      }
-    } catch (error) {
-      console.error(`Error in fetch: ${error.message}`)
+    const response = await patchUser(userPayload)
+    if (response.ok) {
+      const editedUser = response.body
+      props.setCurrentUser(editedUser)
+    } else if (response.status == 422) {
+      setServerErrors(response.error)
+    } else {
       location.href = "/profile"
     }
   }

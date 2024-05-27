@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
-import FormError from "../shared/FormError"
+import FormError from "../utilities/FormError"
 import config from "../../config"
-import isDateInPast from "../../services/isDateInPast"
-import patchAllowance from "../../services/patchAllowance"
-import deleteAllowance from "../../services/deleteAllowance"
-import ErrorList from "../shared/ErrorList"
+import isDateInPast from "../../utilities/isDateInPast"
+import patchAllowance from "../../services/fetch/patchAllowance"
+import deleteAllowance from "../../services/fetch/deleteAllowance"
+import ErrorList from "../utilities/ErrorList"
 
 const ManageAllowance = (props) => {
   const [userPayload, setUserPayload] = useState({
@@ -104,26 +104,15 @@ const ManageAllowance = (props) => {
   const onSubmit = async (event) => {
     event.preventDefault()
     if (validateInput(userPayload)) {
-      try {
-        const fullPayload = {
-          ...userPayload,
-          userId: props.child.id,
-          familyId: props.child.familyId,
-        }
-        const response = await patchAllowance(fullPayload)
-        if (!response.ok) {
-          if (response.status === 422) {
-            setServerErrors(response.error)
-          } else {
-            const errorMessage = `${response.status} (${response.error.message})`
-            const error = new Error(errorMessage)
-            throw error
-          }
-        } else {
-          location.href = "/dashboard"
-        }
-      } catch (error) {
-        console.error(`Error in fetch: ${error.message}`)
+      const fullPayload = {
+        ...userPayload,
+        userId: props.child.id,
+        familyId: props.child.familyId,
+      }
+      const response = await patchAllowance(fullPayload)
+      if (response.status === 422) {
+        setServerErrors(response.error)
+      } else {
         location.href = "/dashboard"
       }
     }
@@ -142,16 +131,8 @@ const ManageAllowance = (props) => {
 
   const handleDelete = async () => {
     setShowDelete(false)
-    try {
-      const response = await deleteAllowance(props.child.allowance.id)
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.error.message})`
-        const error = new Error(errorMessage)
-        throw error
-      }
-      location.href = "/dashboard"
-    } catch (error) {
-      console.error(`Error in delete: ${error.message}`)
+    const response = await deleteAllowance(props.child.allowance.id)
+    if (response.ok) {
       location.href = "/dashboard"
     }
   }

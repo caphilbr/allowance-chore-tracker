@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import FormError from "../shared/FormError.js"
+import FormError from "../utilities/FormError.js"
 import config from "../../config.js"
 
 const AddChild = (props) => {

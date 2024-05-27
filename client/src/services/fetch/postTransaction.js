@@ -1,9 +1,10 @@
-import translateServerErrors from "./translateServerErrors"
+import translateServerErrors from "../../utilities/translateServerErrors"
+import showDate from "../../utilities/showDate"
 
-const patchChore = async (payload) => {
+const postTransaction = async (payload) => {
   try {
-    const response = await fetch("/api/v1/chore", {
-      method: "PATCH",
+    const response = await fetch("/api/v1/transaction", {
+      method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
       }),
@@ -21,7 +22,10 @@ const patchChore = async (payload) => {
       }
     } else {
       const parsedData = await response.json()
-      return { ok: true, status: 200, body: parsedData.chore }
+      parsedData.transaction.paymentDate = showDate(
+        new Date(parsedData.transaction.paymentDate),
+      )
+      return { ok: true, status: 200, body: parsedData.transaction }
     }
   } catch (error) {
     console.error(`Error in fetch patch: ${error.message}`)
@@ -29,4 +33,4 @@ const patchChore = async (payload) => {
   }
 }
 
-export default patchChore
+export default postTransaction

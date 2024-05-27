@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
-import getChildRelations from "../../services/getChildRelations"
-import Balance from "../shared/Balance"
-import BalanceChart from "../shared/BalanceChart"
+import getChildRelations from "../../services/fetch/getChildRelations"
+import Balance from "../utilities/Balance"
+import BalanceChart from "../utilities/BalanceChart"
 import ChoreTileRegular from "./ChoreTileRegular"
-import ChildPhoto from "../shared/ChildPhoto"
+import ChildPhoto from "../utilities/ChildPhoto"
 import sortChoresWithinChild from "../../services/sortChoresWithinChild"
 import Quiz from "./Quiz"
 import checkQuizEligible from "../../services/checkQuizEligible"
+import showDate from "../../utilities/showDate"
 
 const ChildDashboard = (props) => {
   const [showQuiz, setShowQuiz] = useState(false)
@@ -108,8 +109,9 @@ const ChildDashboard = (props) => {
               Quiz Me!
             </span>
           ) : (
-            <span className="waiting-approval">
-              Next quiz will become available 7 days after your last quiz
+            <span className="waiting-quiz">
+              Next quiz will become available 7 days after your last quiz,
+              which you took on {showDate(new Date(child.quizDate))}
             </span>
           )}
         </span>

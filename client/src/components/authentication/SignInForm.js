@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import FormError from "../shared/FormError"
+import FormError from "../utilities/FormError"
+import postUserSession from "../../services/fetch/postUserSession"
 
 const SignInForm = () => {
   const [userPayload, setUserPayload] = useState({ username: "", password: "" })
@@ -36,13 +37,7 @@ const SignInForm = () => {
     event.preventDefault()
     if (validateInput(userPayload)) {
       try {
-        const response = await fetch("/api/v1/user-sessions", {
-          method: "POST",
-          body: JSON.stringify(userPayload),
-          headers: new Headers({
-            "Content-Type": "application/json",
-          }),
-        })
+        const response = await postUserSession(userPayload)
         if (!response.ok) {
           if (response.status === 401) {
             const body = await response.json()
@@ -52,7 +47,6 @@ const SignInForm = () => {
           const error = new Error(errorMessage)
           throw error
         }
-        const userData = await response.json()
         setShouldGoDashboard(true)
       } catch (err) {
         console.error(`Error in fetch: ${err.message}`)

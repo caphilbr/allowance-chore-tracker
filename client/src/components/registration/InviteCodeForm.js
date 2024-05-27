@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import FormError from "../shared/FormError"
+import FormError from "../utilities/FormError"
 import config from "../../config"
 
 const InviteCodeForm = (props) => {

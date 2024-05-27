@@ -14,7 +14,6 @@ const BalanceChart = (props) => {
     const transactionsWithBalance = transactionBalances(
       props.child.transactions,
     )
-    console.log(transactionsWithBalance)
 
     const margin = { top: 20, right: 30, bottom: 100, left: 60 }
     const width = 800 - margin.left - margin.right
@@ -49,7 +48,7 @@ const BalanceChart = (props) => {
       .attr("class", "line")
       .attr("d", valueline)
       .attr("stroke", "var(--darkest-color)")
-      .attr("stroke-width", 5)
+      .attr("stroke-width", 3)
       .attr("fill", "none")
 
     svg
@@ -62,19 +61,6 @@ const BalanceChart = (props) => {
       .attr("cy", (d) => y(d.balance))
       .attr("r", 4)
       .attr("fill", "var(--darkest-color)")
-
-    svg
-      .selectAll(".label")
-      .data(transactionsWithBalance)
-      .enter()
-      .append("text")
-      .attr("class", "label")
-      .attr("x", (d) => x(d.date))
-      .attr("y", (d) => y(d.balance) - 10)
-      .attr("text-anchor", "middle")
-      .text((d) => `$${d.balance.toFixed(0)}`)
-      .style("fill", "black")
-      .style("font-size", "50%")
 
     svg
       .append("g")

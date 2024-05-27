@@ -4,7 +4,7 @@ const getChildRelations = async () => {
     const parsedData = await response.json()
     return parsedData.childRelations
   } catch (error) {
-    console.log(`Error in fetching children:\n`, error.message)
+    console.log(`Error in fetching children: `, error.message)
   }
 }
 

@@ -1,8 +1,8 @@
-import translateServerErrors from "./translateServerErrors"
+import translateServerErrors from "../../utilities/translateServerErrors"
 
-const patchUser = async (payload) => {
+const patchChore = async (payload) => {
   try {
-    const response = await fetch("/api/v1/users", {
+    const response = await fetch("/api/v1/chore", {
       method: "PATCH",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ const patchUser = async (payload) => {
       }
     } else {
       const parsedData = await response.json()
-      return { ok: true, status: 200, body: parsedData.user }
+      return { ok: true, status: 200, body: parsedData.chore }
     }
   } catch (error) {
     console.error(`Error in fetch patch: ${error.message}`)
@@ -29,4 +29,4 @@ const patchUser = async (payload) => {
   }
 }
 
-export default patchUser
+export default patchChore

@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import FormError from "../shared/FormError"
+import FormError from "../utilities/FormError"
 import config from "../../config"
-import ErrorList from "../shared/ErrorList"
-import postTransaction from "../../services/postTransaction"
+import ErrorList from "../utilities/ErrorList"
+import postTransaction from "../../services/fetch/postTransaction"
 
 const ManualTransaction = (props) => {
   const [userPayload, setUserPayload] = useState({
@@ -47,30 +47,21 @@ const ManualTransaction = (props) => {
   const onSubmit = async (event) => {
     event.preventDefault()
     if (validateInput(userPayload)) {
-      try {
-        const fullPayload = {
-          amount: userPayload.amount,
-          type: `Adjustment: ${userPayload.description}`,
-          paymentDate: new Date(),
-          userId: props.child.id,
-        }
-        const response = await postTransaction(fullPayload)
-        if (!response.ok) {
-          if (response.status === 422) {
-            setServerErrors(response.error)
-          } else {
-            const errorMessage = `${response.status} (${response.error.message})`
-            const error = new Error(errorMessage)
-            throw error
-          }
-        } else {
-          const newTransaction = response.body
-          props.addTranscation(newTransaction)
-          props.setShowManualTransaction(false)
-        }
-      } catch (error) {
-        console.error(`Error in fetch: ${error.message}`)
-        // location.href = "/dashboard";
+      const fullPayload = {
+        amount: userPayload.amount,
+        type: `Adjustment: ${userPayload.description}`,
+        paymentDate: new Date(),
+        userId: props.child.id,
+      }
+      const response = await postTransaction(fullPayload)
+      if (response.ok) {
+        const newTransaction = response.body
+        props.addTranscation(newTransaction)
+        props.setShowManualTransaction(false)
+      } else if (response.status == 422) {
+        setServerErrors(response.error)
+      } else {
+        location.href = "/dashboard"
       }
     }
   }

@@ -1,10 +1,9 @@
-import translateServerErrors from "./translateServerErrors"
-import showDate from "./showDate"
+import translateServerErrors from "../../utilities/translateServerErrors"
 
-const postTransaction = async (payload) => {
+const patchAllowance = async (payload) => {
   try {
-    const response = await fetch("/api/v1/transaction", {
-      method: "POST",
+    const response = await fetch("/api/v1/allowance", {
+      method: "PATCH",
       headers: new Headers({
         "Content-Type": "application/json",
       }),
@@ -21,11 +20,7 @@ const postTransaction = async (payload) => {
         throw error
       }
     } else {
-      const parsedData = await response.json()
-      parsedData.transaction.paymentDate = showDate(
-        new Date(parsedData.transaction.paymentDate),
-      )
-      return { ok: true, status: 200, body: parsedData.transaction }
+      return { ok: true, status: 200 }
     }
   } catch (error) {
     console.error(`Error in fetch patch: ${error.message}`)
@@ -33,4 +28,4 @@ const postTransaction = async (payload) => {
   }
 }
 
-export default postTransaction
+export default patchAllowance

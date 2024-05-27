@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import ErrorList from "../shared/ErrorList"
-import FormError from "../shared/FormError"
-import isDateInPast from "../../services/isDateInPast"
+import ErrorList from "../utilities/ErrorList"
+import FormError from "../utilities/FormError"
+import isDateInPast from "../../utilities/isDateInPast"
 import config from "../../config"
-import patchChore from "../../services/patchChore"
+import patchChore from "../../services/fetch/patchChore"
 
 const EditChore = (props) => {
   const [chorePayload, setChorePayload] = useState({
@@ -81,24 +81,15 @@ const EditChore = (props) => {
   const onSubmit = async (event) => {
     event.preventDefault()
     if (validateInput(chorePayload)) {
-      try {
-        const fullPayLoad = setFullPayload(chorePayload)
-        const response = await patchChore(fullPayLoad)
-        if (!response.ok) {
-          if (response.status === 422) {
-            setServerErrors(response.error)
-          } else {
-            const errorMessage = `${response.status} (${response.error.message})`
-            const error = new Error(errorMessage)
-            throw error
-          }
-        } else {
-          const editedChore = response.body
-          props.editChore(editedChore)
-          props.setShowEditChore(false)
-        }
-      } catch (error) {
-        console.error(`Error in fetch: ${error.message}`)
+      const fullPayLoad = setFullPayload(chorePayload)
+      const response = await patchChore(fullPayLoad)
+      if (response.ok) {
+        const editedChore = response.body
+        props.editChore(editedChore)
+        props.setShowEditChore(false)
+      } else if (response.status === 422) {
+        setServerErrors(response.error)
+      } else {
         location.href = "/dashboard"
       }
     }

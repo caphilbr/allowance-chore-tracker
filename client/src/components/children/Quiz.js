@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import getQuizQuestion from "./../../services/getQuizQuestion"
+import getQuizQuestion from "../../services/fetch/getQuizQuestion"
 import parse from "html-react-parser"
 import postQuizResponse from "./../../services/postQuizResponse"
 
@@ -14,18 +14,13 @@ export const Quiz = (props) => {
 
   useEffect(() => {
     const initialFetch = async () => {
-      try {
-        const response = await getQuizQuestion()
-        if (!response.ok) {
-          const newError = new Error(response.statusText)
-          throw newError
-        }
+      const response = await getQuizQuestion()
+      if (response.ok) {
         setQuestionObject(response.body)
         setIsLoading(false)
-      } catch (error) {
-        console.log("error in fetching question: ", error.message)
-        setIsLoading(false)
+      } else {
         handleClose()
+        setIsLoading(false)
       }
     }
     setIsLoading(true)
@@ -39,42 +34,21 @@ export const Quiz = (props) => {
   const handleAnswerChoice = async (event) => {
     if (responseStatus == null) {
       const answer = event.currentTarget.getAttribute("value")
+      let response
       if (answer == correctAnswer) {
-        try {
-          setResponseStatus("correct")
-          const response = await postQuizResponse(true, props.child.id)
-          if (!response.ok) {
-            const errorMessage = `${response.status} (${response.error.message})`
-            const error = new Error(errorMessage)
-            throw error
-          } else {
-            const newTransaction = response.transaction.body
-            const updatedQuizDate = response.user.body.quizDate
-            props.addTranscation(newTransaction)
-            props.changeQuizDate(updatedQuizDate)
-          }
-        } catch (error) {
-          console.error(`Error in fetch: ${error.message}`)
-          // location.href = "/dashboard";
-        }
+        setResponseStatus("correct")
+        response = await postQuizResponse(true, props.child.id)
       } else {
-        try {
-          setResponseStatus("incorrect")
-          const response = await postQuizResponse(false, props.child.id)
-          if (!response.ok) {
-            const errorMessage = `${response.status} (${response.error.message})`
-            const error = new Error(errorMessage)
-            throw error
-          } else {
-            const newTransaction = response.transaction.body
-            const updatedQuizDate = response.user.body.quizDate
-            props.addTranscation(newTransaction)
-            props.changeQuizDate(updatedQuizDate)
-          }
-        } catch (error) {
-          console.error(`Error in fetch: ${error.message}`)
-          // location.href = "/dashboard";
-        }
+        setResponseStatus("incorrect")
+        response = await postQuizResponse(false, props.child.id)
+      }
+      if (response.ok) {
+        const newTransaction = response.transaction.body
+        const updatedQuizDate = response.user.body.quizDate
+        props.addTranscation(newTransaction)
+        props.changeQuizDate(updatedQuizDate)
+      } else {
+        location.href = "/dashboard";
       }
     }
   }
@@ -128,7 +102,7 @@ export const Quiz = (props) => {
 
   const incorrectDisplay = (
     <>
-      <h3>Incorrect</h3>
+      <h3>Incorrect, but you still get $1</h3>
       <span className="button-styling" onClick={handleClose}>
         Close
       </span>
@@ -137,7 +111,7 @@ export const Quiz = (props) => {
 
   const correctDisplay = (
     <>
-      <h3>Correct</h3>
+      <h3>Correct! You have been credited $2</h3>
       <span className="button-styling" onClick={handleClose}>
         Close
       </span>

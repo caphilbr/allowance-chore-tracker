@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import ChildDetails from "./ChildDetails"
 import ChildTile from "./ChildTile"
-import getChildren from "../../services/getChildren"
+import getChildren from "../../services/fetch/getChildren"
 import AddChild from "./AddChild"
 import sortChoresWithinChildren from "../../services/sortChoresWithinChildren"
 import removeChoreFromChildren from "../../services/removeChoreFromChildren"

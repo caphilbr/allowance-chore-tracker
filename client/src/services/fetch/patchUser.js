@@ -1,9 +1,9 @@
-import translateServerErrors from "./translateServerErrors"
+import translateServerErrors from "../../utilities/translateServerErrors"
 
-const postChore = async (payload) => {
+const patchUser = async (payload) => {
   try {
-    const response = await fetch("/api/v1/chore", {
-      method: "POST",
+    const response = await fetch("/api/v1/users", {
+      method: "PATCH",
       headers: new Headers({
         "Content-Type": "application/json",
       }),
@@ -13,6 +13,7 @@ const postChore = async (payload) => {
       if (response.status === 422) {
         const errorBody = await response.json()
         const newErrors = translateServerErrors(errorBody.errors)
+        console.error(`422 error in fetch patch: ${newErrors}`)
         return { ok: false, status: 422, error: newErrors }
       } else {
         const errorMessage = `${response.status} (${response.statusText})`
@@ -21,7 +22,7 @@ const postChore = async (payload) => {
       }
     } else {
       const parsedData = await response.json()
-      return { ok: true, status: 200, body: parsedData.chore }
+      return { ok: true, status: 200, body: parsedData.user }
     }
   } catch (error) {
     console.error(`Error in fetch patch: ${error.message}`)
@@ -29,4 +30,4 @@ const postChore = async (payload) => {
   }
 }
 
-export default postChore
+export default patchUser

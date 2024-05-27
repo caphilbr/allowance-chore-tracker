@@ -1,4 +1,4 @@
-import isMoreThan2DaysOld from "./isMoreThan2DaysOld"
+import isMoreThan2DaysOld from "../utilities/isMoreThan2DaysOld"
 
 const transactionBalances = (transactions) => {
   const sortedTransactions = transactions.sort((a, b) => {

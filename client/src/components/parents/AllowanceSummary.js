@@ -12,17 +12,17 @@ const AllowanceSummary = (props) => {
           <p>Current Allowance</p>
           <div className="horizontal-line" />
           <table>
-            <thead>
-              <tr>
-                <th>Frequency</th>
-                <th>End Date</th>
-                <th className="align-amt-right">Amount</th>
-              </tr>
-            </thead>
             <tbody>
               <tr>
-                <td>{props.allowance.frequency}</td>
-                <td>{props.allowance.lastDate}</td>
+                <th>Frequency</th>
+                <td className="align-amt-right">{props.allowance.frequency}</td>
+              </tr>
+              <tr>
+                <th>End Date</th>
+                <td className="align-amt-right">{props.allowance.lastDate}</td>
+              </tr>
+              <tr>
+                <th>Amount</th>
                 <td className="align-amt-right">
                   ${props.allowance.amount.toFixed(2)}
                 </td>

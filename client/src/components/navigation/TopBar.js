@@ -1,8 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import ProfileButton from "./ProfileButton"
+import ProfileDropdown from "./ProfileDropdown"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const TopBar = (props) => {
+  
+  const [showDropdown, setShowDropdown] = useState(false)
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown)
+  }
+
+  let dropdown = null
+  if (showDropdown) {
+    dropdown = <ProfileDropdown />
+  }
+  
   return (
     <div className="top-bar">
       <div className="top-bar-left">
@@ -13,8 +27,10 @@ const TopBar = (props) => {
           My Dashboard
         </Link>
       </div>
-      <div className="top-bar-right">
+      <div className="top-bar-right" onClick={toggleDropdown}>
         <ProfileButton user={props.user} />
+        <FontAwesomeIcon icon="fas fa-angle-down" />
+        {dropdown}
       </div>
     </div>
   )

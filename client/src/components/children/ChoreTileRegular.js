@@ -1,15 +1,11 @@
 import React from "react"
+import patchSubmitChore from "../../services/fetch/patchSubmitChore"
 
 const ChoreTileRegular = (props) => {
   const handleSubmit = async () => {
-    try {
-      const response = await fetch(`/api/v1/chore/submit/${props.chore.id}`, {
-        method: "PATCH",
-      })
-      const parsedData = await response.json()
-      props.updateChoreState(parsedData.chore)
-    } catch (error) {
-      console.log(error)
+    const response = await patchSubmitChore(props.chore.id)
+    if (response.ok) {
+      props.updateChoreState(response.chore)
     }
   }
 

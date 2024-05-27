@@ -1,15 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import SignOutButton from "../authentication/SignOutButton"
 
 const ProfileDropdown = () => {
-  const [shouldGoProfile, setShouldGoProfile] = useState(false)
-
-  if (shouldGoProfile) {
-    location.href = "/profile"
-  }
 
   const goToProfile = () => {
-    setShouldGoProfile(true)
+    location.href = "/profile"
   }
 
   return (

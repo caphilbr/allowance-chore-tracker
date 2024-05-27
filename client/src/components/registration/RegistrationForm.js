@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import config from "../../config"
-import ErrorList from "../shared/ErrorList"
-import FormError from "../shared/FormError"
-import translateServerErrors from "../../services/translateServerErrors"
+import ErrorList from "../utilities/ErrorList"
+import FormError from "../utilities/FormError"
+import translateServerErrors from "../../utilities/translateServerErrors"
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({

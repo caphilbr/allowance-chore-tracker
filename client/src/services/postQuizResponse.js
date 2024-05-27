@@ -1,5 +1,5 @@
-import postTransaction from "./postTransaction"
-import patchUser from "./patchUser"
+import postTransaction from "./fetch/postTransaction"
+import patchUser from "./fetch/patchUser"
 
 const postQuizResponse = async (isCorrect, userId) => {
   let amount = "1"

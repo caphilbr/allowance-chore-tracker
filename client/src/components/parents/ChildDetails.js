@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import Balance from "../shared/Balance"
+import Balance from "../utilities/Balance"
 import ChoreTileSmall from "./ChoreTileSmall"
-import ChildPhoto from "../shared/ChildPhoto"
+import ChildPhoto from "../utilities/ChildPhoto"
 import ManageAllowance from "./ManageAllowance"
 import AllowanceSummary from "./AllowanceSummary"
-import BalanceChart from "../shared/BalanceChart"
+import BalanceChart from "../utilities/BalanceChart"
 import AddChore from "./AddChore"
 import EditChore from "./EditChore"
 import ManualTransaction from "./ManualTransaction"
@@ -100,7 +100,7 @@ const ChildDetails = (props) => {
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="cell small-12 chart-container">
-          <div className="cell child-dash-title-in-parent">
+          <div className="child-dash-title-in-parent">
             Balance Over Time
           </div>
           <BalanceChart child={props.child} />
