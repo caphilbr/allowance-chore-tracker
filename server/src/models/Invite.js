@@ -32,7 +32,13 @@ class Invite extends Model {
   }
 
   async sendInvite() {
-    const inviteUrl = "http://localhost:3000/invite"
+    const { default: getNodeEnv } = await import("./../config.js")
+
+    let inviteUrl = "http://localhost:3000/invite"
+    // if (getNodeEnv.nodeEnv != "development") {
+      inviteUrl = 
+        "https://allowance-chore-tracker-46cd68f48ad0.herokuapp.com/invite"
+    // }
     try {
       const { default: emailInvite } = await import(
         "./../services/emailInvite.js"

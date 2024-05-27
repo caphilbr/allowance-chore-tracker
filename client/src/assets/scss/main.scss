@@ -115,8 +115,8 @@
 .child-tile {
   margin: 0.5rem 0.2rem 0 0.2rem;
   text-align: center;
-  width: 10rem;
-  height: 7rem;
+  width: 8rem;
+  height: 5rem;
   font-weight: bold;
   color: var(--lightest-color);
   cursor: pointer;
@@ -128,14 +128,16 @@
 
 .child-tile-add {
   @extend .child-tile;
+  padding-top: 1rem;
 }
 
 .child-tile-add p {
-  margin-top: 1rem;
+  margin-top: .1rem;
 }
 
 .child-tile p {
   margin-bottom: 0.1rem;
+  font-size: 80%;
 }
 
 .child-tile:hover {
@@ -156,7 +158,6 @@
 
 .horizontal-scroll {
   overflow-x: auto;
-
 }
 
 .scroll {
@@ -178,19 +179,19 @@
   border-radius: 50%;
   margin-bottom: 0.1rem;
   margin-top: 0.1rem;
-  max-height: 4rem;
+  max-height: 2.8rem;
   width: auto;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
   transition: box-shadow 0.3s ease-in-out;
 }
 
 .child-details {
-  background-color: var(--lightest-color);
+  // background-color: var(--lightest-color);
   border-radius: 1rem;
-  padding: 2rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   margin: 0 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease-in-out;
+  // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  // transition: box-shadow 0.3s ease-in-out;
   // max-height: 65%;
   // overflow-y: auto;
 }
@@ -256,7 +257,7 @@
   border: 1px solid transparent;
   border-radius: 0.5rem;
   padding: 0.2rem;
-  background-color: var(--light-color);
+  background-color: var(--lightest-color);
   color: var(--darkest-color);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
@@ -286,7 +287,7 @@
   text-align: center;  
   font-weight: bold;
   color: var(--darkest-color);
-  padding: 2rem 0.5rem;
+  padding: 0.5rem;
   margin: 0 1rem;
   align-content: center;
 }
@@ -363,6 +364,8 @@
 
 .profile-page {
   padding-top: 6rem;
+  height: 90vh;
+  overflow-y: auto;
 }
 
 .profile-page img {
@@ -484,7 +487,6 @@
 .invite-message {
   color: var(--lightest-color);
   font-weight: bold;
-  font-size: 125%;
   justify-content: center; 
   margin: 1rem 0.5rem 2rem 0.5rem;
 }
@@ -531,7 +533,7 @@
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
   text-align: center;
-  height: 60vh;
+  height: 50vh;
   overflow-y: auto;
 }
 
@@ -542,8 +544,8 @@
 }
 
 .popout-box h3 {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .allowance-summary {
@@ -621,13 +623,15 @@
 
 .child-pic img {
   margin-bottom: 1.5rem;
-  max-height: 15rem;
+  max-height: 12rem;
   width: auto;
 }
 
 .manage-allowance-button-container {
-  text-align: center;
-  padding-top: 1rem;
+  padding: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
 }
 
 .chore-title {
@@ -652,17 +656,15 @@
 .child-dash-title {
   color: var(--lightest-color);
   text-align: center;
-  font-size: 100%;
+  font-size: 115%;
   font-weight: bold;
   text-shadow: 1px 1px 1px var(--grey-color);
 }
 
 .chart-container {
   margin: 0 auto;
-}
-
-.chart-container {
   max-width: 75rem;
+  text-align: center;
 }
 
 .chart-container svg {
@@ -746,7 +748,8 @@
 .popout-box-quiz {
   @extend .popout-box;
   margin-top: 0.5rem;
-  width: 50%;
+  padding-top: 2rem;
+  width: 90vw;
 }
 
 .button-styling-loading {
@@ -777,7 +780,7 @@
 }
 
 .full-screen-intro {
-  height: 100vh;
+  height: 85vh;
   overflow-y: auto;
 }
 
@@ -807,4 +810,8 @@
   100% {
     background-color: green;
   }
+}
+
+.dashboard-container {
+  margin-top: 4rem;
 }

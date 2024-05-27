@@ -77,6 +77,7 @@ const ChildDetails = (props) => {
 
   let details = (
     <>
+      <div className="cell small-12 horizontal-line" />
       <h3 className="cell parent-dash-title">
         {props.child.nickname}'s Details
       </h3>
@@ -84,13 +85,16 @@ const ChildDetails = (props) => {
         {popOutBox}
       </div>
       <div className="grid-x grid-margin-x grid-margin-y child-details align-center">
+        <div className="cell small-12 horizontal-line" />
         <div className="cell small-12 large-6 details-left">
           <ChildPhoto child={props.child} />
+          <div className="cell small-12 horizontal-line" />
           <AllowanceSummary
             setShowManageAllowance={setShowManageAllowance}
             allowance={props.child.allowance}
           />
         </div>
+        <div className="cell small-12 horizontal-line" />
         <div className="cell small-12 large-6 details-right">
           <Balance
             user={props.user}

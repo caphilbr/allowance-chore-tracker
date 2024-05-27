@@ -206,18 +206,19 @@ const ManageAllowance = (props) => {
           />
           <FormError error={errors.lastDate} />
         </label>
-
-        <input
-          type="submit"
-          className="allowance-button"
-          value="Submit Changes"
-        />
-        <span className="allowance-button" onClick={onDeleteClick}>
-          Delete This Allowance
-        </span>
-        <span className="allowance-button" onClick={handleCancel}>
-          Cancel
-        </span>
+        <div className="manage-allowance-button-container">
+          <input
+            type="submit"
+            className="allowance-button"
+            value="Submit Changes"
+          />
+          <span className="allowance-button" onClick={onDeleteClick}>
+            Delete This Allowance
+          </span>
+          <span className="allowance-button" onClick={handleCancel}>
+            Cancel
+          </span>
+        </div>
       </form>
     </div>
   )

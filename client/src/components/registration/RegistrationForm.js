@@ -122,7 +122,7 @@ const RegistrationForm = () => {
   }
 
   return (
-    <div className="sign-in-form">
+    <div className="sign-in-form full-screen-intro">
       <p className="sign-in-up-title">Register a new Family</p>
       <p className="reg-notice">
         If you want to add a child or spouse to a an existing family, please

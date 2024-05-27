@@ -12,10 +12,7 @@ const Dashboard = (props) => {
   }
 
   return (
-    <div className="background-color">
-      <div className="dashboard-title">
-        <img className="landing-title" src={config.dashboardTitleUrl} />
-      </div>
+    <div className="background-color dashboard-container">
       {mainContent}
     </div>
   )

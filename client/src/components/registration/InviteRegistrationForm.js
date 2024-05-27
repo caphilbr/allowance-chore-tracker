@@ -157,13 +157,15 @@ const InviteRegistrationForm = (props) => {
           />
           <FormError error={errors.passwordConfirmation} />
         </label>
-        <input type="submit" className="landing-page-button" value="Register" />
-        <span className="landing-page-button" onClick={goHome}>
-          Home
-        </span>
-        <span className="landing-page-button" onClick={clearForm}>
-          Clear
-        </span>
+        <div className="intro-button-container">
+          <input type="submit" className="landing-page-button" value="Register" />
+          <span className="landing-page-button" onClick={goHome}>
+            Home
+          </span>
+          <span className="landing-page-button" onClick={clearForm}>
+            Clear
+          </span>
+        </div>
       </form>
     </div>
   )
