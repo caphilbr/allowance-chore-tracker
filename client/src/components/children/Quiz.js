@@ -80,8 +80,7 @@ export const Quiz = (props) => {
     <>
       <h3>Quiz Time!</h3>
       <h5>
-        You get $1 for answering, plus <br />
-        another $1 if you get the correct response!
+        $1 for playing, $2 for correct answers
       </h5>
       <div className="grid-x grid-margin-x grid-margin-y align-center quiz-answer-container">
         <p className="cell">{question}</p>
@@ -131,7 +130,7 @@ export const Quiz = (props) => {
     }
   }
 
-  return <div className="popout-box-quiz">{quizDisplay}</div>
+  return <div className="cell small-11 popout-box-quiz">{quizDisplay}</div>
 }
 
 export default Quiz
