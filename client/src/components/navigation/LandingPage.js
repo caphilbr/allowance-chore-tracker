@@ -21,7 +21,7 @@ const LandingPage = (props) => {
   }
 
   return (
-    <div className="background-color grid-x">
+    <div className="full-screen-landing background-color grid-x ">
       <img
         className="cell small-12 medium-5 landing-page-background-img"
         src={config.homeBackgroundUrl}

@@ -788,6 +788,12 @@
   overflow-y: auto;
 }
 
+.full-screen-landing {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+
 .waiting-quiz {
   background-color: var(--grey-color);
   margin: 3rem auto;
