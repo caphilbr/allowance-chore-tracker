@@ -20,12 +20,13 @@
 }
 
 .landing-page-background-img {
-  z-index: -1;
-  width: 45%;
+  max-height: 300px; /* Adjust this value as needed */
+  width: 100%;
   height: auto;
-  display: block;
-  position: absolute;
-  border-radius: 0 0 2rem 0;
+  object-fit: contain; 
+  // display: block;
+  // position: absolute;
+  // border-radius: 0 0 2rem 0;
 }
 
 .background-color {
@@ -229,7 +230,6 @@
 }
 
 .balance-box {
-  border: 3px solid rgb(220, 220, 220);
   border-radius: 0.5rem;
   background-color: var(--lightest-color);
   color: var(--darkest-color);
@@ -237,6 +237,9 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
   margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60rem;
 }
 
 .balance-box span {
@@ -422,10 +425,12 @@
 .more-list {
   margin: 0 auto 1rem auto;
   max-width: 20rem;
+  padding-left: 0.75rem;
 }
 
 .more-list li {
   text-align: left;
+
 }
 
 .sign-in-form {
@@ -545,7 +550,6 @@
 }
 
 .allowance-summary {
-  border: 3px solid rgb(220, 220, 220);
   border-radius: 0.5rem;
   background-color: var(--lightest-color);
   color: var(--darkest-color);
@@ -650,22 +654,25 @@
 }
 
 .child-dash-title {
-  color: var(--lightest-color);
   text-align: center;
-  font-size: 115%;
   font-weight: bold;
-  text-shadow: 1px 1px 1px var(--grey-color);
+  color: var(--darkest-color);
+  font-size: 150%;
+  text-shadow: none;
 }
 
 .chart-container {
-  margin: 0 auto;
-  max-width: 75rem;
-  text-align: center;
-}
-
-.chart-container svg {
+  border-radius: 0.5rem;
   background-color: var(--lightest-color);
-  border-radius: 1rem;
+  color: var(--darkest-color);
+  padding: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60rem;
+  text-align: center;
 }
 
 .chart-container g {
@@ -674,9 +681,6 @@
 
 .child-dash-title-in-parent {
   @extend .child-dash-title;
-  color: var(--darkest-color);
-  font-size: 150%;
-  text-shadow: none;
 }
 
 #manual-transaction-button {
@@ -814,4 +818,22 @@
 
 .dashboard-container {
   margin-top: 4rem;
+}
+
+.empty {
+  background-color: lightgray;
+  color: var(--darkest-color);
+  border-radius: 0.5rem;
+  width: 30rem;
+  max-width: 80%;
+  margin: 1rem auto;
+  font-style: italic;
+  word-wrap: normal;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.icon-photo {
+  margin-bottom: 1rem;
 }

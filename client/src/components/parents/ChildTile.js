@@ -1,4 +1,5 @@
 import React from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const ChildTile = (props) => {
   const handleChildClick = () => {
@@ -10,9 +11,14 @@ const ChildTile = (props) => {
     styling = "cell small-2 child-tile-selected"
   }
 
+  let photo = <FontAwesomeIcon icon="fas fa-user" className="fa-2x"/>
+  if (props.child.imageUrl != null && props.child.imageUrl != "") {
+    photo = <img src={props.child.imageUrl} className="circle-image" />
+  }
+
   return (
     <div onClick={handleChildClick} className={styling}>
-      <img src={props.child.imageUrl} className="circle-image" />
+      {photo}
       <p>{props.child.nickname}</p>
     </div>
   )

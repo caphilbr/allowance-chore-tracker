@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import { hot } from "react-hot-loader/root"
 import "../assets/scss/main.scss"
 import getCurrentUser from "../services/fetch/getCurrentUser"
@@ -32,7 +32,13 @@ const App = () => {
     </>
   )
   if (!currentUser) {
-    dashBoardContent = <p>Loading...</p>
+    dashBoardContent = (
+      <>
+        <p>Loading...</p>
+        <Link to="/">Click here if not redirected shortly</Link>
+      </>
+    )
+
   }
 
   return (

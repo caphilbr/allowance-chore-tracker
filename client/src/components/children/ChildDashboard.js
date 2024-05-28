@@ -57,7 +57,7 @@ const ChildDashboard = (props) => {
     setQuizEligible(false)
   }
 
-  let choreList = <span>Chores will appear when assigned</span>
+  let choreList = <div className="empty">Chores will appear when assigned</div>
   if (child.chores.length > 0) {
     choreList = childRelations.chores.map((chore) => {
       return (
@@ -123,22 +123,26 @@ const ChildDashboard = (props) => {
             </span>
           )}
         </span>
+        <div className="cell horizontal-line" />
         <span className="cell small-12 child-dash-top-right">
           <Balance user={props.user} child={child} />
         </span>
       </div>
+      <div className="cell horizontal-line" />
       <div className="cell small-11 medium-9 large-8">
         <div className="chart-container">
           <div className="cell child-dash-title">Balance Over Time</div>
           {showBalanceChart ?
             <BalanceChart child={child} />
           :
-            <span>Chart will appear after your first transaction</span>
+            <div className="empty">Chart will appear after your first transaction</div>
           }
         </div>
       </div>
       <div className="cell grid-x grid-margin-x">
         <div className="cell small-12 child-dash-bottom-left">
+          <div className="horizontal-line"/>
+          <br/>
           <h3 className="child-dash-title cell">My Assigned Chores</h3>
           <div className="grid-x grid-margin-x align-center">{choreList}</div>
         </div>

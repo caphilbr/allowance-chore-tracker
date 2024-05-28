@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import config from "../../config"
 import { Redirect } from "react-router-dom"
 import SignOutButton from "../authentication/SignOutButton"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 
 const Intro = (props) => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
@@ -43,7 +45,9 @@ const Intro = (props) => {
 
   let moreToShow = (
     <span className="cell show-more-button" onClick={toggleShowMore}>
-      ▼ SHOW MORE ▼
+      <FontAwesomeIcon icon="fas fa-angle-down" />
+      SHOW MORE
+      <FontAwesomeIcon icon="fas fa-angle-down" />
     </span>
   )
   if (showMore) {

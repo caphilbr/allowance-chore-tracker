@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Dropzone from "react-dropzone"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const ProfilePhoto = (props) => {
   const [newPhotoUrl, setNewPhotoUrl] = useState({ image: {} })
@@ -36,9 +37,15 @@ const ProfilePhoto = (props) => {
     addPhoto()
   }
 
+  let photo = <FontAwesomeIcon icon="fas fa-user" className="fa-6x icon-photo"/>
+  console.log(props.user.imageUrl)
+  if (props.user.imageUrl != null && props.user.imageUrl != "") {
+    photo = <img src={props.user.imageUrl} />
+  }
+
   return (
     <>
-      <img src={props.user.imageUrl} />
+      {photo}
       <form>
         <Dropzone onDrop={handleImageUpload}>
           {({ getRootProps, getInputProps }) => (

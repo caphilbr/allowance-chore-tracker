@@ -79,9 +79,7 @@ usersRouter.post("/child", async (req, res) => {
   let childPayload = req.body
   delete childPayload.passwordConfirmation
   delete childPayload.inviteId
-  if (childPayload.imageUrl == "") {
-    childPayload.imageUrl = config.defaultProfilePic
-  }
+
   try {
     const persistedUser = await User.query().insertAndFetch(childPayload)
     const invite = await Invite.query()
@@ -101,9 +99,6 @@ usersRouter.post("/child", async (req, res) => {
 usersRouter.post("/", async (req, res) => {
   let { email, username, imageUrl, familyName, password, nickname, isParent } =
     req.body
-  if (imageUrl == "") {
-    imageUrl = config.defaultProfilePic
-  }
   try {
     const newFamily = await Family.query().insertAndFetch({ name: familyName })
     const familyId = newFamily.id
