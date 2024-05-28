@@ -18,13 +18,13 @@ const Invite = (props) => {
   }
 
   return (
-    <>
+    <div className="background-color grid-x align-right full-screen-intro">
       <img
-        className="landing-page-background-img"
+        className="cell small-12 medium-5 landing-page-background-img"
         src={config.homeBackgroundUrl}
       />
-      <div className="background-color grid-x align-right full-screen-intro">
-        <div className="cell small-6 landing-page-main">
+      {/* <div className="background-color grid-x align-right full-screen-intro"> */}
+        <div className="cell small-12 medium-6 landing-page-main">
           <img
             className="cell small-12 landing-title"
             src={config.titleFontUrl}
@@ -61,8 +61,8 @@ const Invite = (props) => {
             </>
           )}
         </div>
-      </div>
-    </>
+      {/* </div> */}
+    </div>
   )
 }
 

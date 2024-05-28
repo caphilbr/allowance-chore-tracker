@@ -5,11 +5,8 @@ import graphAxis from "../../services/graphAxis"
 
 const BalanceChart = (props) => {
   const svgRef = useRef(null)
-
+  
   useEffect(() => {
-    if (props.child.transactions.length == 0) {
-      return
-    }
 
     const transactionsWithBalance = transactionBalances(
       props.child.transactions,
@@ -85,9 +82,9 @@ const BalanceChart = (props) => {
         .tickFormat((d) => `$${d}`)
         .ticks(5),
     )
-  }, [props])
+  }, [props.child.transactions])
   
-  return <svg ref={svgRef} />
+  return <svg className="chart" ref={svgRef} />
 }
 
 export default BalanceChart

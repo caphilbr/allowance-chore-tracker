@@ -29,17 +29,20 @@ const ChildDetails = (props) => {
     setShowEditChore(true)
   }
 
-  const choreList = props.child.chores.map((chore) => {
-    return (
-      <ChoreTileSmall
-        key={chore.id}
-        chore={chore}
-        payChore={props.payChore}
-        removeChore={props.removeChore}
-        handleEditChore={handleEditChore}
-      />
-    )
-  })
+  let choreList = <div className="empty">Chores will appear when assigned</div>
+  if (props.child.chores.length > 0) {
+    choreList = props.child.chores.map((chore) => {
+      return (
+        <ChoreTileSmall
+          key={chore.id}
+          chore={chore}
+          payChore={props.payChore}
+          removeChore={props.removeChore}
+          handleEditChore={handleEditChore}
+        />
+      )
+    })
+  }
 
   let popOutBox = null
   if (showManageAllowance) {
@@ -75,6 +78,11 @@ const ChildDetails = (props) => {
     )
   }
 
+  let showBalanceChart = false
+  if (props.child.transactions.length > 0) {
+    showBalanceChart = true
+  }
+
   let details = (
     <>
       <div className="cell small-12 horizontal-line" />
@@ -107,7 +115,11 @@ const ChildDetails = (props) => {
           <div className="child-dash-title-in-parent">
             Balance Over Time
           </div>
-          <BalanceChart child={props.child} />
+          {showBalanceChart ?
+            <BalanceChart child={props.child} />
+          :
+            <div className="empty">Chart will appear after your first transaction</div>
+          }          
         </div>
         <div className="cell small-12 horizontal-line" />
         <div className="chore-title cell small-12">

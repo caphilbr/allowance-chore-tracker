@@ -20,19 +20,30 @@ const PastTransactions = (props) => {
     )
   })
 
+  let showEmpty = false
+  if (transactionList.length == 0) {
+    showEmpty = true
+  }
+
   return (
-    <div className="transaction-table-container">
-      <table className="transaction-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th className="align-amt-right">Amount</th>
-          </tr>
-        </thead>
-        <tbody>{transactionList}</tbody>
-      </table>
-    </div>
+    <>
+      {showEmpty ?
+        null
+      :
+        <div className="transaction-table-container">
+          <table className="transaction-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th className="align-amt-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>{transactionList}</tbody>
+          </table>
+        </div>
+      }
+    </>
   )
 }
 

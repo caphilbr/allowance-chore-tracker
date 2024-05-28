@@ -14,9 +14,7 @@ const development = {
   nodeEnv: getNodeEnv(),
   session: { secret: process.env.SESSION_SECRET },
   databaseUrl: getDatabaseUrl(getNodeEnv()),
-  web: { host: process.env.HOST || "0.0.0.0", port: process.env.PORT || 3000 },
-  defaultProfilePic:
-    "https://allowance-chore-tracker.s3.amazonaws.com/default-profile-pic",
+  web: { host: process.env.HOST || "0.0.0.0", port: process.env.PORT || 3000 }
 }
 
 const test = { ...development }

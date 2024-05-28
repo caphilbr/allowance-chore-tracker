@@ -31,7 +31,7 @@ const AllowanceSummary = (props) => {
           </table>
         </>
       ) : (
-        <p>No allowance has been set</p>
+        <div className="empty">No allowance has been set</div>
       )}
       <div className="manage-allowance-button-container">
         <span className="detail-option-button" onClick={handleManageAllowClick}>
