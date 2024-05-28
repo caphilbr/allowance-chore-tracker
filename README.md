@@ -36,7 +36,8 @@ Use these test logins...
    password: "password"
    ```
 
-![Screenshot](screenshot.jpeg)
+![Screenshot](screen1.jpeg)
+![Screenshot](screen2.jpeg)
 
 ## Technologies
 
