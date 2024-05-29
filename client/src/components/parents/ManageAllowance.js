@@ -126,7 +126,7 @@ const ManageAllowance = (props) => {
   }
 
   const onDeleteClick = () => {
-    setShowDelete(true)
+    setShowDelete(!showDelete)
   }
 
   const handleDelete = async () => {
@@ -149,6 +149,9 @@ const ManageAllowance = (props) => {
       </p>
       <span className="allowance-button" onClick={handleDelete}>
         Confirm Allowance Delete
+      </span>
+      <span className="allowance-button" onClick={onDeleteClick}>
+        Cancel
       </span>
     </div>
   )
