@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe("As a user visiting the sign in page", () => {
+describe("As a user visiting the login page", () => {
   const visitRegistrationPage = () => {
     cy.visit("/users/new");
   };

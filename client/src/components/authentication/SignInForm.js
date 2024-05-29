@@ -75,7 +75,7 @@ const SignInForm = () => {
 
   return (
     <div className="sign-in-form" onSubmit={onSubmit}>
-      <p className="sign-in-up-title">Sign In</p>
+      <p className="sign-in-up-title">Login</p>
 
       {credentialsErrors ? (
         <p className="callout alert">{credentialsErrors}</p>
@@ -104,7 +104,7 @@ const SignInForm = () => {
           />
           <FormError error={errors.password} />
         </label>
-        <input type="submit" className="landing-page-button" value="Sign In" />
+        <input type="submit" className="landing-page-button" value="Login" />
         <span className="landing-page-button" onClick={goHome}>
           Home
         </span>

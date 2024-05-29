@@ -6,6 +6,8 @@ const development = {
   awsAccess: { key: process.env.AWS_ACCESS_KEY },
   awsSecret: { key: process.env.AWS_SECRET_ACCESS_KEY },
   s3Bucket: { name: process.env.S3_BUCKET_DEVELOPMENT },
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   email: {
     username: process.env.EMAIL_USERNAME,
     address: process.env.EMAIL_ADDRESS,

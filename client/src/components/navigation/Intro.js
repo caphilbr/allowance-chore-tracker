@@ -31,7 +31,7 @@ const Intro = (props) => {
     buttonsToShow = (
       <div className="cell intro-button-container">
         <span className="landing-page-button" onClick={showSignIn}>
-          Sign In
+          Login
         </span>
         <span className="landing-page-button" onClick={showSignUp}>
           Create A New Family
