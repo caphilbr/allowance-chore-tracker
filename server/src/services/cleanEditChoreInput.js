@@ -17,6 +17,8 @@ const cleanEditChoreInput = (inputObject) => {
       } else {
         cleanInput[key] = new Date(inputObject[key])
       }
+    } else if (key == 'description' && inputObject[key] == null) {
+      cleanInput[key] = ""
     } else {
       cleanInput[key] = inputObject[key]
     }
