@@ -48,7 +48,6 @@ const CashoutForm = (props) => {
     }
     return false
   }
-  console.log('errors ', errors)
   const onSubmit = async (event) => {
     event.preventDefault()
     if (validateInput(cashoutAmount)) {
