@@ -3,6 +3,7 @@ import config from "../../config"
 import { Redirect } from "react-router-dom"
 import SignOutButton from "../authentication/SignOutButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import GoogleButton from 'react-google-button'
 
 
 const Intro = (props) => {
@@ -14,6 +15,7 @@ const Intro = (props) => {
   const showDashboard = () => setShouldRedirect(true)
   const showInvite = () => (location.href = "/invite")
   const toggleShowMore = () => setShowMore(!showMore)
+  const googleClick = () => location.href = "/api/v1/user-sessions/auth/google"
 
   let buttonsToShow
   if (props.user) {
@@ -29,17 +31,22 @@ const Intro = (props) => {
     )
   } else {
     buttonsToShow = (
-      <div className="cell intro-button-container">
-        <span className="landing-page-button" onClick={showSignIn}>
-          Login
-        </span>
-        <span className="landing-page-button" onClick={showSignUp}>
-          Create A New Family
-        </span>
-        <span className="landing-page-button" onClick={showInvite}>
-          I Have An Invite
-        </span>
-      </div>
+      <>
+        <div className="cell intro-button-container">
+          <span className="landing-page-button" onClick={showSignIn}>
+            Login
+          </span>
+          <span className="landing-page-button" onClick={showSignUp}>
+            Create A New Family
+          </span>
+          <span className="landing-page-button" onClick={showInvite}>
+            I Have An Invite
+          </span>
+        </div>
+        <div className="cell intro-button-container">
+          <GoogleButton type="light" label="Login/Signup with Google" onClick={googleClick} />
+        </div>
+      </>
     )
   }
 
