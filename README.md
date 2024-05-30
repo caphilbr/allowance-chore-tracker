@@ -14,6 +14,7 @@ Parent features
 - Create an ad hoc debit/credit
 - Assign new chores, accept chores as complete and pay the amount due, edit & delete chores
 - Send an email invite for a new child, with a registration code
+- Optional Google login/authentication
 
 Shared features
 - Authenticated login
@@ -42,16 +43,14 @@ Use these test logins...
 ## Technologies
 
 - D3 (graphing balances over time)
-- Passport (authentication)
+- Passport (authentication, including Google)
 - Nodemailer (email registration links)
 - React/Express/PostgreSQL (Objection/Knex)
 
 ## Backlog/Roadmap
 
-- Register and login using Google account
-- Allow children to request 'cash-out' amounts from their balance
 - Setup a new child without them having an email
-- Add to profile page (change password, change username, view/edit family name)
+- Add to profile page (change password, change username)
 - Allow for text invites to children for registration
 - Incorporate the child registration code into the registration link
 - Parent can see outstanding child invites
