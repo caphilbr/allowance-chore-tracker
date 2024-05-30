@@ -1,25 +1,40 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import TopBar from "./TopBar"
 import ProfilePhoto from "./ProfilePhoto"
 import patchUser from "../../services/fetch/patchUser"
 import ErrorList from "../utilities/ErrorList"
 import FormError from "../utilities/FormError"
 import config from "../../config"
+import getFamily from "../../services/fetch/getFamily"
+import patchFamilyName from "../../services/fetch/patchFamilyName"
 
 const UserProfile = (props) => {
   const [errors, setErrors] = useState({})
   const [serverErrors, setServerErrors] = useState({})
   const [showEditNickname, setShowEditNickname] = useState(false)
   const [showEditEmail, setShowEditEmail] = useState(false)
+  const [showEditFamily, setShowEditFamily] = useState(false)
   const [userPayload, setUserPayload] = useState({
     nickname: props.user.nickname,
     email: props.user.email,
+    familyName: ""
   })
+
+  useEffect(() => {
+    const fetchedData = async () => {
+      const response = await getFamily()
+      setUserPayload({
+        ...userPayload,
+        familyName: response.name
+      })
+    }
+    fetchedData()
+  }, [])
 
   const validateInput = (payload) => {
     setErrors({})
     setServerErrors({})
-    const { email, nickname } = payload
+    const { email, nickname, familyName } = payload
     const emailRegexp = config.validation.email.regexp.emailRegex
     let newErrors = {}
     if (!email.match(emailRegexp)) {
@@ -34,6 +49,12 @@ const UserProfile = (props) => {
         nickname: "Nickname is required",
       }
     }
+    if (familyName.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        nickname: "Family name is required",
+      }
+    }
 
     setErrors(newErrors)
     if (Object.keys(newErrors).length === 0) {
@@ -43,10 +64,29 @@ const UserProfile = (props) => {
   }
 
   const fetchHandling = async () => {
-    const response = await patchUser(userPayload)
+    const userPayloadToSend = {
+      nickname: userPayload.nickname,
+      email: userPayload.email
+    }
+    const response = await patchUser(userPayloadToSend)
     if (response.ok) {
       const editedUser = response.body
       props.setCurrentUser(editedUser)
+    } else if (response.status == 422) {
+      setServerErrors(response.error)
+    } else {
+      location.href = "/profile"
+    }
+  }
+
+  const fetchFamilyHandling = async () => {
+    const response = await patchFamilyName({ familyName: userPayload.familyName })
+    if (response.ok) {
+      const editedFamilyName = response.body
+      setUserPayload({
+        ...userPayload,
+        familyName: editedFamilyName
+      })
     } else if (response.status == 422) {
       setServerErrors(response.error)
     } else {
@@ -70,14 +110,30 @@ const UserProfile = (props) => {
     }
   }
 
+  const handleFamilyChange = async (event) => {
+    event.preventDefault()
+    if (validateInput(userPayload)) {
+      await fetchFamilyHandling()
+      setShowEditFamily(false)
+    }
+  }
+
   const handleNicknameClick = () => {
     setShowEditNickname(true)
     setShowEditEmail(false)
+    setShowEditFamily(false)
   }
 
   const handleEmailClick = () => {
     setShowEditEmail(true)
     setShowEditNickname(false)
+    setShowEditFamily(false)
+  }
+
+  const handleFamilyClick = () => {
+    setShowEditFamily(true)
+    setShowEditNickname(false)
+    setShowEditEmail(false)
   }
 
   const onInputChange = (event) => {
@@ -196,6 +252,53 @@ const UserProfile = (props) => {
                 <td className="profile-category">Username</td>
                 <td>{props.user.username}</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td className="profile-category">Family Name</td>
+                {showEditFamily ? (
+                  <td colSpan="2">
+                    <form onSubmit={handleFamilyChange}>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <input
+                                type="text"
+                                name="familyName"
+                                value={userPayload.familyName}
+                                onChange={onInputChange}
+                              />
+                              <FormError error={errors.familyName} />
+                            </td>
+                            <td>
+                              <input
+                                type="submit"
+                                className="button-styling-small"
+                                value="Submit"
+                              />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </form>
+                  </td>
+                ) : (
+                  <>
+                    <td>{userPayload.familyName}</td>
+                    <td>
+                      {props.user.isParent ?
+                        <span
+                          className="button-styling-small"
+                          onClick={handleFamilyClick}
+                        >
+                          Edit
+                        </span>
+                      :
+                        null
+                      }
+                    </td>
+                  </>
+                )}            
               </tr>
             </tbody>
           </table>

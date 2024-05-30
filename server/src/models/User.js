@@ -31,7 +31,7 @@ class User extends uniqueFunc(Model) {
 
       properties: {
         email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
-        cryptedPassword: { type: "string" },
+        cryptedPassword: { type: ["string", "null"] },
         username: { type: "string", minLength: 2, maxLength: 30 },
       },
     }

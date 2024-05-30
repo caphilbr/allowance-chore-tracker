@@ -23,6 +23,19 @@ sessionRouter.post("/", (req, res, next) => {
   })(req, res, next)
 })
 
+sessionRouter.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] }),
+)
+
+sessionRouter.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/",
+  }),
+)
+
 sessionRouter.get("/current", async (req, res) => {
   if (req.user) {
     res.status(200).json(req.user)

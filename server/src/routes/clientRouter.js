@@ -9,7 +9,7 @@ const clientRoutes = [
   "/user-sessions/new",
   "/users/new",
   "/dashboard",
-  "/invite",
+  "/invite"
 ]
 const authedClientRoutes = ["/profile"]
 
