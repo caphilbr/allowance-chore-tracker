@@ -108,6 +108,7 @@ const ChildDetails = (props) => {
             user={props.user}
             child={props.child}
             handleManualTransaction={handleManualTransaction}
+            editTransaction={props.editTransaction}
           />
         </div>
         <div className="cell small-12 horizontal-line" />

@@ -30,4 +30,22 @@ transactionRouter.post("/", async (req, res) => {
   }
 })
 
+transactionRouter.patch("/", async (req, res) => {
+  try {
+    const editedTransaction = cleanNewTransactionInput(req.body)
+    const persistedEdit = await Transaction.query().patchAndFetchById(
+      editedTransaction.id,
+      editedTransaction,
+    )
+    res.status(201).json({ transaction: persistedEdit })
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      res.status(422).json({ errors: error.data })
+    } else {
+      console.log(error)
+      res.status(500).json({ error })
+    }
+  }
+})
+
 export default transactionRouter

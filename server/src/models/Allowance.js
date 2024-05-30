@@ -121,7 +121,7 @@ class Allowance extends Model {
       )
       if (pendingTransactions) {
         for (const pendingTransaction of pendingTransactions) {
-          if (pendingTransaction.paymentDate <= today) {
+          if (pendingTransaction.paymentDate < today) {
             const newTransaction = {
               amount: currency(pendingTransaction.amount),
               type: "allowance",
