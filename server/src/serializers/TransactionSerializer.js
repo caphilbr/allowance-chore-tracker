@@ -2,7 +2,7 @@ import showDate from "../services/showDate.js"
 
 class TransactionSerializer {
   static summaryforBalanceList(transactionsArray) {
-    const allowedTransactionFields = ["id", "paymentDate", "type", "amount"]
+    const allowedTransactionFields = ["id", "paymentDate", "type", "amount", "isPending"]
     const serializedTransactions = transactionsArray.map((transaction) => {
       const serializedTransaction = {}
       allowedTransactionFields.forEach((field) => {
@@ -18,7 +18,7 @@ class TransactionSerializer {
   }
 
   static singleTransactionForBalanceList(transaction) {
-    const allowedTransactionFields = ["id", "paymentDate", "type", "amount"]
+    const allowedTransactionFields = ["id", "paymentDate", "type", "amount", "isPending"]
     const serializedTransaction = {}
     allowedTransactionFields.forEach((field) => {
       if (field === "paymentDate") {

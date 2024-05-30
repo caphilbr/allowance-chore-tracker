@@ -5,12 +5,15 @@ import BalanceChart from "../utilities/BalanceChart"
 import ChoreTileRegular from "./ChoreTileRegular"
 import ChildPhoto from "../utilities/ChildPhoto"
 import sortChoresWithinChild from "../../services/sortChoresWithinChild"
+import addCashoutToChildRelations from "../../services/addCashoutToChildRelations"
 import Quiz from "./Quiz"
 import checkQuizEligible from "../../services/checkQuizEligible"
 import showDate from "../../utilities/showDate"
+import CashoutForm from "./CashoutForm"
 
 const ChildDashboard = (props) => {
   const [showQuiz, setShowQuiz] = useState(false)
+  const [showCashout, setShowCashout] = useState(false)
   const [quizEligible, setQuizEligible] = useState(false)
   const [childRelations, setChildRelations] = useState({
     chores: [],
@@ -22,6 +25,11 @@ const ChildDashboard = (props) => {
   const child = {
     ...props.user,
     ...childRelations,
+  }
+
+  const addCashoutState = (cashoutTransaction) => {
+    const updatedChildRelations = addCashoutToChildRelations(cashoutTransaction, childRelations)
+    setChildRelations(updatedChildRelations)
   }
 
   const updateChoreState = (updatedChore) => {
@@ -92,6 +100,12 @@ const ChildDashboard = (props) => {
         child={child}
       />
     )
+  } else if (showCashout) {
+    popOutBox = <CashoutForm
+                  addCashoutState={addCashoutState}
+                  child={child}
+                  setShowCashout={setShowCashout}
+                />
   }
 
   if (checkQuizEligible(child.quizDate)) {
@@ -125,7 +139,7 @@ const ChildDashboard = (props) => {
         </span>
         <div className="cell horizontal-line" />
         <span className="cell small-12 child-dash-top-right">
-          <Balance user={props.user} child={child} />
+          <Balance user={props.user} child={child} setShowCashout={setShowCashout} />
         </span>
       </div>
       <div className="cell horizontal-line" />

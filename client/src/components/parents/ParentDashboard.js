@@ -10,6 +10,7 @@ import editChoreWithinChildren from "../../services/editChoreWithinChildren"
 import addTransactionToChildren from "../../services/addTransactionToChildren"
 import addChoreToChildren from "../../services/addChoreToChildren"
 import ChildListHorizontal from "./ChildListHorizontal"
+import editTransactionInChildren from "../../services/editTransactionInChildren"
 
 const ParentDashboard = (props) => {
   const [showAddChild, setShowAddChild] = useState(false)
@@ -31,6 +32,11 @@ const ParentDashboard = (props) => {
 
   const addTranscation = (transactionToAdd) => {
     const updatedChildren = addTransactionToChildren(transactionToAdd, children)
+    setChildren(updatedChildren)
+  }
+
+  const editTransaction = (transactionToEdit) => {
+    const updatedChildren = editTransactionInChildren(transactionToEdit, children)
     setChildren(updatedChildren)
   }
 
@@ -118,6 +124,7 @@ const ParentDashboard = (props) => {
           removeChore={removeChore}
           payChore={payChore}
           addTranscation={addTranscation}
+          editTransaction={editTransaction}
         />
       </div>
     </div>

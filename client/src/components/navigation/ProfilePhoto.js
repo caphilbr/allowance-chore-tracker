@@ -38,7 +38,6 @@ const ProfilePhoto = (props) => {
   }
 
   let photo = <FontAwesomeIcon icon="fas fa-user" className="fa-6x icon-photo"/>
-  console.log(props.user.imageUrl)
   if (props.user.imageUrl != null && props.user.imageUrl != "") {
     photo = <img src={props.user.imageUrl} />
   }

@@ -7,6 +7,8 @@ const cleanNewTransactionInput = (inputObject) => {
       cleanInput[key] = currency(inputObject[key])
     } else if (key == "paymentDate") {
       cleanInput[key] = new Date(inputObject[key])
+    } else if (key == "isPending") {
+      cleanInput[key] = inputObject[key]
     } else if (inputObject[key] != "") {
       cleanInput[key] = inputObject[key]
     }
