@@ -1,5 +1,4 @@
 import React from "react"
-import config from "../../config"
 import ParentDashboard from "./../parents/ParentDashboard"
 import ChildDashboard from "../children/ChildDashboard"
 
