@@ -88,6 +88,13 @@ const AddChild = (props) => {
             className="form-field"
           />
           <FormError error={errors.email} />
+          <p>
+            IMPORTANT! While in development, only emails to the developer at
+            caphilbr@hotmail.com are deliverable. Please contact Charlie
+            Philbrook at caphilbr@hotmail.com to receive the registration code
+            for your child. Soon, a new feature will be released that allows
+            children to be added without an email address. 
+          </p>
         </label>
         <label>
           Child Name
