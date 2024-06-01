@@ -162,7 +162,13 @@
 
 .email-message {
   @extend .child-dash-title;
-  font-size: 20px;
+  margin: 0 auto;
+  padding: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+  transition: box-shadow 0.3s ease-in-out;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px var(--near-black-color);
+
 }
 
 .add-child-button {

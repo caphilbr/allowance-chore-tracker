@@ -50,11 +50,19 @@ const AddChild = (props) => {
           const newError = new Error(response.statusText)
           throw newError
         }
+        const parsedData = await response.json()
+        const invite = parsedData.invite
         setShowWaiting(false)
-        props.setEmailStatus("success")
+        props.setEmailStatus({
+          status: "success",
+          code: invite.code,
+        })
         props.setShowAddChild(!props.showAddChild)
       } catch (err) {
-        props.setEmailStatus("error")
+        props.setEmailStatus({
+          status: "error",
+          code: "n/a",
+        })
         props.setShowAddChild(!props.showAddChild)
         console.error(`Error in sending email: ${err.message}`)
       }
@@ -69,7 +77,10 @@ const AddChild = (props) => {
   }
 
   const handleCancel = () => {
-    props.setEmailStatus("")
+    props.setEmailStatus({
+      status: "",
+      code: "",
+    })
     setShowWaiting(false)
     props.setShowAddChild(!props.showAddChild)
   }
@@ -90,10 +101,11 @@ const AddChild = (props) => {
           <FormError error={errors.email} />
           <p>
             IMPORTANT! While in development, only emails to the developer at
-            caphilbr@hotmail.com are deliverable. Please contact Charlie
-            Philbrook at caphilbr@hotmail.com to receive the registration code
-            for your child. Soon, a new feature will be released that allows
-            children to be added without an email address. 
+            caphilbr@hotmail.com are deliverable. Soon, a new feature will be
+            released that allows children to be added without an email address.
+            In the meantime, send the child invite to caphilbr@hotmail.com and
+            the registration code will be made visible to you on the next
+            screen.
           </p>
         </label>
         <label>

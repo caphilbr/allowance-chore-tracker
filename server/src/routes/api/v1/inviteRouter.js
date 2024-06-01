@@ -20,7 +20,7 @@ inviteRouter.post("/email", async (req, res) => {
       const newError = new Error(response.errorMessage)
       throw newError
     }
-    res.status(200).json({})
+    res.status(200).json({ invite })
   } catch (error) {
     console.log(error)
     res.status(500).json({ error })

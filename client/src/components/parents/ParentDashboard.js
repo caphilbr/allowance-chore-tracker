@@ -14,7 +14,10 @@ import editTransactionInChildren from "../../services/editTransactionInChildren"
 
 const ParentDashboard = (props) => {
   const [showAddChild, setShowAddChild] = useState(false)
-  const [emailStatus, setEmailStatus] = useState("")
+  const [emailStatus, setEmailStatus] = useState({
+    status: "",
+    code: ""
+  })
   const [children, setChildren] = useState([])
   const [selectedChildId, setSelectedChildId] = useState(null)
 
@@ -91,14 +94,17 @@ const ParentDashboard = (props) => {
   })
 
   let emailMessage = ""
-  if (emailStatus === "success") {
+  if (emailStatus.status === "success") {
     emailMessage = (
-      <p className="email-message">Email invite successfully sent!</p>
+      <span className="email-message">
+        Email invite successfully sent! The
+        registration code is: {emailStatus.code}
+      </span>
     )
   }
-  if (emailStatus === "error") {
+  if (emailStatus.status === "error") {
     emailMessage = (
-      <p className="email-message">ERROR in sending email invite</p>
+      <span className="email-message">ERROR in sending email invite</span>
     )
   }
 
@@ -108,6 +114,7 @@ const ParentDashboard = (props) => {
         toggleAddChild={toggleAddChild}
         childrenList={childrenList}
       />
+      {emailMessage}
       <div className="cell grid-x align-center">
         {showAddChild ? (
           <AddChild
