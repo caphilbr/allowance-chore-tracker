@@ -29,6 +29,7 @@ choreRouter.patch("/", async (req, res) => {
 choreRouter.post("/", async (req, res) => {
   try {
     let newChore = cleanNewChoreInput(req.body)
+    console.log('new chore to post ->', newChore)
     const persistedChore = await Chore.query().insertAndFetch(newChore)
     res.status(201).json({ chore: persistedChore })
   } catch (error) {

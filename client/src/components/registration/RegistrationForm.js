@@ -6,9 +6,9 @@ import translateServerErrors from "../../utilities/translateServerErrors"
 
 const RegistrationForm = () => {
   const [userPayload, setUserPayload] = useState({
-    username: "(e.g. mother99)",
+    username: "",
     nickname: "",
-    familyName: "(e.g. The Smiths)",
+    familyName: "",
     email: "",
     password: "",
     passwordConfirmation: "",

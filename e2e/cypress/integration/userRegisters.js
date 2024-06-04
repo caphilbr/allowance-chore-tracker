@@ -2,59 +2,71 @@
 
 describe("As a user visiting the login page", () => {
   const visitRegistrationPage = () => {
-    cy.visit("/users/new");
-  };
+    cy.visit("/")
+    cy.get(".cell.intro-button-container span")
+      .contains("Create A New Family")
+      .should("be.visible")
+      .click()
+  }
 
   before(() => {
-    cy.task("db:truncate", "User");
-  });
+    cy.task("db:truncate", "User")
+  })
 
-  it("If I provide a valid email, password, and password confirmation, I will be signed in", () => {
-    visitRegistrationPage();
+  it("If I provide a valid username, password, and password confirmation, I will be signed in", () => {
+    visitRegistrationPage()
     cy.get("form").within(() => {
-      cy.findByLabelText("Email").type("user@example.com");
+      cy.findByLabelText("Username").type("usernameX")
+      cy.findByLabelText("Family Name").type("userFamily")
+      cy.findByLabelText("Parent Email").type("user@example.com")
 
-      cy.findByLabelText("Password").type("password");
-      cy.findByLabelText("Password Confirmation").type("password");
+      cy.findByLabelText("Password").type("password")
+      cy.findByLabelText("Password Confirmation").type("password")
 
-      cy.root().submit();
+      cy.root().submit()
 
-      cy.url().should("eq", `${Cypress.config().baseUrl}/`);
-    });
-    cy.contains("Sign Out");
-  });
+      cy.url().should("eq", `http://localhost:8765/profile`)
+    })
+  })
 
-  it("If I provide an invalid email and password, I will remain on the same page", () => {
-    visitRegistrationPage();
+  it("If I provide an invalid username and password, I will remain on the same page", () => {
+    visitRegistrationPage()
     cy.get("form").within(() => {
-      cy.findByLabelText("Email").type("just@a.joke");
-      cy.findByLabelText("Password").type("password");
-      cy.root().submit();
+      cy.findByLabelText("Parent Email").type("wrongemailtype")
+      cy.findByLabelText("Password").type("password")
+      cy.findByLabelText("Password Confirmation").type("password")
+      cy.root().submit()
 
-      cy.url().should("eq", `${Cypress.config().baseUrl}/users/new`);
-    });
-  });
+      cy.url().should("eq", `http://localhost:8765/`)
+    })
+  })
 
   it("If passwords don't match, I will remain on the same page", () => {
-    visitRegistrationPage();
+    visitRegistrationPage()
     cy.get("form").within(() => {
-      cy.findByLabelText("Email").type("user@example.com");
+      cy.findByLabelText("Username").type("usernameX")
+      cy.findByLabelText("Family Name").type("userFamily")
+      cy.findByLabelText("Parent Email").type("user@example.com")
 
-      cy.findByLabelText("Password").type("password");
-      cy.findByLabelText("Password Confirmation").type("passwordNotAMatch");
+      cy.findByLabelText("Password").type("password")
+      cy.findByLabelText("Password Confirmation").type("passwordnotsame")
 
-      cy.root().submit();
-      cy.url().should("eq", `${Cypress.config().baseUrl}/users/new`);
-    });
-  });
+      cy.root().submit()
+      cy.url().should("eq", `http://localhost:8765/`)
+    })
+  })
 
-  it("I will see an error message when no email is provided", () => {
-    visitRegistrationPage();
+  it("I will see an error message when no username is provided", () => {
+    visitRegistrationPage()
     cy.get("form").within(() => {
-      cy.findByLabelText("Password").type("migratedata");
-      cy.root().submit();
+      cy.findByLabelText("Family Name").type("userFamily")
+      cy.findByLabelText("Parent Email").type("user@example.com")
 
-      cy.contains("is invalid");
-    });
-  });
-});
+      cy.findByLabelText("Password").type("password")
+      cy.findByLabelText("Password Confirmation").type("passwordnotsame")
+      cy.root().submit()
+
+      cy.contains("is required")
+    })
+  })
+})

@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@testing-library/cypress": "^7.0.3",
-    "cypress": "^6.1.0"
+    "cypress": "^6.1.0",
+    "currency.js": "^2.0.4"
   }
 }
