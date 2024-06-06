@@ -21,7 +21,6 @@ childrenRouter.get("/", async (req, res) => {
     const children = await family.children()
     const serializedChildren =
       await ChildrenSerializer.parentDashboardList(children)
-
     res.status(200).json({ children: serializedChildren })
   } catch (error) {
     console.log(error)

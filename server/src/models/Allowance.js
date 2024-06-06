@@ -86,7 +86,6 @@ class Allowance extends Model {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
     let date = this.firstDate
-
     do {
       if (date >= today) {
         await PendingTransaction.query().insert({

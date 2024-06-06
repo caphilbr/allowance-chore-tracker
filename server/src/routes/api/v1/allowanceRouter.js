@@ -22,11 +22,11 @@ allowanceRouter.patch("/", async (req, res) => {
         .updateAndFetch(payload)
       updatedAllowance.deletePendingAllowances()
       updatedAllowance.generatePendingAllowances()
-      res.status(201).json({})
+      res.status(201).json({ allowance: updatedAllowance })
     } else {
       const newAllowance = await Allowance.query().insertAndFetch(payload)
       newAllowance.generatePendingAllowances()
-      res.status(201).json({})
+      res.status(201).json({ allowance: newAllowance })
     }
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -44,7 +44,6 @@ allowanceRouter.delete("/:id", async (req, res) => {
     await Allowance.query().deleteById(req.params.id)
     res.status(200).json({})
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error })
   }
 })

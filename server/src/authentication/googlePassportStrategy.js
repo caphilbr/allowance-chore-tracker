@@ -22,7 +22,6 @@ const authHandler = (accessToken, refreshToken, profile, done) => {
               familyId: newFamily.id,
               isParent: true
             }
-            console.log('trying to insert this user ->', newUser)
             User.query()
               .insert(newUser)
               .then((insertedUser) => {
