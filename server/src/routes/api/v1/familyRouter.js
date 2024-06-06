@@ -8,14 +8,17 @@ familyRouter.get("/", async (req, res) => {
   try {
     const response = await Family.query().findById(req.user.familyId)
     res.status(200).json({ family: response })
-  } catch(error) {
+  } catch (error) {
     res.status(500).json({ error })
   }
 })
 
 familyRouter.patch("/", async (req, res) => {
   try {
-    const updatedFamily = await Family.query().patchAndFetchById(req.user.familyId, { name: req.body.familyName })
+    const updatedFamily = await Family.query().patchAndFetchById(
+      req.user.familyId,
+      { name: req.body.familyName },
+    )
     res.status(201).json({ familyName: updatedFamily.name })
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -26,6 +29,5 @@ familyRouter.patch("/", async (req, res) => {
     }
   }
 })
-
 
 export default familyRouter

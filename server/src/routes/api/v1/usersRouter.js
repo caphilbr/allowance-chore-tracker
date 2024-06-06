@@ -2,7 +2,6 @@ import express from "express"
 import { ValidationError } from "objection"
 import { User, Family, Invite } from "../../../models/index.js"
 import uploadImage from "../../../services/upLoadImage.js"
-import config from "../../../config.js"
 
 const usersRouter = new express.Router()
 
