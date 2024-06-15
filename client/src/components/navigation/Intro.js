@@ -44,7 +44,7 @@ const Intro = (props) => {
           </span>
         </div>
         <div className="cell intro-button-container">
-          <GoogleButton type="light" label="Login/Signup with Google" onClick={googleClick} />
+          <GoogleButton type="light" label="Login with Google" className="google-button" onClick={googleClick} />
         </div>
       </>
     )
@@ -68,7 +68,9 @@ const Intro = (props) => {
           <li>Add as many children and spouses as you need</li>
         </ul>
         <span className="show-more-button" onClick={toggleShowMore}>
-          ▲ SHOW LESS ▲
+          <FontAwesomeIcon icon="fas fa-angle-up" />
+          SHOW LESS
+          <FontAwesomeIcon icon="fas fa-angle-up" />
         </span>
       </div>
     )
