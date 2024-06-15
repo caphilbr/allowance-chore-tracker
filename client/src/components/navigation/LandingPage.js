@@ -22,10 +22,14 @@ const LandingPage = (props) => {
 
   return (
     <div className="full-screen-landing background-color grid-x ">
-      <img
-        className="cell small-12 medium-5 landing-page-background-img"
-        src={config.homeBackgroundUrl}
-      />
+      <div className="fade">
+        <div className="fade-bottom">
+          <img
+            className="cell small-12 medium-5 landing-page-background-img"
+            src={config.homeBackgroundUrl}
+          />
+        </div>
+      </div>
       <div className="cell small-12 medium-6 landing-page-main">{mainContent}</div>
     </div>
   )
