@@ -544,6 +544,9 @@
   font-weight: bold;
   text-align: center;
   overflow-y: auto;
+  max-height: 60vh;
+  top: 10vh;
+  max-width: 90vw;
 }
 
 .popout-box label {
