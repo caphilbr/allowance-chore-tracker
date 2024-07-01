@@ -24,9 +24,8 @@ const UserProfile = (props) => {
   const [showAddParent, setShowAddParent] = useState(false)
   const [emailStatus, setEmailStatus] = useState({
     status: "",
-    code: ""
+    code: "",
   })
-
 
   useEffect(() => {
     const fetchedData = async () => {
@@ -171,8 +170,8 @@ const UserProfile = (props) => {
   if (emailStatus.status === "success") {
     emailMessage = (
       <span className="email-message">
-        Email invite successfully sent! The
-        registration code is: {emailStatus.code}
+        Email invite successfully sent! The registration code is:{" "}
+        {emailStatus.code}
       </span>
     )
   }
@@ -186,6 +185,13 @@ const UserProfile = (props) => {
     <>
       <TopBar user={props.user} />
       <div className="background-color grid-x grid-margin-x grid-padding-x align-center profile-page">
+        {showAddParent ? (
+          <AddParent
+            setShowAddParent={setShowAddParent}
+            showAddParent={showAddParent}
+            setEmailStatus={setEmailStatus}
+          />
+        ) : null}
         <div className="cell small-12 medium-6 large-3 profile-pic-containter">
           <ProfilePhoto
             user={props.user}
@@ -193,13 +199,6 @@ const UserProfile = (props) => {
           />
         </div>
         <div className="cell small-12 large-8 profile-page-details">
-          {showAddParent ? (
-            <AddParent
-              setShowAddParent={setShowAddParent}
-              showAddParent={showAddParent}
-              setEmailStatus={setEmailStatus}
-            />
-          ) : null}
           <ErrorList errors={serverErrors} />
           <table>
             <tbody>
@@ -348,8 +347,7 @@ const UserProfile = (props) => {
                 <tr>
                   <td className="profile-category">Other Parent</td>
                   <td>{spouse[0].nickname}</td>
-                  <td>
-                  </td>
+                  <td></td>
                 </tr>
               ) : props.user.isParent ? (
                 <tr>
