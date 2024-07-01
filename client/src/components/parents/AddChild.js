@@ -86,7 +86,7 @@ const AddChild = (props) => {
   }
 
   return (
-    <div className="cell small-6 popout-box">
+    <div className="cell small-9 popout-box">
       <h3>Send Invite to New Child</h3>
       <form onSubmit={handleSubmit}>
         <label>
