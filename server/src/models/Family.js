@@ -56,6 +56,18 @@ class Family extends Model {
     }
     return []
   }
+
+  async parents() {
+    const users = await this.$relatedQuery("users")
+    if (users) {
+      const parents = users.filter((user) => {
+        return user.isParent
+      })
+      return parents
+    }
+    return []
+  }
+
 }
 
 module.exports = Family

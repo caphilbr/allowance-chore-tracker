@@ -7,6 +7,7 @@ import FormError from "../utilities/FormError"
 import config from "../../config"
 import getFamily from "../../services/fetch/getFamily"
 import patchFamilyName from "../../services/fetch/patchFamilyName"
+import AddParent from "../parents/AddParent"
 
 const UserProfile = (props) => {
   const [errors, setErrors] = useState({})
@@ -17,16 +18,27 @@ const UserProfile = (props) => {
   const [userPayload, setUserPayload] = useState({
     nickname: props.user.nickname,
     email: props.user.email,
-    familyName: ""
+    familyName: "",
   })
+  const [spouse, setSpouse] = useState([])
+  const [showAddParent, setShowAddParent] = useState(false)
+  const [emailStatus, setEmailStatus] = useState({
+    status: "",
+    code: ""
+  })
+
 
   useEffect(() => {
     const fetchedData = async () => {
       const response = await getFamily()
       setUserPayload({
         ...userPayload,
-        familyName: response.name
+        familyName: response.name,
       })
+      const fetchedSpouse = response.parents.filter(
+        (parent) => parent.id != props.user.id,
+      )
+      setSpouse(fetchedSpouse[0])
     }
     fetchedData()
   }, [])
@@ -66,7 +78,7 @@ const UserProfile = (props) => {
   const fetchHandling = async () => {
     const userPayloadToSend = {
       nickname: userPayload.nickname,
-      email: userPayload.email
+      email: userPayload.email,
     }
     const response = await patchUser(userPayloadToSend)
     if (response.ok) {
@@ -80,12 +92,14 @@ const UserProfile = (props) => {
   }
 
   const fetchFamilyHandling = async () => {
-    const response = await patchFamilyName({ familyName: userPayload.familyName })
+    const response = await patchFamilyName({
+      familyName: userPayload.familyName,
+    })
     if (response.ok) {
       const editedFamilyName = response.body
       setUserPayload({
         ...userPayload,
-        familyName: editedFamilyName
+        familyName: editedFamilyName,
       })
     } else if (response.status == 422) {
       setServerErrors(response.error)
@@ -118,22 +132,32 @@ const UserProfile = (props) => {
     }
   }
 
+  const handleAddParent = () => {
+    setShowEditNickname(false)
+    setShowEditEmail(false)
+    setShowEditFamily(false)
+    setShowAddParent(true)
+  }
+
   const handleNicknameClick = () => {
     setShowEditNickname(true)
     setShowEditEmail(false)
     setShowEditFamily(false)
+    setShowAddParent(false)
   }
 
   const handleEmailClick = () => {
     setShowEditEmail(true)
     setShowEditNickname(false)
     setShowEditFamily(false)
+    setShowAddParent(false)
   }
 
   const handleFamilyClick = () => {
     setShowEditFamily(true)
     setShowEditNickname(false)
     setShowEditEmail(false)
+    setShowAddParent(false)
   }
 
   const onInputChange = (event) => {
@@ -141,6 +165,21 @@ const UserProfile = (props) => {
       ...userPayload,
       [event.currentTarget.name]: event.currentTarget.value,
     })
+  }
+
+  let emailMessage = ""
+  if (emailStatus.status === "success") {
+    emailMessage = (
+      <span className="email-message">
+        Email invite successfully sent! The
+        registration code is: {emailStatus.code}
+      </span>
+    )
+  }
+  if (emailStatus.status === "error") {
+    emailMessage = (
+      <span className="email-message">ERROR in sending email invite</span>
+    )
   }
 
   return (
@@ -154,6 +193,13 @@ const UserProfile = (props) => {
           />
         </div>
         <div className="cell small-12 large-8 profile-page-details">
+          {showAddParent ? (
+            <AddParent
+              setShowAddParent={setShowAddParent}
+              showAddParent={showAddParent}
+              setEmailStatus={setEmailStatus}
+            />
+          ) : null}
           <ErrorList errors={serverErrors} />
           <table>
             <tbody>
@@ -286,22 +332,42 @@ const UserProfile = (props) => {
                   <>
                     <td>{userPayload.familyName}</td>
                     <td>
-                      {props.user.isParent ?
+                      {props.user.isParent ? (
                         <span
                           className="button-styling-small"
                           onClick={handleFamilyClick}
                         >
                           Edit
                         </span>
-                      :
-                        null
-                      }
+                      ) : null}
                     </td>
                   </>
-                )}            
+                )}
               </tr>
+              {props.user.isParent && Object.keys(spouse).length > 0 ? (
+                <tr>
+                  <td className="profile-category">Other Parent</td>
+                  <td>{spouse.nickname}</td>
+                  <td>
+                  </td>
+                </tr>
+              ) : props.user.isParent ? (
+                <tr>
+                  <td className="profile-category">Other Parent</td>
+                  <td>{`<No other parent>`}</td>
+                  <td>
+                    <span
+                      className="button-styling-small"
+                      onClick={handleAddParent}
+                    >
+                      Add
+                    </span>
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
+          {emailMessage}
         </div>
       </div>
     </>

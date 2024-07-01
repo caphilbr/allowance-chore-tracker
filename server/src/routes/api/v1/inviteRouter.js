@@ -5,7 +5,7 @@ import createCode from "../../../services/createCode.js"
 const inviteRouter = express.Router()
 
 inviteRouter.post("/email", async (req, res) => {
-  const { email, nickname } = req.body
+  const { email, nickname, isParent } = req.body
   try {
     const newInvite = {
       email: email,
@@ -13,6 +13,7 @@ inviteRouter.post("/email", async (req, res) => {
       code: createCode(),
       wasAccepted: false,
       familyId: req.user.familyId,
+      isParent: isParent
     }
     const invite = await Invite.query().insertAndFetch(newInvite)
     const response = await invite.sendInvite()

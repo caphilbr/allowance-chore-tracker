@@ -61,18 +61,29 @@ const InviteRegistrationForm = (props) => {
           ...userPayload,
           nickname: props.invite.nickname,
           email: props.invite.email,
-          isParent: false,
+          isParent: props.invite.isParent,
           imageUrl: "",
           familyId: props.invite.familyId,
           inviteId: props.invite.id,
         }
-        const response = await fetch("/api/v1/users/child", {
-          method: "POST",
-          body: JSON.stringify(fullUserPayload),
-          headers: new Headers({
-            "Content-Type": "application/json",
-          }),
-        })
+        let response
+        if (props.invite.isParent) {
+          response = await fetch("/api/v1/users/parent", {
+            method: "POST",
+            body: JSON.stringify(fullUserPayload),
+            headers: new Headers({
+              "Content-Type": "application/json",
+            }),
+          })
+        } else {
+          response = await fetch("/api/v1/users/child", {
+            method: "POST",
+            body: JSON.stringify(fullUserPayload),
+            headers: new Headers({
+              "Content-Type": "application/json",
+            }),
+          })
+        }
         if (!response.ok) {
           if (response.status === 422) {
             const body = await response.json()
@@ -109,7 +120,7 @@ const InviteRegistrationForm = (props) => {
     })
   }
 
-  const inviteMessage = `Your parent has already provided your email and nickname. Simply choose a username and password and you'll get access to Chore Champions!`
+  const inviteMessage = `An email and nickname have already been provided. Simply choose a username and password and you'll get access to Chore Champions!`
 
   if (shouldGoProfile) {
     location.href = "/profile"
