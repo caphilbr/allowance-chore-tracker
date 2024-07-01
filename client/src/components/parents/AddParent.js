@@ -2,11 +2,11 @@ import React, { useState } from "react"
 import FormError from "../utilities/FormError.js"
 import config from "../../config.js"
 
-const AddChild = (props) => {
+const AddParent = (props) => {
   const [userPayload, setUserPayload] = useState({
     email: "",
     nickname: "",
-    isParent: false
+    isParent: true
   })
   const [errors, setErrors] = useState({})
   const [showWaiting, setShowWaiting] = useState(false)
@@ -58,13 +58,13 @@ const AddChild = (props) => {
           status: "success",
           code: invite.code,
         })
-        props.setShowAddChild(!props.showAddChild)
+        props.setShowAddParent(!props.showAddParent)
       } catch (err) {
         props.setEmailStatus({
           status: "error",
           code: "n/a",
         })
-        props.setShowAddChild(!props.showAddChild)
+        props.setShowAddParent(!props.showAddParent)
         console.error(`Error in sending email: ${err.message}`)
       }
     }
@@ -83,15 +83,15 @@ const AddChild = (props) => {
       code: "",
     })
     setShowWaiting(false)
-    props.setShowAddChild(!props.showAddChild)
+    props.setShowAddParent(!props.showAddParent)
   }
 
   return (
     <div className="cell small-9 popout-box">
-      <h3>Send Invite to New Child</h3>
+      <h3>Send Invite to Parent</h3>
       <form onSubmit={handleSubmit}>
         <label>
-          Child Email
+          Parent Email
           <input
             type="text"
             name="email"
@@ -103,14 +103,14 @@ const AddChild = (props) => {
           <p>
             IMPORTANT! While in development, only emails to the developer at
             caphilbr@hotmail.com are deliverable. Soon, a new feature will be
-            released that allows children to be added without an email address.
-            In the meantime, send the child invite to caphilbr@hotmail.com and
+            released that allows parents to be added without an email address.
+            In the meantime, send the parent invite to caphilbr@hotmail.com and
             the registration code will be made visible to you on the next
             screen.
           </p>
         </label>
         <label>
-          Child Name
+          Parent Name
           <input
             type="text"
             name="nickname"
@@ -124,7 +124,7 @@ const AddChild = (props) => {
         <input
           type="submit"
           className="landing-page-button"
-          value="Invite Child"
+          value="Invite Parent"
         />
         <span className="landing-page-button" onClick={handleCancel}>
           Cancel
@@ -134,4 +134,4 @@ const AddChild = (props) => {
   )
 }
 
-export default AddChild
+export default AddParent

@@ -95,6 +95,29 @@ usersRouter.post("/child", async (req, res) => {
   }
 })
 
+usersRouter.post("/parent", async (req, res) => {
+  const { inviteId } = req.body
+  let parentPayload = req.body
+  delete parentPayload.passwordConfirmation
+  delete parentPayload.inviteId
+
+  try {
+    const persistedUser = await User.query().insertAndFetch(parentPayload)
+    const invite = await Invite.query()
+      .findById(inviteId)
+      .patch({ wasAccepted: true })
+    return req.login(persistedUser, () => {
+      return res.status(201).json({ user: persistedUser })
+    })
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return res.status(422).json({ errors: error.data })
+    }
+    return res.status(500).json({ error: error.message })
+  }
+})
+
+
 usersRouter.post("/", async (req, res) => {
   let { email, username, imageUrl, familyName, password, nickname, isParent } =
     req.body

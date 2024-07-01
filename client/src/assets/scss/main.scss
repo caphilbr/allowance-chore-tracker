@@ -395,12 +395,14 @@
 .profile-page-details {
   color: var(--darkest-color);
   background-color: var(--lightest-color);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 2rem 0.5rem;
   margin: 0 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
   max-height: 350px;
+  overflow-y: auto;
+  max-width: 95vw;
 }
 
 .test {

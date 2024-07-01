@@ -104,10 +104,10 @@ const SignInForm = () => {
           />
           <FormError error={errors.password} />
         </label>
-        <input type="submit" className="landing-page-button" value="Login" />
         <span className="landing-page-button" onClick={goHome}>
           Home
         </span>
+        <input type="submit" className="landing-page-button" value="Login" />
       </form>
     </div>
   )

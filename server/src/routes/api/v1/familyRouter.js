@@ -7,7 +7,12 @@ const familyRouter = express.Router()
 familyRouter.get("/", async (req, res) => {
   try {
     const response = await Family.query().findById(req.user.familyId)
-    res.status(200).json({ family: response })
+    const parents = await response.parents()
+    const family = {
+      ...response,
+      parents: parents
+    }
+    res.status(200).json({ family })
   } catch (error) {
     res.status(500).json({ error })
   }
