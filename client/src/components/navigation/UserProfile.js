@@ -38,7 +38,7 @@ const UserProfile = (props) => {
       const fetchedSpouse = response.parents.filter(
         (parent) => parent.id != props.user.id,
       )
-      setSpouse(fetchedSpouse[0])
+      setSpouse(fetchedSpouse)
     }
     fetchedData()
   }, [])
@@ -344,10 +344,10 @@ const UserProfile = (props) => {
                   </>
                 )}
               </tr>
-              {props.user.isParent && Object.keys(spouse).length > 0 ? (
+              {props.user.isParent && spouse.length > 0 ? (
                 <tr>
                   <td className="profile-category">Other Parent</td>
-                  <td>{spouse.nickname}</td>
+                  <td>{spouse[0].nickname}</td>
                   <td>
                   </td>
                 </tr>
