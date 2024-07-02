@@ -12,16 +12,18 @@ import AddParent from "../parents/AddParent"
 const UserProfile = (props) => {
   const [errors, setErrors] = useState({})
   const [serverErrors, setServerErrors] = useState({})
-  const [showEditNickname, setShowEditNickname] = useState(false)
-  const [showEditEmail, setShowEditEmail] = useState(false)
-  const [showEditFamily, setShowEditFamily] = useState(false)
+  const [showEdit, setShowEdit] = useState({
+    nickname: false,
+    email: false,
+    familyName: false,
+    parent: false,
+  })
   const [userPayload, setUserPayload] = useState({
     nickname: props.user.nickname,
     email: props.user.email,
     familyName: "",
   })
   const [spouse, setSpouse] = useState([])
-  const [showAddParent, setShowAddParent] = useState(false)
   const [emailStatus, setEmailStatus] = useState({
     status: "",
     code: "",
@@ -48,25 +50,10 @@ const UserProfile = (props) => {
     const { email, nickname, familyName } = payload
     const emailRegexp = config.validation.email.regexp.emailRegex
     let newErrors = {}
-    if (!email.match(emailRegexp)) {
-      newErrors = {
-        ...newErrors,
-        email: "Email is invalid",
-      }
-    }
-    if (nickname.trim() == "") {
-      newErrors = {
-        ...newErrors,
-        nickname: "Nickname is required",
-      }
-    }
-    if (familyName.trim() == "") {
-      newErrors = {
-        ...newErrors,
-        nickname: "Family name is required",
-      }
-    }
-
+    if (!email.match(emailRegexp)) newErrors.email = "Email is invalid"
+    if (nickname.trim() == "") newErrors.nickname = "Nickname is required"
+    if (familyName.trim() == "")
+      newErrors.familyName = "Family name is required"
     setErrors(newErrors)
     if (Object.keys(newErrors).length === 0) {
       return true
@@ -107,56 +94,32 @@ const UserProfile = (props) => {
     }
   }
 
-  const handleNicknameChange = async (event) => {
+  const handleEditSubmit = async (event) => {
     event.preventDefault()
+    const fieldToChange = event.currentTarget.getAttribute("name")
     if (validateInput(userPayload)) {
-      await fetchHandling()
-      setShowEditNickname(false)
+      if (fieldToChange == "familyName") {
+        await fetchFamilyHandling()
+      } else {
+        await fetchHandling()
+      }
+      setShowEdit({
+        ...showEdit,
+        [fieldToChange]: false,
+      })
     }
   }
 
-  const handleEmailChange = async (event) => {
-    event.preventDefault()
-    if (validateInput(userPayload)) {
-      await fetchHandling()
-      setShowEditEmail(false)
-    }
-  }
-
-  const handleFamilyChange = async (event) => {
-    event.preventDefault()
-    if (validateInput(userPayload)) {
-      await fetchFamilyHandling()
-      setShowEditFamily(false)
-    }
-  }
-
-  const handleAddParent = () => {
-    setShowEditNickname(false)
-    setShowEditEmail(false)
-    setShowEditFamily(false)
-    setShowAddParent(true)
-  }
-
-  const handleNicknameClick = () => {
-    setShowEditNickname(true)
-    setShowEditEmail(false)
-    setShowEditFamily(false)
-    setShowAddParent(false)
-  }
-
-  const handleEmailClick = () => {
-    setShowEditEmail(true)
-    setShowEditNickname(false)
-    setShowEditFamily(false)
-    setShowAddParent(false)
-  }
-
-  const handleFamilyClick = () => {
-    setShowEditFamily(true)
-    setShowEditNickname(false)
-    setShowEditEmail(false)
-    setShowAddParent(false)
+  const handleEditClick = (event) => {
+    const clickedField = event.currentTarget.getAttribute("name")
+    const newValue = !showEdit[clickedField]
+    setShowEdit((prevShowEdit) => {
+      const newShowEdit = {}
+      for (const key of Object.keys(prevShowEdit)) {
+        newShowEdit[key] = key == clickedField ? newValue : false
+      }
+      return newShowEdit
+    })
   }
 
   const onInputChange = (event) => {
@@ -166,29 +129,41 @@ const UserProfile = (props) => {
     })
   }
 
-  let emailMessage = ""
-  if (emailStatus.status === "success") {
-    emailMessage = (
-      <span className="email-message">
-        Email invite successfully sent! The registration code is:{" "}
-        {emailStatus.code}
-      </span>
-    )
-  }
-  if (emailStatus.status === "error") {
-    emailMessage = (
-      <span className="email-message">ERROR in sending email invite</span>
-    )
-  }
+  const renderForm = (fieldName) => (
+    <form onSubmit={handleEditSubmit} name={fieldName}>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                type="text"
+                name={fieldName}
+                value={userPayload[fieldName]}
+                onChange={onInputChange}
+              />
+              <FormError error={errors[fieldName]} />
+            </td>
+            <td>
+              <input
+                type="submit"
+                className="button-styling-small"
+                value="Submit"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  )
 
   return (
     <>
       <TopBar user={props.user} />
       <div className="background-color grid-x grid-margin-x grid-padding-x align-center profile-page">
-        {showAddParent ? (
+        {showEdit.parent ? (
           <AddParent
-            setShowAddParent={setShowAddParent}
-            showAddParent={showAddParent}
+            setShowEdit={setShowEdit}
+            showEdit={showEdit}
             setEmailStatus={setEmailStatus}
           />
         ) : null}
@@ -203,92 +178,6 @@ const UserProfile = (props) => {
           <table>
             <tbody>
               <tr>
-                <td className="profile-category">Nickname</td>
-                {showEditNickname ? (
-                  <td colSpan="2">
-                    <form onSubmit={handleNicknameChange}>
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <input
-                                type="text"
-                                name="nickname"
-                                value={userPayload.nickname}
-                                onChange={onInputChange}
-                              />
-                              <FormError error={errors.nickname} />
-                            </td>
-                            <td>
-                              <input
-                                type="submit"
-                                className="button-styling-small"
-                                value="Submit"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </form>
-                  </td>
-                ) : (
-                  <>
-                    <td>{userPayload.nickname}</td>
-                    <td>
-                      <span
-                        className="button-styling-small"
-                        onClick={handleNicknameClick}
-                      >
-                        Edit
-                      </span>
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
-                <td className="profile-category">Email</td>
-                {showEditEmail ? (
-                  <td colSpan="2">
-                    <form onSubmit={handleEmailChange}>
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <input
-                                type="text"
-                                name="email"
-                                value={userPayload.email}
-                                onChange={onInputChange}
-                              />
-                              <FormError error={errors.email} />
-                            </td>
-                            <td>
-                              <input
-                                type="submit"
-                                className="button-styling-small"
-                                value="Submit"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </form>
-                  </td>
-                ) : (
-                  <>
-                    <td>{userPayload.email}</td>
-                    <td>
-                      <span
-                        className="button-styling-small"
-                        onClick={handleEmailClick}
-                      >
-                        Edit
-                      </span>
-                    </td>
-                  </>
-                )}
-              </tr>
-              <tr>
                 <td className="profile-category">Account Type</td>
                 <td>{props.user.isParent ? "Parent" : "Child"}</td>
                 <td></td>
@@ -297,51 +186,6 @@ const UserProfile = (props) => {
                 <td className="profile-category">Username</td>
                 <td>{props.user.username}</td>
                 <td></td>
-              </tr>
-              <tr>
-                <td className="profile-category">Family Name</td>
-                {showEditFamily ? (
-                  <td colSpan="2">
-                    <form onSubmit={handleFamilyChange}>
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <input
-                                type="text"
-                                name="familyName"
-                                value={userPayload.familyName}
-                                onChange={onInputChange}
-                              />
-                              <FormError error={errors.familyName} />
-                            </td>
-                            <td>
-                              <input
-                                type="submit"
-                                className="button-styling-small"
-                                value="Submit"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </form>
-                  </td>
-                ) : (
-                  <>
-                    <td>{userPayload.familyName}</td>
-                    <td>
-                      {props.user.isParent ? (
-                        <span
-                          className="button-styling-small"
-                          onClick={handleFamilyClick}
-                        >
-                          Edit
-                        </span>
-                      ) : null}
-                    </td>
-                  </>
-                )}
               </tr>
               {props.user.isParent && spouse.length > 0 ? (
                 <tr>
@@ -356,16 +200,55 @@ const UserProfile = (props) => {
                   <td>
                     <span
                       className="button-styling-small"
-                      onClick={handleAddParent}
+                      name="parent"
+                      onClick={handleEditClick}
                     >
                       Add
                     </span>
                   </td>
                 </tr>
               ) : null}
+              {[
+                ["Nickname", "nickname"],
+                ["Email", "email"],
+                ["Family Name", "familyName"],
+              ].map((field) => {
+                return (
+                  <tr key={field[1]}>
+                    <td className="profile-category">{field[0]}</td>
+                    {showEdit[field[1]] ? (
+                      <td colSpan="2">{renderForm(field[1])}</td>
+                    ) : (
+                      <>
+                        <td>{userPayload[field[1]]}</td>
+                        <td>
+                          {!props.user.isParent &&
+                          field[1] == "familyName" ? null : (
+                            <span
+                              className="button-styling-small"
+                              name={field[1]}
+                              onClick={handleEditClick}
+                            >
+                              Edit
+                            </span>
+                          )}
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
-          {emailMessage}
+          {emailStatus.status === "success" && (
+            <span className="email-message">
+              Email invite successfully sent! The registration code is:{" "}
+              {emailStatus.code}
+            </span>
+          )}
+          {emailStatus.status === "error" && (
+            <span className="email-message">ERROR in sending email invite</span>
+          )}
         </div>
       </div>
     </>

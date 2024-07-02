@@ -58,13 +58,19 @@ const AddParent = (props) => {
           status: "success",
           code: invite.code,
         })
-        props.setShowAddParent(!props.showAddParent)
+        props.setShowEdit({
+          ...props.showEdit,
+          parent: !props.showEdit.parent
+        })
       } catch (err) {
         props.setEmailStatus({
           status: "error",
           code: "n/a",
         })
-        props.setShowAddParent(!props.showAddParent)
+        props.setShowEdit({
+          ...props.showEdit,
+          parent: !props.showEdit.parent
+        })
         console.error(`Error in sending email: ${err.message}`)
       }
     }
@@ -83,7 +89,10 @@ const AddParent = (props) => {
       code: "",
     })
     setShowWaiting(false)
-    props.setShowAddParent(!props.showAddParent)
+    props.setShowEdit({
+      ...props.showEdit,
+      parent: !props.showEdit.parent
+    })
   }
 
   return (
