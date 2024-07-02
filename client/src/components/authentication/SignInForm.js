@@ -4,8 +4,10 @@ import postUserSession from "../../services/fetch/postUserSession"
 
 const SignInForm = () => {
   const [userPayload, setUserPayload] = useState({ username: "", password: "" })
-  const [shouldGoHome, setShouldGoHome] = useState(false)
-  const [shouldGoDashboard, setShouldGoDashboard] = useState(false)
+  const [shouldGo, setShouldGo] = useState({
+    home: false,
+    dashboard: false
+  })
   const [errors, setErrors] = useState({})
   const [credentialsErrors, setCredentialsErrors] = useState("")
 
@@ -47,7 +49,10 @@ const SignInForm = () => {
           const error = new Error(errorMessage)
           throw error
         }
-        setShouldGoDashboard(true)
+        setShouldGo({
+          ...shouldGo,
+          dashboard: true
+        })
       } catch (err) {
         console.error(`Error in fetch: ${err.message}`)
       }
@@ -62,14 +67,17 @@ const SignInForm = () => {
   }
 
   const goHome = () => {
-    setShouldGoHome(true)
+    setShouldGo({
+      ...shouldGo,
+      home: true
+    })
   }
 
-  if (shouldGoDashboard) {
+  if (shouldGo.dashboard) {
     location.href = "/dashboard"
   }
 
-  if (shouldGoHome) {
+  if (shouldGo.home) {
     location.href = "/"
   }
 

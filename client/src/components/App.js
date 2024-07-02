@@ -25,22 +25,6 @@ const App = () => {
     fetchCurrentUser()
   }, [])
 
-  let dashBoardContent = (
-    <>
-      <TopBar user={currentUser} />
-      <Dashboard user={currentUser} setCurrentUser={setCurrentUser} />
-    </>
-  )
-  if (!currentUser) {
-    dashBoardContent = (
-      <>
-        <p>Loading...</p>
-        <Link to="/">Click here if not redirected shortly</Link>
-      </>
-    )
-
-  }
-
   return (
     <Router>
       <Switch>
@@ -48,7 +32,17 @@ const App = () => {
           <LandingPage user={currentUser} />
         </Route>
         <Route exact path="/dashboard">
-          {dashBoardContent}
+          {!currentUser ?
+            <>
+              <p>Loading...</p>
+              <Link to="/">Click here if not redirected shortly</Link>
+            </>
+          :
+            <>
+              <TopBar user={currentUser} />
+              <Dashboard user={currentUser} setCurrentUser={setCurrentUser} />
+            </>
+          }
         </Route>
         <Route exact path="/invite">
           <Invite user={currentUser} />

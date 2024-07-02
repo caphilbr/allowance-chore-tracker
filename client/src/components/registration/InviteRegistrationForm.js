@@ -11,8 +11,10 @@ const InviteRegistrationForm = (props) => {
   })
   const [errors, setErrors] = useState({})
   const [serverErrors, setServerErrors] = useState({})
-  const [shouldGoHome, setShouldGoHome] = useState(false)
-  const [shouldGoProfile, setShouldGoProfile] = useState(false)
+  const [shouldGo, setShouldGo] = useState({
+    home: false,
+    profile: false
+  })
 
   const validateInput = (payload) => {
     setErrors({})
@@ -94,7 +96,10 @@ const InviteRegistrationForm = (props) => {
           const error = new Error(errorMessage)
           throw error
         }
-        return setShouldGoProfile(true)
+        return setShouldGo({
+          ...shouldGo,
+          profile: true
+        })
       }
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
@@ -109,7 +114,10 @@ const InviteRegistrationForm = (props) => {
   }
 
   const goHome = () => {
-    setShouldGoHome(true)
+    setShouldGo({
+      ...shouldGo,
+      home: true
+    })
   }
 
   const clearForm = () => {
@@ -122,11 +130,11 @@ const InviteRegistrationForm = (props) => {
 
   const inviteMessage = `An email and nickname have already been provided. Simply choose a username and password and you'll get access to Chore Champions!`
 
-  if (shouldGoProfile) {
+  if (shouldGo.profile) {
     location.href = "/profile"
   }
 
-  if (shouldGoHome) {
+  if (shouldGo.home) {
     location.href = "/"
   }
 

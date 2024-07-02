@@ -50,7 +50,7 @@ const PastTransactions = (props) => {
 
   return (
     <>
-      {showPending ?
+      {showPending &&
         <div className="transaction-table-container">
           <table className="pending-transaction-table">
             <thead>
@@ -61,12 +61,8 @@ const PastTransactions = (props) => {
             <tbody>{pendingTransactionsToShow}</tbody>
           </table>
         </div>
-      :
-        null
       }
-      {showEmpty ?
-        null
-      :
+      {!showEmpty && 
         <div className="transaction-table-container">
           <table className="transaction-table">
             <thead>

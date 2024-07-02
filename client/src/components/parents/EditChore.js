@@ -102,55 +102,34 @@ const EditChore = (props) => {
     })
   }
 
+  const formInputElements = [
+    ["Chore Name", "name"],
+    ["Description", "description"],
+    ["Amount", "amount"],
+    ["Due Date", "dueDate"],
+  ].map((element) => {
+    return (
+      <label>
+        {element[0]}
+        <input
+          type={element[1] == "dueDate" ? "date" : "text"}
+          name={element[1]}
+          value={chorePayload[element[1]]}
+          onChange={onInputChange}
+          className="form-field"
+        />
+        <FormError error={errors[element[1]]} />
+      </label>
+    )
+  })
+
+
   return (
     <div className="popout-box">
       <h3>Edit Chore: {props.chore.name}</h3>
       <form onSubmit={onSubmit}>
         <ErrorList errors={serverErrors} />
-        <label>
-          Chore Name
-          <input
-            type="text"
-            name="name"
-            value={chorePayload.name}
-            onChange={onInputChange}
-            className="form-field"
-          />
-          <FormError error={errors.name} />
-        </label>
-        <label>
-          Description
-          <input
-            type="text"
-            name="description"
-            value={chorePayload.description}
-            onChange={onInputChange}
-            className="form-field"
-          />
-          <FormError error={errors.description} />
-        </label>
-        <label>
-          Amount
-          <input
-            type="text"
-            name="amount"
-            value={chorePayload.amount}
-            onChange={onInputChange}
-            className="form-field"
-          />
-          <FormError error={errors.amount} />
-        </label>
-        <label>
-          Due Date
-          <input
-            type="date"
-            name="dueDate"
-            value={chorePayload.dueDate}
-            onChange={onInputChange}
-            className="form-field"
-          />
-          <FormError error={errors.dueDate} />
-        </label>
+        {formInputElements}
         <input
           type="submit"
           className="allowance-button"

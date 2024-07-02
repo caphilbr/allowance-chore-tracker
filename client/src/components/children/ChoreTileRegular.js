@@ -9,16 +9,6 @@ const ChoreTileRegular = (props) => {
     }
   }
 
-  let description = null
-  if (props.chore.description && props.chore.description != "") {
-    description = (
-      <div className="cell small-6 description">
-        <p>Description:</p>
-        <p>{props.chore.description}</p>
-      </div>
-    )
-  }
-
   return (
     <div className="cell small-12 large-6 chore-tile-regular grid-x grid-margin-x">
       <div className="cell">
@@ -26,7 +16,12 @@ const ChoreTileRegular = (props) => {
           {props.chore.name} - ${props.chore.amount}
         </p>
         <p>Due: {props.chore.dueDate.slice(0, 10)}</p>
-        {description}
+        {props.chore.description && props.chore.description != "" &&
+          <div className="cell small-6 description">
+            <p>Description:</p>
+            <p>{props.chore.description}</p>
+          </div>
+        }
       </div>
       <p className="cell chore-tile-buttons">
         {props.chore.status == "open" ? (

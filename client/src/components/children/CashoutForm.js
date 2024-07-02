@@ -24,22 +24,13 @@ const CashoutForm = (props) => {
     const currencyRegexp = config.validation.currency.regexp.currencyRegex
     let newErrors = {}
     if (!amount.match(currencyRegexp)) {
-      newErrors = {
-        ...newErrors,
-        amount: "must be a number with up to two decimals (e.g. $9.99)",
-      }
+      newErrors.amount = "must be a number with up to two decimals (e.g. $9.99)"
     }
     if (amount.trim() == "") {
-      newErrors = {
-        ...newErrors,
-        amount: "amount cannot be blank",
-      }
+      newErrors.amount = "amount cannot be blank"
     }
     if (parseFloat(amount) > parseFloat(props.child.balance)) {
-      newErrors = {
-        ...newErrors,
-        amount: "Cashout cannot be greater than Balance",
-      }
+      newErrors.amount = "Cashout cannot be greater than Balance"
     }
 
     setErrors(newErrors)
@@ -65,8 +56,6 @@ const CashoutForm = (props) => {
         props.setShowCashout(false)
       } else if (response.status == 422) {
         setServerErrors(response.error)
-      } else {
-        // location.href = "/dashboard"
       }
     }
   }
