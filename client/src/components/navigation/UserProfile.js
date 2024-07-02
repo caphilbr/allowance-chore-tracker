@@ -156,6 +156,36 @@ const UserProfile = (props) => {
     </form>
   )
 
+  const rowsForEditing = [
+    ["Nickname", "nickname"],
+    ["Email", "email"],
+    ["Family Name", "familyName"],
+  ].map((field) => {
+    return (
+      <tr key={field[1]}>
+        <td className="profile-category">{field[0]}</td>
+        {showEdit[field[1]] ? (
+          <td colSpan="2">{renderForm(field[1])}</td>
+        ) : (
+          <>
+            <td>{userPayload[field[1]]}</td>
+            <td>
+              {!props.user.isParent && field[1] == "familyName" ? null : (
+                <span
+                  className="button-styling-small"
+                  name={field[1]}
+                  onClick={handleEditClick}
+                >
+                  Edit
+                </span>
+              )}
+            </td>
+          </>
+        )}
+      </tr>
+    )
+  })
+
   return (
     <>
       <TopBar user={props.user} />
@@ -208,36 +238,7 @@ const UserProfile = (props) => {
                   </td>
                 </tr>
               ) : null}
-              {[
-                ["Nickname", "nickname"],
-                ["Email", "email"],
-                ["Family Name", "familyName"],
-              ].map((field) => {
-                return (
-                  <tr key={field[1]}>
-                    <td className="profile-category">{field[0]}</td>
-                    {showEdit[field[1]] ? (
-                      <td colSpan="2">{renderForm(field[1])}</td>
-                    ) : (
-                      <>
-                        <td>{userPayload[field[1]]}</td>
-                        <td>
-                          {!props.user.isParent &&
-                          field[1] == "familyName" ? null : (
-                            <span
-                              className="button-styling-small"
-                              name={field[1]}
-                              onClick={handleEditClick}
-                            >
-                              Edit
-                            </span>
-                          )}
-                        </td>
-                      </>
-                    )}
-                  </tr>
-                )
-              })}
+              {rowsForEditing}
             </tbody>
           </table>
           {emailStatus.status === "success" && (

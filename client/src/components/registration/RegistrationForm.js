@@ -18,8 +18,10 @@ const RegistrationForm = () => {
 
   const [errors, setErrors] = useState({})
   const [serverErrors, setServerErrors] = useState({})
-  const [shouldGoHome, setShouldGoHome] = useState(false)
-  const [shouldGoProfile, setShouldGoProfile] = useState(false)
+  const [shouldGo, setShouldGo] = useState({
+    home: false,
+    profile: false
+  })
 
   const validateInput = (payload) => {
     setErrors({})
@@ -95,7 +97,10 @@ const RegistrationForm = () => {
           const error = new Error(errorMessage)
           throw error
         }
-        return setShouldGoProfile(true)
+        return setShouldGo({
+          ...shouldGo,
+          profile: true
+        })
       }
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
@@ -109,16 +114,19 @@ const RegistrationForm = () => {
     })
   }
 
-  if (shouldGoProfile) {
+  if (shouldGo.profile) {
     location.href = "/profile"
   }
 
-  if (shouldGoHome) {
+  if (shouldGo.home) {
     location.href = "/"
   }
 
   const goHome = () => {
-    setShouldGoHome(true)
+    setShouldGo({
+      ...shouldGo,
+      home: true
+    })
   }
 
   return (

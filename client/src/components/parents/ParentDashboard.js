@@ -108,7 +108,7 @@ const ParentDashboard = (props) => {
     )
   }
 
-  let contentHolder = (
+  let dashboardContent = (
     <div className="cell grid-x">
       <ChildListHorizontal
         toggleAddChild={toggleAddChild}
@@ -138,7 +138,7 @@ const ParentDashboard = (props) => {
   )
 
   if (childCount == 0) {
-    contentHolder = (
+    dashboardContent = (
       <>
         <div className="cell invite-container">
           <h4 className="parent-dash-title">
@@ -167,7 +167,7 @@ const ParentDashboard = (props) => {
 
   return (
     <div className="align-center full-screen">
-      {contentHolder}
+      {dashboardContent}
     </div>
   )
 }
