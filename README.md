@@ -23,19 +23,9 @@ Shared features
 
 ## Usage
 
-Navigate to [Chore Champion](https://allowance-chore-tracker-46cd68f48ad0.herokuapp.com/)
+Chore Champion is no longer live.
 
-Use these test logins...
-
-   ```
-   username: "testParent1"  
-   password: "password"
-   ```
-
-   ```
-   username: "testChild4"  
-   password: "password"
-   ```
+Run it locally with `yarn dev` and navigating to `localhost:3000`.
 
 ![Screenshot](screen1.jpeg)
 ![Screenshot](screen2.jpeg)
